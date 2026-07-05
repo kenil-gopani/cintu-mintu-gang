@@ -97,10 +97,10 @@ export default function Home() {
     memberService.getActivities().then(r => setActivities(r.data.activities || [])).catch(() => {})
 
     // 6. Fetch Weather (Geo IP fallback to static)
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=28.6139&longitude=77.2090&current_weather=true')
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=21.1702&longitude=72.8311&current_weather=true')
       .then(res => res.json())
       .then(data => {
-        setWeather({ temp: Math.round(data.current_weather.temperature), code: data.current_weather.weathercode, city: 'New Delhi' })
+        setWeather({ temp: Math.round(data.current_weather.temperature), code: data.current_weather.weathercode, city: 'Surat' })
       })
       .catch(() => {})
   }, [])

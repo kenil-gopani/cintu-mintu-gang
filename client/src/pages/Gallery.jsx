@@ -497,13 +497,18 @@ export default function Gallery() {
       <AnimatePresence>
         {showUpload && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="card w-full max-w-xl p-8 shadow-2xl border border-gray-100 dark:border-gray-800">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.95, y: 20 }} 
+              className="card w-full max-w-xl p-5 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-800 max-h-[90vh] overflow-y-auto no-overscroll"
+            >
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-extrabold">Upload to Memory Wall</h2>
+                <h2 className="text-xl sm:text-2xl font-extrabold">Upload to Memory Wall</h2>
                 <button onClick={() => setShowUpload(false)} className="btn-icon"><X size={20} /></button>
               </div>
               
-              <form onSubmit={handleUploadSubmit} className="space-y-6">
+              <form onSubmit={handleUploadSubmit} className="space-y-4 sm:space-y-6">
                 <div 
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full aspect-video rounded-3xl border-2 border-dashed border-coral/30 hover:border-coral flex flex-col items-center justify-center cursor-pointer transition-colors overflow-hidden bg-coral/5 group"
