@@ -8,12 +8,12 @@ import { useSocket } from '../../hooks/useSocket'
 const navItems = [
   { to: '/home',      icon: Home,          label: 'Home' },
   { to: '/gallery',   icon: Image,         label: 'Memory Wall' },
-  { to: '/chat',      icon: MessageCircle, label: 'Family Chat' },
   { to: '/events',    icon: Calendar,      label: 'Events' },
   { to: '/members',   icon: Users,         label: 'Members' },
   { to: '/tree',      icon: Network,       label: 'Family Tree' },
   { to: '/birthday',  icon: Gift,          label: 'Birthdays' },
-  { to: '/games',     icon: Laugh,         label: 'Arcade & Games' },
+  { to: '/chat',      icon: MessageCircle, label: 'Family Chat',  comingSoon: true },
+  { to: '/games',     icon: Laugh,         label: 'Arcade & Games', comingSoon: true },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -55,8 +55,21 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Nav items */}
       <nav className="flex-1 px-3 sidebar-scroll overflow-y-auto">
         <ul className="space-y-1">
-          {navItems.map(({ to, icon: Icon, label }) => {
+          {navItems.map(({ to, icon: Icon, label, comingSoon }) => {
             const active = location.pathname === to
+            if (comingSoon) {
+              return (
+                <li key={to}>
+                  <div
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm opacity-50 cursor-not-allowed select-none text-light-muted dark:text-dark-muted"
+                  >
+                    <Icon size={18} />
+                    <span className="flex-1">{label}</span>
+                    <span className="text-[9px] font-extrabold uppercase tracking-wider bg-coral/20 text-coral px-2 py-0.5 rounded-full">Soon</span>
+                  </div>
+                </li>
+              )
+            }
             return (
               <li key={to}>
                 <Link
