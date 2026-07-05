@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
   Image, Calendar, Users, ArrowRight, CloudRain, Sun, Cloud, 
-  MapPin, Quote, Trophy, Activity, CheckCircle2, ChevronRight 
+  MapPin, Quote, Trophy, Activity, CheckCircle2, ChevronRight, Plus
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useSocket } from '../hooks/useSocket'
@@ -12,6 +12,7 @@ import Avatar from '../components/common/Avatar'
 import { format, isToday, differenceInDays } from 'date-fns'
 import confetti from 'canvas-confetti'
 import toast from 'react-hot-toast'
+import Modal from '../components/common/Modal'
 
 // --- Quotes Data ---
 const FAMILY_QUOTES = [
@@ -55,6 +56,9 @@ export default function Home() {
   const [stats, setStats] = useState({ totalMembers: 0, totalMemories: 0, upcomingEventsCount: 0, totalPolls: 0, leaderboard: [] })
   const [activities, setActivities] = useState([])
   const [weather, setWeather] = useState(null)
+  
+  const [createPollModal, setCreatePollModal] = useState(false)
+  const [newPoll, setNewPoll] = useState({ question: '', options: ['', ''] })
   
   const confettiFired = useRef(false)
   const [quote] = useState(() => FAMILY_QUOTES[new Date().getDay() % FAMILY_QUOTES.length])
@@ -115,6 +119,25 @@ export default function Home() {
       setLatestPoll(updatedPoll)
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to vote.')
+    }
+  }
+
+  const handleCreatePoll = async () => {
+    if (!newPoll.question.trim() || newPoll.options.filter(o => o.trim()).length < 2) {
+      return toast.error('Enter a question and at least 2 options.')
+    }
+    try {
+      const payload = {
+        question: newPoll.question,
+        options: newPoll.options.filter(o => o.trim()).map(o => ({ text: o }))
+      }
+      const res = await pollService.create(payload)
+      setLatestPoll(res.data.poll)
+      setCreatePollModal(false)
+      setNewPoll({ question: '', options: ['', ''] })
+      toast.success('Poll created!')
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to create poll.')
     }
   }
 
@@ -237,7 +260,12 @@ export default function Home() {
                 )}
               </div>
            ) : (
-             <div className="h-24 flex items-center justify-center text-sm font-semibold text-gray-500">No active polls right now.</div>
+             <div className="h-24 flex flex-col items-center justify-center gap-3">
+               <span className="text-sm font-semibold text-gray-500">No active polls right now.</span>
+               <button onClick={() => setCreatePollModal(true)} className="btn-primary text-xs py-1.5 px-3 flex items-center gap-1">
+                 <Plus size={14} /> Create Poll
+               </button>
+             </div>
            )}
         </motion.div>
 
@@ -378,6 +406,47 @@ export default function Home() {
         </motion.div>
 
       </motion.div>
+
+      <Modal isOpen={createPollModal} onClose={() => setCreatePollModal(false)} title="📊 Create Quick Poll">
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Question</label>
+            <input 
+              className="input-field w-full"
+              placeholder="e.g. What should we do this weekend?"
+              value={newPoll.question}
+              onChange={e => setNewPoll(p => ({ ...p, question: e.target.value }))}
+            />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Options</label>
+            {newPoll.options.map((opt, i) => (
+              <div key={i} className="flex gap-2 mb-2">
+                <input 
+                  className="input-field flex-1"
+                  placeholder={`Option ${i + 1}`}
+                  value={opt}
+                  onChange={e => {
+                    const newOptions = [...newPoll.options]
+                    newOptions[i] = e.target.value
+                    setNewPoll(p => ({ ...p, options: newOptions }))
+                  }}
+                />
+              </div>
+            ))}
+            {newPoll.options.length < 5 && (
+              <button 
+                onClick={() => setNewPoll(p => ({ ...p, options: [...p.options, ''] }))}
+                className="text-coral text-xs font-bold flex items-center gap-1 mt-2"
+              >
+                <Plus size={14} /> Add Option
+              </button>
+            )}
+          </div>
+          <button onClick={handleCreatePoll} className="btn-primary w-full mt-4">Create Poll</button>
+        </div>
+      </Modal>
+
     </div>
   )
 }
