@@ -191,7 +191,7 @@ exports.getFamilyTree = async (req, res) => {
 // POST /api/users/tree/member - Any member can add a new person to the family tree
 exports.createFamilyMember = async (req, res) => {
   try {
-    const { name, nickname } = req.body
+    const { name, nickname, birthday } = req.body
     if (!name) return res.status(400).json({ message: 'Name is required' })
 
     const baseEmail = name.toLowerCase().replace(/\s+/g, '.') + '@cintumintugang.com'
@@ -204,7 +204,8 @@ exports.createFamilyMember = async (req, res) => {
       email: finalEmail,
       password: 'Password@123',
       isEmailVerified: true,
-      role: 'member'
+      role: 'member',
+      birthday: birthday || undefined
     })
 
     await user.save()

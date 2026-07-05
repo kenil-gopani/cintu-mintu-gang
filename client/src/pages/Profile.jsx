@@ -48,6 +48,7 @@ export default function Profile() {
         nickname: form.nickname,
         bio: form.bio,
         funFacts: form.funFacts,
+        birthday: form.birthday,
       })
       setProfile(res.data.user)
       updateUser(res.data.user)
@@ -124,6 +125,13 @@ export default function Profile() {
                     onChange={e => setForm(p => ({ ...p, nickname: e.target.value }))}
                     className="input-field"
                     placeholder="Nickname"
+                  />
+                  <input
+                    type="date"
+                    value={form.birthday ? new Date(form.birthday).toISOString().split('T')[0] : ''}
+                    onChange={e => setForm(p => ({ ...p, birthday: e.target.value }))}
+                    className="input-field"
+                    placeholder="Birthday"
                   />
                 </div>
               ) : (

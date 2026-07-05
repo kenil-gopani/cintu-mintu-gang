@@ -73,7 +73,7 @@ export default function FamilyTree() {
   // Admin Edit Mode State
   const [isEditMode, setIsEditMode] = useState(false)
   const [addModalOpen, setAddModalOpen] = useState(false)
-  const [newMemberData, setNewMemberData] = useState({ name: '', nickname: '' })
+  const [newMemberData, setNewMemberData] = useState({ name: '', nickname: '', birthday: '' })
   
   const [editRelationsUser, setEditRelationsUser] = useState(null)
   const [relationsData, setRelationsData] = useState({ parents: [], spouse: '', children: [] })
@@ -193,7 +193,7 @@ export default function FamilyTree() {
       await memberService.createFamilyMember(newMemberData)
       toast.success('Member added to family tree!')
       setAddModalOpen(false)
-      setNewMemberData({ name: '', nickname: '' })
+      setNewMemberData({ name: '', nickname: '', birthday: '' })
       loadTree()
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to add member')
@@ -419,6 +419,15 @@ export default function FamilyTree() {
               placeholder="e.g. Johnny"
               value={newMemberData.nickname}
               onChange={e => setNewMemberData({...newMemberData, nickname: e.target.value})}
+            />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Birthday (Optional)</label>
+            <input 
+              type="date"
+              className="input-field w-full" 
+              value={newMemberData.birthday}
+              onChange={e => setNewMemberData({...newMemberData, birthday: e.target.value})}
             />
           </div>
           <button onClick={handleAddMember} className="btn-primary w-full mt-4">Create Member</button>
