@@ -19,8 +19,7 @@
 
   html {
     scroll-behavior: smooth;
-    /* Fix iOS 100vh issue (excludes browser toolbar) */
-    height: -webkit-fill-available;
+    height: 100%;
   }
 
   body {
@@ -29,8 +28,8 @@
     /* iOS momentum scrolling */
     -webkit-overflow-scrolling: touch;
     /* Use dvh (dynamic viewport height) to account for iOS Safari toolbar */
+    min-height: 100vh;
     min-height: 100dvh;
-    min-height: -webkit-fill-available;
     /* Prevent elastic overscroll on body */
     overscroll-behavior: none;
   }
@@ -281,7 +280,7 @@
 
 /* ===== Full-height fix for mobile layout ===== */
 .layout-height {
+  height: 100vh;
   height: 100dvh;
-  height: -webkit-fill-available;
 }
 
