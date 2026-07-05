@@ -82,18 +82,18 @@ const FamilyNode = memo(({ data }) => {
         style={{ background: 'transparent', border: 'none', width: 1, height: 1, bottom: 0 }}
       />
 
-      {/* Spouse handles */}
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="spouse-left"
-        style={{ background: 'transparent', border: 'none', width: 1, height: 1, left: 0 }}
-      />
+      {/* Spouse handles (Center point, one source, one target) */}
       <Handle
         type="source"
         position={Position.Right}
-        id="spouse-right"
-        style={{ background: 'transparent', border: 'none', width: 1, height: 1, right: 0 }}
+        id="spouse-center-src"
+        style={{ background: 'transparent', border: 'none', width: 1, height: 1, top: '50%', left: '50%', zIndex: -1 }}
+      />
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="spouse-center-tgt"
+        style={{ background: 'transparent', border: 'none', width: 1, height: 1, top: '50%', left: '50%', zIndex: -1 }}
       />
     </div>
   )

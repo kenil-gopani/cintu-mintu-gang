@@ -128,7 +128,8 @@ export default function FamilyTree() {
               id: `spouse-${edgeId}`,
               source: u._id,
               target: u.spouse,
-              sourceHandle: 'spouse-right',
+              sourceHandle: 'spouse-center-src',
+              targetHandle: 'spouse-center-tgt',
               type: 'straight',
               data: { type: 'spouse' },
               style: {
@@ -138,6 +139,7 @@ export default function FamilyTree() {
                 strokeLinecap: 'round',
               },
               animated: true,
+              zIndex: -1,
             })
           }
         }
