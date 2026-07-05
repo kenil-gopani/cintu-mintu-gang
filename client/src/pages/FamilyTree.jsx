@@ -27,7 +27,7 @@ const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setDefaultEdgeLabel(() => ({}))
   
   // TB = Top to Bottom
-  dagreGraph.setGraph({ rankdir: 'TB', nodesep: 120, ranksep: 200 })
+  dagreGraph.setGraph({ rankdir: 'TB', nodesep: 80, ranksep: 160 })
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: 256, height: 180 })
@@ -110,8 +110,9 @@ export default function FamilyTree() {
                 sourceHandle: 'children',
                 type: 'smoothstep',
                 data: { type: 'parent-child' },
-                style: { stroke: '#4ECDC4', strokeWidth: 3 }, 
-                markerEnd: { type: MarkerType.ArrowClosed, color: '#4ECDC4' },
+                style: { stroke: '#4ECDC4', strokeWidth: 2.5, strokeLinecap: 'round' }, 
+                markerEnd: { type: MarkerType.ArrowClosed, color: '#4ECDC4', width: 12, height: 12 },
+                pathOptions: { borderRadius: 20 },
               })
             }
           })
@@ -126,11 +127,14 @@ export default function FamilyTree() {
               source: u._id,
               target: u.spouse,
               sourceHandle: 'spouse-right',
-              targetHandle: 'spouse-left',
+              targetHandle: 'spouse-target-left',
               type: 'straight',
               data: { type: 'spouse' },
-              style: { stroke: '#C3B1E1', strokeWidth: 3, strokeDasharray: '5 5' }, 
+              style: { stroke: '#f472b6', strokeWidth: 2.5, strokeDasharray: '6 4' }, 
               animated: true,
+              label: '❤️',
+              labelStyle: { fontSize: 12, fill: 'transparent' },
+              labelBgStyle: { fill: 'transparent' },
             })
           }
         }
