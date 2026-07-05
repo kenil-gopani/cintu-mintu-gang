@@ -43,6 +43,7 @@ export const memberService = {
   getActivities: () => api.get('/users/activities'),
   getFamilyTree: () => api.get('/users/tree'),
   createFamilyMember: (data) => api.post('/users/tree/member', data),
+  deleteFamilyMember: (id) => api.delete(`/users/tree/member/${id}`),
   updateRelations: (id, data) => api.put(`/users/${id}/relations`, data),
 }
 

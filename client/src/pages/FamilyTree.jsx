@@ -10,7 +10,7 @@ import {
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import dagre from 'dagre'
-import { Search, X, Loader2, Info, Edit, Plus, Save } from 'lucide-react'
+import { Search, X, Loader2, Info, Edit, Plus, Save, Trash2 } from 'lucide-react'
 import { memberService } from '../services/services'
 import FamilyNode from '../components/tree/FamilyNode'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -214,6 +214,18 @@ export default function FamilyTree() {
     }
   }
 
+  const handleDeleteMember = async () => {
+    if (!window.confirm(`Are you sure you want to remove ${editRelationsUser?.name} from the tree?`)) return
+    try {
+      await memberService.deleteFamilyMember(editRelationsUser._id)
+      toast.success('Member deleted from tree')
+      setEditRelationsUser(null)
+      loadTree()
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete member')
+    }
+  }
+
   const toggleSelection = (field, id) => {
     setRelationsData(prev => {
       const list = prev[field]
@@ -253,8 +265,8 @@ export default function FamilyTree() {
         <Background variant="dots" color="#d1d5db" gap={28} size={1.5} className="dark:opacity-20" />
         <Controls className="bg-white/90 dark:bg-dark-card/90 border border-gray-100 dark:border-gray-800 shadow-2xl rounded-2xl overflow-hidden backdrop-blur-xl" />
         
-        <Panel position="top-left" className="m-4">
-          <div className="glass rounded-2xl p-4 shadow-xl flex items-center gap-4">
+        <Panel position="top-left" className="m-4 max-w-[calc(100vw-32px)]">
+          <div className="glass rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div>
               <h1 className="text-xl font-extrabold gradient-text">Family Tree</h1>
               <p className="text-xs font-bold text-gray-500">Pan & Zoom to explore</p>
@@ -277,8 +289,8 @@ export default function FamilyTree() {
             </div>
             
             {/* Edit Mode toggle — visible to ALL members */}
-              <>
-                <div className="h-8 w-px bg-gray-200 dark:bg-gray-700" />
+              <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+                <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700" />
                 <button 
                   onClick={() => setIsEditMode(!isEditMode)} 
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-bold transition-all ${isEditMode ? 'bg-coral text-white shadow-lg shadow-coral/30' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'}`}
@@ -290,7 +302,7 @@ export default function FamilyTree() {
                     <Plus size={14} /> Add Member
                   </button>
                 )}
-              </>
+              </div>
           </div>
         </Panel>
 
@@ -457,9 +469,14 @@ export default function FamilyTree() {
             </div>
           </div>
 
-          <button onClick={handleSaveRelations} className="btn-primary w-full flex items-center justify-center gap-2">
-            <Save size={18} /> Save Relationships
-          </button>
+          <div className="flex gap-2">
+            <button onClick={handleSaveRelations} className="btn-primary flex-1 flex items-center justify-center gap-2">
+              <Save size={18} /> Save
+            </button>
+            <button onClick={handleDeleteMember} className="btn-secondary border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:shadow-glow-red flex items-center justify-center gap-2 px-4">
+              <Trash2 size={18} />
+            </button>
+          </div>
         </div>
       </Modal>
 

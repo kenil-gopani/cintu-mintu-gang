@@ -214,6 +214,25 @@ exports.createFamilyMember = async (req, res) => {
   }
 }
 
+// DELETE /api/users/tree/member/:id
+exports.deleteFamilyMember = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    // Also remove this user from all reciprocal relations
+    await User.updateMany({ parents: user._id }, { $pull: { parents: user._id } })
+    await User.updateMany({ children: user._id }, { $pull: { children: user._id } })
+    await User.updateMany({ spouse: user._id }, { $unset: { spouse: "" } })
+
+    await User.findByIdAndDelete(req.params.id)
+
+    res.json({ message: 'Member deleted from family tree' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 // PUT /api/users/:id/relations
 exports.updateRelations = async (req, res) => {
   try {
