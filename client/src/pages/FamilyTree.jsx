@@ -30,7 +30,7 @@ const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setGraph({ rankdir: 'TB', nodesep: 80, ranksep: 160 })
 
   nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: 256, height: 180 })
+    dagreGraph.setNode(node.id, { width: 180, height: 150 })
   })
 
   // Only pass parent-child edges to dagre to avoid cyclic routing errors with spouses
@@ -50,8 +50,8 @@ const getLayoutedElements = (nodes, edges) => {
         targetPosition: 'top',
         sourcePosition: 'bottom',
         position: {
-          x: nodeWithPosition.x - 256 / 2,
-          y: nodeWithPosition.y - 180 / 2,
+          x: nodeWithPosition.x - 180 / 2,
+          y: nodeWithPosition.y - 150 / 2,
         },
       }
     }),
@@ -108,11 +108,13 @@ export default function FamilyTree() {
                 source: u._id,
                 target: childId,
                 sourceHandle: 'children',
-                type: 'smoothstep',
+                type: 'bezier',
                 data: { type: 'parent-child' },
-                style: { stroke: '#4ECDC4', strokeWidth: 2.5, strokeLinecap: 'round' }, 
-                markerEnd: { type: MarkerType.ArrowClosed, color: '#4ECDC4', width: 12, height: 12 },
-                pathOptions: { borderRadius: 20 },
+                style: {
+                  stroke: 'url(#edge-parent)',
+                  strokeWidth: 2.5,
+                  strokeLinecap: 'round',
+                },
               })
             }
           })
@@ -127,14 +129,15 @@ export default function FamilyTree() {
               source: u._id,
               target: u.spouse,
               sourceHandle: 'spouse-right',
-              targetHandle: 'spouse-target-left',
               type: 'straight',
               data: { type: 'spouse' },
-              style: { stroke: '#f472b6', strokeWidth: 2.5, strokeDasharray: '6 4' }, 
+              style: {
+                stroke: '#f472b6',
+                strokeWidth: 2,
+                strokeDasharray: '6 4',
+                strokeLinecap: 'round',
+              },
               animated: true,
-              label: '❤️',
-              labelStyle: { fontSize: 12, fill: 'transparent' },
-              labelBgStyle: { fill: 'transparent' },
             })
           }
         }
@@ -238,8 +241,17 @@ export default function FamilyTree() {
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
       >
-        <Background color="#888" gap={24} size={2} />
-        <Controls className="bg-white dark:bg-dark-card border-none shadow-xl rounded-xl overflow-hidden" />
+        {/* SVG gradient for parent-child edges */}
+        <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+          <defs>
+            <linearGradient id="edge-parent" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#4ECDC4" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#6C63FF" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <Background variant="dots" color="#d1d5db" gap={28} size={1.5} className="dark:opacity-20" />
+        <Controls className="bg-white/90 dark:bg-dark-card/90 border border-gray-100 dark:border-gray-800 shadow-2xl rounded-2xl overflow-hidden backdrop-blur-xl" />
         
         <Panel position="top-left" className="m-4">
           <div className="glass rounded-2xl p-4 shadow-xl flex items-center gap-4">
