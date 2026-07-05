@@ -47,7 +47,7 @@ exports.getUserById = async (req, res) => {
 // PUT /api/users/:id
 exports.updateUser = async (req, res) => {
   try {
-    if (req.params.id !== req.user._id.toString()) {
+    if (req.params.id !== req.user._id.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'You can only update your own profile' })
     }
     const allowed = ['name', 'nickname', 'bio', 'funFacts', 'birthday']
@@ -63,7 +63,7 @@ exports.updateUser = async (req, res) => {
 // PUT /api/users/:id/avatar
 exports.updateAvatar = async (req, res) => {
   try {
-    if (req.params.id !== req.user._id.toString()) {
+    if (req.params.id !== req.user._id.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Unauthorized' })
     }
     if (!req.file) return res.status(400).json({ message: 'No file uploaded' })

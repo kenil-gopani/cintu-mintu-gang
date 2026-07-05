@@ -23,6 +23,7 @@ export default function Profile() {
 
   const targetId = id || user?._id
   const isMe = targetId === user?._id
+  const canEdit = isMe || user?.role === 'admin'
 
   useEffect(() => {
     if (!targetId) return
@@ -96,7 +97,7 @@ export default function Profile() {
           {/* Avatar */}
           <div className="relative inline-block -mt-10 mb-4">
             <Avatar src={profile.avatar} name={profile.name} size={80} />
-            {isMe && (
+            {canEdit && (
               <>
                 <button
                   onClick={() => avatarRef.current?.click()}
@@ -154,7 +155,7 @@ export default function Profile() {
                 </span>
               </div>
             </div>
-            {isMe && (
+            {canEdit && (
               editing ? (
                 <div className="flex gap-2">
                   <button onClick={handleSave} disabled={saving} className="btn-primary flex items-center gap-1.5 text-sm">
