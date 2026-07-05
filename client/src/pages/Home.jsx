@@ -91,7 +91,7 @@ export default function Home() {
     pollService.getAll().then(r => {
       if (r.data.polls?.length > 0) {
         // Find most recent active poll
-        const active = r.data.polls.filter(p => p.isActive).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        const active = r.data.polls.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         setLatestPoll(active[0] || null)
       }
     }).catch(() => {})
@@ -226,7 +226,7 @@ export default function Home() {
         <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 card p-6">
            <div className="flex justify-between items-start mb-4">
               <h2 className="font-extrabold text-lg flex items-center gap-2"><CheckCircle2 className="text-teal-500" size={20} /> Quick Poll</h2>
-              <Link to="/fun-zone" className="text-sm font-bold text-coral">More polls</Link>
+              <Link to="/polls" className="text-sm font-bold text-coral">More polls</Link>
            </div>
            
            {latestPoll ? (

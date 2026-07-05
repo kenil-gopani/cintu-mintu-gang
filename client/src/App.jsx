@@ -23,6 +23,7 @@ const FamilyTree        = lazy(() => import('./pages/FamilyTree'))
 const Profile           = lazy(() => import('./pages/Profile'))
 const Birthdays         = lazy(() => import('./pages/Birthdays'))
 const Games             = lazy(() => import('./pages/Games'))
+const Polls             = lazy(() => import('./pages/Polls'))
 const Admin             = lazy(() => import('./pages/Admin'))
 const NotFound          = lazy(() => import('./pages/NotFound'))
 
@@ -60,6 +61,7 @@ export default function App() {
                   <Route path="/events"       element={<Events />} />
                   <Route path="/members"      element={<Members />} />
                   <Route path="/tree"         element={<FamilyTree />} />
+                  <Route path="/polls"        element={<Polls />} />
                   <Route path="/profile/:id?" element={<Profile />} />
 
                   {/* Accessible by members and admins only */}

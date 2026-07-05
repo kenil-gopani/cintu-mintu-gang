@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Home, Image, MessageCircle, Calendar, Users, Network, Gift, Laugh, Shield, LogOut } from 'lucide-react'
+import { X, Home, Image, MessageCircle, Calendar, Users, Network, Gift, Laugh, Shield, LogOut, CheckCircle2 } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import Avatar from './Avatar'
 import { useSocket } from '../../hooks/useSocket'
@@ -11,6 +11,7 @@ const navItems = [
   { to: '/events',    icon: Calendar,      label: 'Events' },
   { to: '/members',   icon: Users,         label: 'Members' },
   { to: '/tree',      icon: Network,       label: 'Family Tree' },
+  { to: '/polls',     icon: CheckCircle2,  label: 'Polls' },
   { to: '/birthday',  icon: Gift,          label: 'Birthdays' },
   { to: '/chat',      icon: MessageCircle, label: 'Family Chat',  comingSoon: true },
   { to: '/games',     icon: Laugh,         label: 'Arcade & Games', comingSoon: true },
