@@ -11,9 +11,21 @@ const app = express()
 app.use(helmet())
 
 // CORS
-const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'http://localhost:5173'
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000']
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL.replace(/\/$/, ''))
+}
+
 app.use(cors({
-  origin:      clientUrl,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true)
+    const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')
+    if (isAllowed) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true,
 }))
 
