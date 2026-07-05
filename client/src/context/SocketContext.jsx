@@ -22,9 +22,12 @@ export function SocketProvider({ children }) {
     }
 
     const token = localStorage.getItem('cmg-token')
-    socketRef.current = io('/', {
+    const serverUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+    socketRef.current = io(serverUrl, {
       auth: { token },
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: 5,
     })
 
     const socket = socketRef.current

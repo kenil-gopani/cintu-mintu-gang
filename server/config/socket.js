@@ -7,11 +7,24 @@ const Notification = require('../models/Notification')
 let io
 
 function init(server) {
+  const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000']
+  if (process.env.CLIENT_URL) {
+    allowedOrigins.push(process.env.CLIENT_URL.replace(/\/$/, ''))
+  }
+
   io = new Server(server, {
     cors: {
-      origin:      process.env.CLIENT_URL || 'http://localhost:5173',
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+          callback(null, true)
+        } else {
+          callback(new Error('Socket CORS blocked'))
+        }
+      },
       credentials: true,
     },
+    pingTimeout: 60000,
+    pingInterval: 25000,
   })
 
   // Auth middleware for sockets

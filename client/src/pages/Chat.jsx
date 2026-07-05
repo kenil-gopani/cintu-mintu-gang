@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Send, Image as ImageIcon, Mic, Square, Smile, Paperclip, 
-  ChevronLeft, Check, CheckCheck, MoreVertical, Plus, Users, Search
+  ChevronLeft, Check, CheckCheck, MoreVertical, Plus, Users, Search, X
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { chatService, memberService } from '../services/services'
@@ -47,10 +47,19 @@ export default function Chat() {
 
   // Initialize Socket & Data
   useEffect(() => {
-    const s = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-      auth: { token: localStorage.getItem('token') }
+    const token = localStorage.getItem('cmg-token')
+    const serverUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+    const s = io(serverUrl, {
+      auth: { token },
+      transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     })
     setSocket(s)
+    
+    s.on('connect', () => console.log('✅ Chat socket connected'))
+    s.on('connect_error', (e) => console.error('❌ Socket error:', e.message))
     
     chatService.getRooms().then(r => { setRooms(r.data.rooms); setLoading(false) })
     memberService.getAll().then(r => setMembers(r.data.users))
