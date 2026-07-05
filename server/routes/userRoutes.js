@@ -1,0 +1,19 @@
+const router  = require('express').Router()
+const ctrl    = require('../controllers/userController')
+const protect = require('../middleware/authMiddleware')
+const { uploadAvatar } = require('../config/cloudinary')
+
+router.use(protect)
+
+router.get('/',                 ctrl.getAllUsers)
+router.get('/birthdays',        ctrl.getBirthdays)
+router.get('/dashboard-stats',  ctrl.getDashboardStats)
+router.get('/activities',       ctrl.getActivities)
+router.get('/tree',             ctrl.getFamilyTree)
+router.post('/tree/member',     ctrl.createFamilyMember)
+router.get('/:id',              ctrl.getUserById)
+router.put('/:id',              ctrl.updateUser)
+router.put('/:id/relations',    ctrl.updateRelations)
+router.put('/:id/avatar', uploadAvatar.single('avatar'), ctrl.updateAvatar)
+
+module.exports = router
