@@ -10,8 +10,8 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [showPw, setShowPw]     = useState(false)
   const [loading, setLoading]   = useState(false)
-  const { login }  = useAuth()
-  const navigate   = useNavigate()
+  const { login }   = useAuth()
+  const navigate    = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -27,78 +27,53 @@ export default function Login() {
   }
 
   return (
-    /* ── Pastel swirl background ── */
-    <div className="min-h-screen flex items-center justify-center p-4 overflow-hidden relative"
-      style={{
-        background: 'linear-gradient(135deg, #f9c0d0 0%, #c9e4f7 30%, #fde8a0 65%, #c9e4f7 100%)',
-      }}
-    >
-      {/* swirl blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-[500px] h-[500px] rounded-full blur-3xl opacity-60 -top-40 -left-40"
-          style={{ background: '#f9c0d0' }} />
-        <div className="absolute w-[400px] h-[400px] rounded-full blur-3xl opacity-50 top-0 right-0"
-          style={{ background: '#c9e4f7' }} />
-        <div className="absolute w-[350px] h-[350px] rounded-full blur-3xl opacity-50 bottom-0 left-1/3"
-          style={{ background: '#fde8a0' }} />
-        <div className="absolute w-[300px] h-[300px] rounded-full blur-3xl opacity-40 bottom-10 right-10"
-          style={{ background: '#b5eae0' }} />
-      </div>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#fdfaf6]">
+      {/* Soft pastel wavy background effect */}
+      <div className="absolute w-[800px] h-[800px] rounded-full opacity-60 -top-64 -left-64 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #fca5a5 0%, transparent 70%)' }} />
+      <div className="absolute w-[900px] h-[900px] rounded-full opacity-60 -bottom-80 -right-40 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #fef08a 0%, transparent 70%)' }} />
+      <div className="absolute w-[700px] h-[700px] rounded-full opacity-50 top-20 -right-20 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #93c5fd 0%, transparent 70%)' }} />
+      <div className="absolute w-[600px] h-[600px] rounded-full opacity-50 bottom-20 -left-20 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #a7f3d0 0%, transparent 70%)' }} />
 
-      {/* ── Glassmorphism Card ── */}
       <motion.div
-        initial={{ opacity: 0, y: 28, scale: 0.97 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.65, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-3xl"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 w-full max-w-4xl"
       >
-        <div className="flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl"
-          style={{
-            background: 'rgba(255,255,255,0.55)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.7)',
-          }}
-        >
-          {/* ── LEFT: Illustration ── */}
-          <div className="md:w-1/2 flex items-center justify-center p-8"
-            style={{ background: 'rgba(255,255,255,0.3)' }}
-          >
-            <img
-              src="/family-illustration.png"
-              alt="Happy family"
-              className="w-full max-w-xs object-contain select-none"
-              draggable={false}
-            />
+        <div className="bg-white/40 backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/60 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+          
+          {/* Left Side: Illustration */}
+          <div className="md:w-1/2 p-8 flex items-center justify-center relative bg-white/20">
+             <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent"></div>
+             <img src="/family-hero.png" alt="Family Picnic" className="w-full h-auto max-w-sm object-contain drop-shadow-xl relative z-10" />
           </div>
 
-          {/* ── RIGHT: Form ── */}
-          <div className="md:w-1/2 flex flex-col justify-center p-8 md:p-10">
-            <h1 className="text-2xl font-black text-gray-800 leading-tight mb-1">
-              Welcome back to<br />
-              <span style={{ color: '#1a2b5e' }}>Cintu-Mintu Gang!</span>
-            </h1>
-            <p className="text-sm text-gray-400 font-medium mb-6">
-              Your private family space. Stay connected.
-            </p>
+          {/* Right Side: Login Form */}
+          <div className="md:w-1/2 p-10 lg:p-14 flex flex-col justify-center">
+            
+            <div className="mb-8">
+              <h1 className="text-3xl lg:text-4xl font-bold text-[#1e293b] mb-3 leading-tight tracking-tight">
+                Welcome back<br />to Family Hub!
+              </h1>
+              <p className="text-gray-600 font-medium">Organize your family's life, stay connected.</p>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Enter Email"
-                required
-                className="w-full px-4 py-3 rounded-xl text-sm text-gray-700 placeholder-gray-400 outline-none transition-all border"
-                style={{
-                  background: 'rgba(255,255,255,0.8)',
-                  borderColor: 'rgba(0,0,0,0.08)',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-                }}
-                onFocus={e => e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.15)'}
-                onBlur={e => e.target.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)'}
-              />
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Enter Email"
+                  required
+                  className="w-full px-5 py-3.5 rounded-full bg-white/90 border border-white/40 text-gray-800 text-sm font-medium shadow-sm outline-none focus:ring-2 focus:ring-teal-500/50 transition-all placeholder-gray-400"
+                />
+              </div>
 
               {/* Password */}
               <div className="relative">
@@ -108,38 +83,23 @@ export default function Login() {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="Password"
                   required
-                  className="w-full px-4 py-3 pr-10 rounded-xl text-sm text-gray-700 placeholder-gray-400 outline-none transition-all border"
-                  style={{
-                    background: 'rgba(255,255,255,0.8)',
-                    borderColor: 'rgba(0,0,0,0.08)',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-                  }}
-                  onFocus={e => e.target.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.15)'}
-                  onBlur={e => e.target.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)'}
+                  className="w-full px-5 py-3.5 pr-12 rounded-full bg-white/90 border border-white/40 text-gray-800 text-sm font-medium shadow-sm outline-none focus:ring-2 focus:ring-teal-500/50 transition-all placeholder-gray-400"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPw(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
 
-              {/* Forgot password */}
-              <div className="text-right">
-                <Link to="/forgot-password" className="text-xs text-gray-400 hover:text-indigo-500 transition-colors">
-                  Forgot Password?
-                </Link>
-              </div>
-
-              {/* Sign In button */}
+              {/* Submit */}
               <motion.button
                 type="submit"
                 disabled={loading}
-                whileTap={{ scale: 0.97 }}
-                className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full mt-6 py-3.5 rounded-full font-bold text-white text-base transition-all hover:opacity-90 shadow-lg active:scale-95 flex items-center justify-center bg-[#219673]"
               >
                 {loading
                   ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
@@ -148,10 +108,6 @@ export default function Login() {
               </motion.button>
             </form>
 
-            {/* Back to home */}
-            <p className="text-center mt-5">
-              <Link to="/" className="text-xs text-gray-300 hover:text-gray-500 transition-colors">← Back to home</Link>
-            </p>
           </div>
         </div>
       </motion.div>
