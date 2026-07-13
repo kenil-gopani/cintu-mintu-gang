@@ -4,6 +4,7 @@ import { X, Home, Image, MessageCircle, Calendar, Users, Network, Gift, Laugh, S
 import { useAuth } from '../../hooks/useAuth'
 import Avatar from './Avatar'
 import { useSocket } from '../../hooks/useSocket'
+import { useEffect } from 'react'
 
 const navItems = [
   { to: '/home',     icon: Home,          label: 'Home' },
@@ -21,6 +22,18 @@ export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth()
   const { onlineUsers } = useSocket()
   const location = useLocation()
+
+  // Prevent body scrolling when mobile sidebar is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
