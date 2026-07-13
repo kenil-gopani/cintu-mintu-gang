@@ -45,7 +45,7 @@ export default function Login() {
           display: flex;
           max-width: 960px;
           width: 100%;
-          background: rgba(255, 255, 255, 0.45);
+          background: rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
           border: 1px solid rgba(255, 255, 255, 0.7);
@@ -57,7 +57,7 @@ export default function Login() {
         }
 
         .illustration-section {
-          flex: 1;
+          flex: 1.1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -66,7 +66,9 @@ export default function Login() {
         }
 
         .family-illustration {
-          max-width: 100%;
+          max-width: 110%;
+          width: 110%;
+          transform: translateX(-5%);
           height: auto;
           object-fit: contain;
         }
