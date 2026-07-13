@@ -43,15 +43,15 @@ app.use(rateLimit({
   message: { message: 'Too many requests, please try again later.' },
 }))
 
-// Auth rate limiter
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: { message: 'Too many auth attempts. Please try again in 15 minutes.' },
-})
+// Auth rate limiter (disabled to prevent locking out family members)
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 10,
+//   message: { message: 'Too many auth attempts. Please try again in 15 minutes.' },
+// })
 
 // Routes
-app.use('/api/auth',          authLimiter, require('./routes/authRoutes'))
+app.use('/api/auth',          require('./routes/authRoutes'))
 app.use('/api/users',         require('./routes/userRoutes'))
 app.use('/api/gallery',       require('./routes/galleryRoutes'))
 app.use('/api/events',        require('./routes/eventRoutes'))
