@@ -341,6 +341,15 @@ export default function Gallery() {
                 {memory.type === 'video' && <div className="absolute top-3 right-3 bg-black/60 p-2 rounded-xl text-white backdrop-blur-md shadow-lg"><Video size={16} /></div>}
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                  
+                  {/* Action Buttons Overlay */}
+                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={(e) => { e.stopPropagation(); handleDownload(memory) }} className="p-2 bg-black/50 text-white rounded-full hover:bg-white hover:text-black backdrop-blur-md transition-colors"><Download size={16} /></button>
+                    {(user.role === 'admin' || user._id === memory.uploadedBy._id) && (
+                      <button onClick={(e) => { e.stopPropagation(); handleDelete(memory._id) }} className="p-2 bg-black/50 text-white rounded-full hover:bg-red-500 backdrop-blur-md transition-colors"><Trash2 size={16} /></button>
+                    )}
+                  </div>
+
                   <div className="flex items-center gap-3 mb-2">
                     <Avatar src={memory.uploadedBy.avatar} name={memory.uploadedBy.name} size={28} className="shadow-lg border-2 border-white/20" />
                     <span className="text-white text-sm font-bold shadow-sm">{memory.uploadedBy.nickname || memory.uploadedBy.name}</span>
@@ -454,7 +463,10 @@ export default function Gallery() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <button onClick={() => setIsPlaying(!isPlaying)} className={`btn-icon shadow-lg border border-white/20 hover:scale-110 transition-transform ${isPlaying ? 'bg-coral text-white border-coral' : 'bg-black/50 text-white'}`}>
+                {(user.role === 'admin' || user._id === memories[lightboxIndex].uploadedBy._id) && (
+                  <button onClick={() => handleDelete(memories[lightboxIndex]._id)} className="btn-icon bg-black/50 text-white border border-white/20 shadow-lg hover:bg-red-500 hover:border-red-500 transition-colors" title="Delete Memory"><Trash2 size={20} /></button>
+                )}
+                <button onClick={() => setIsPlaying(!isPlaying)} className={`btn-icon shadow-lg border border-white/20 hover:scale-110 transition-transform ${isPlaying ? 'bg-black text-white border-black' : 'bg-black/50 text-white'}`}>
                   {isPlaying ? <Pause size={20} /> : <Play size={20} className="ml-1" />}
                 </button>
                 <button onClick={() => handleDownload(memories[lightboxIndex])} className="btn-icon bg-black/50 text-white border border-white/20 shadow-lg hover:bg-white hover:text-black transition-colors"><Download size={20} /></button>
