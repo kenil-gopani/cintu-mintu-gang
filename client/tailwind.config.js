@@ -9,20 +9,18 @@ export default {
         inter:  ['Inter', 'sans-serif'],
       },
       colors: {
-        // Brand accent — Indigo/Purple + Emerald green
-        primary:   '#6366F1',   // Indigo
-        secondary: '#8B5CF6',   // Purple
-        accent:    '#10B981',   // Emerald green
-        // Keep teal/mint as decorative
-        teal:      '#14B8A6',
-        mint:      '#A8E6CF',
-        lavender:  '#C3B1E1',
-        gold:      '#F59E0B',
-        // For compatibility
-        coral:     '#6366F1',   // Map coral → primary indigo so existing uses get purple
-        tangerine: '#8B5CF6',
-        // Verified tick
-        verified:  '#10B981',
+        // Monochrome Theme
+        primary:   '#000000',   // Black
+        secondary: '#4B5563',   // Gray-600
+        accent:    '#111827',   // Gray-900
+        // Legacy colors mapped to grays for monochrome look
+        teal:      '#374151',
+        mint:      '#9CA3AF',
+        lavender:  '#D1D5DB',
+        gold:      '#6B7280',
+        coral:     '#000000',
+        tangerine: '#374151',
+        verified:  '#000000',
         // Light theme
         light: {
           bg:     '#F5F6FA',

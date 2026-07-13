@@ -137,11 +137,11 @@
   .badge {
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
-  .badge-coral    { @apply badge bg-coral/10 text-coral; }
-  .badge-teal     { @apply badge bg-teal/10 text-teal; }
-  .badge-gold     { @apply badge bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
-  .badge-lavender { @apply badge bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400; }
-  .badge-green    { @apply badge bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400; }
+  .badge-coral    { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
+  .badge-teal     { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
+  .badge-gold     { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
+  .badge-lavender { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
+  .badge-green    { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
 
   /* ===== Avatar ===== */
   .avatar {
