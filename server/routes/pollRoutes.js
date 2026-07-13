@@ -6,5 +6,6 @@ router.use(protect)
 router.get('/',          ctrl.getAllPolls)
 router.post('/',         ctrl.createPoll)
 router.post('/:id/vote', ctrl.votePoll)
+router.delete('/:id', ctrl.deletePoll)
 
 module.exports = router

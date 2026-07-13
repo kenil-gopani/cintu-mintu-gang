@@ -66,6 +66,7 @@ export const pollService = {
   getAll: () => api.get('/polls'),
   create: (data) => api.post('/polls', data),
   vote:   (id, optionIndex) => api.post(`/polls/${id}/vote`, { optionIndex }),
+  delete: (id) => api.delete(`/polls/${id}`),
 }
 
 export const gameService = {

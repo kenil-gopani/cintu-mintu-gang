@@ -54,3 +54,19 @@ exports.votePoll = async (req, res) => {
     res.json({ poll })
   } catch (err) { res.status(500).json({ message: err.message }) }
 }
+
+exports.deletePoll = async (req, res) => {
+  try {
+    const poll = await Poll.findById(req.params.id)
+    if (!poll) return res.status(404).json({ message: 'Poll not found' })
+
+    if (poll.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to delete this poll' })
+    }
+
+    await poll.deleteOne()
+    res.json({ message: 'Poll deleted successfully' })
+  } catch (err) { 
+    res.status(500).json({ message: err.message }) 
+  }
+}

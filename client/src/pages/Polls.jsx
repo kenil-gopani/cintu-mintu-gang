@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { CheckCircle2, Plus } from 'lucide-react'
+import { CheckCircle2, Plus, Trash2 } from 'lucide-react'
 import { pollService } from '../services/services'
 import { useAuth } from '../hooks/useAuth'
 import Modal from '../components/common/Modal'
@@ -37,6 +37,17 @@ export default function Polls() {
       fetchPolls() // Refresh to get updated counts and all votes
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to vote.')
+    }
+  }
+
+  const handleDeletePoll = async (pollId) => {
+    if (!window.confirm('Are you sure you want to delete this poll?')) return;
+    try {
+      await pollService.delete(pollId)
+      toast.success('Poll deleted!')
+      fetchPolls()
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete poll.')
     }
   }
 
@@ -89,7 +100,16 @@ export default function Polls() {
               <motion.div key={poll._id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="card p-6 flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start mb-4">
-                    <p className="font-extrabold text-lg leading-snug">{poll.question}</p>
+                    <p className="font-extrabold text-lg leading-snug pr-4">{poll.question}</p>
+                    {(user._id === poll.createdBy?._id || user.role === 'admin') && (
+                      <button 
+                        onClick={() => handleDeletePoll(poll._id)}
+                        className="text-gray-400 hover:text-red-500 transition-colors p-1"
+                        title="Delete Poll"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    )}
                   </div>
                   
                   {hasVoted ? (
