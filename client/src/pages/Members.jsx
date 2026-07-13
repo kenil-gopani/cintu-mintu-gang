@@ -19,6 +19,13 @@ const COVER_GRADIENTS = [
   'linear-gradient(135deg, #fff8e1, #ffecb3)',
 ]
 
+const EXCLUDED_NAMES = [
+  'nani', 'baa', 'bharat', 'bharat sheta', 'bipin', 'bipin gopani', 
+  'chetan', 'chetan sutariya', 'nana', 'dada', 'jagruti', 'jagruti sheta', 
+  'jayshree', 'jayshree sutariya', 'minaxi', 'minaxi gopani', 
+  'rajesh', 'rajesh miyani', 'shital', 'shital miyani'
+]
+
 export default function Members() {
   const [members, setMembers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -32,18 +39,24 @@ export default function Members() {
       .finally(() => setLoading(false))
   }, [])
 
-  const filtered = members.filter(m =>
-    m.name.toLowerCase().includes(query.toLowerCase()) ||
-    (m.nickname || '').toLowerCase().includes(query.toLowerCase())
-  )
+  const filtered = members.filter(m => {
+    const nameLower = (m.name || '').toLowerCase()
+    const nicknameLower = (m.nickname || '').toLowerCase()
+    
+    if (EXCLUDED_NAMES.includes(nameLower) || EXCLUDED_NAMES.includes(nicknameLower)) {
+      return false
+    }
+
+    return nameLower.includes(query.toLowerCase()) || nicknameLower.includes(query.toLowerCase())
+  })
 
   return (
     <div className="page-container">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-light-text dark:text-dark-text">👨‍👩‍👧‍👦 Family Members</h1>
+        <h1 className="text-2xl font-bold text-light-text dark:text-dark-text">Members</h1>
         <p className="text-sm text-light-muted dark:text-dark-muted mt-1">
-          {members.length} members in the gang
+          {filtered.length} members in the gang
         </p>
       </div>
 
