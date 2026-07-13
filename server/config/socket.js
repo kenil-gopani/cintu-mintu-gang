@@ -42,12 +42,17 @@ function init(server) {
     }
   })
 
-  // Track online users: Map<userId, socketId>
+  // Track online users: Map<userId, Set<socketId>>
   const onlineMap = new Map()
 
   io.on('connection', (socket) => {
     const userId = socket.user._id.toString()
-    onlineMap.set(userId, socket.id)
+    
+    if (!onlineMap.has(userId)) {
+      onlineMap.set(userId, new Set())
+    }
+    onlineMap.get(userId).add(socket.id)
+    
     console.log(`🟢 ${socket.user.name} connected`)
 
     // Broadcast updated online list
@@ -93,9 +98,15 @@ function init(server) {
 
     // === Disconnect ===
     socket.on('disconnect', () => {
-      onlineMap.delete(userId)
+      const userSockets = onlineMap.get(userId)
+      if (userSockets) {
+        userSockets.delete(socket.id)
+        if (userSockets.size === 0) {
+          onlineMap.delete(userId)
+          User.findByIdAndUpdate(userId, { lastSeen: new Date() }).exec()
+        }
+      }
       broadcastOnline()
-      User.findByIdAndUpdate(userId, { lastSeen: new Date() }).exec()
       console.log(`🔴 ${socket.user.name} disconnected`)
     })
   })
