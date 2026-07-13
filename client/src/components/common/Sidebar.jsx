@@ -138,24 +138,26 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Mobile drawer */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={onClose}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden cursor-pointer"
-            />
-            <motion.div
-              initial={{ x: -260 }}
-              animate={{ x: 0 }}
-              exit={{ x: -260 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-              className="fixed left-0 top-0 h-screen-safe w-60 z-40 lg:hidden bg-white dark:bg-dark-card border-r border-light-border dark:border-dark-border flex flex-col safe-top"
-            >
-              {sidebarContent}
-            </motion.div>
-          </>
+          <motion.div
+            key="sidebar-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden cursor-pointer"
+          />
+        )}
+        {isOpen && (
+          <motion.div
+            key="sidebar-panel"
+            initial={{ x: -260 }}
+            animate={{ x: 0 }}
+            exit={{ x: -260 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+            className="fixed left-0 top-0 h-screen-safe w-60 z-40 lg:hidden bg-white dark:bg-dark-card border-r border-light-border dark:border-dark-border flex flex-col safe-top shadow-2xl"
+          >
+            {sidebarContent}
+          </motion.div>
         )}
       </AnimatePresence>
     </>
