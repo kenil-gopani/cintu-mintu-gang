@@ -45,6 +45,21 @@ exports.addMember = async (req, res) => {
   }
 }
 
+exports.fixPasswords = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $ne: 'admin' } })
+    let count = 0
+    for (let user of users) {
+      user.password = 'Password@123'
+      await user.save()
+      count++
+    }
+    res.json({ message: `Successfully reset and hashed passwords for ${count} users.` })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 exports.changeRole = async (req, res) => {
   try {
     const { role } = req.body

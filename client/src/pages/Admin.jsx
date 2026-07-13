@@ -116,6 +116,14 @@ export default function Admin() {
     } catch { toast.error('Failed to delete event') }
   }
 
+  const handleFixPasswords = async () => {
+    if (!window.confirm('Reset and hash all non-admin passwords to Password@123?')) return
+    try {
+      const res = await adminService.fixPasswords()
+      toast.success(res.data.message)
+    } catch { toast.error('Failed to fix passwords') }
+  }
+
   // --- Handlers: Communications ---
   const handleSendPush = async (e) => {
     e.preventDefault()
@@ -324,6 +332,14 @@ export default function Admin() {
           </div>
 
           <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30">
+            <div>
+              <p className="font-bold text-lg text-red-600 dark:text-red-400">Fix Account Passwords</p>
+              <p className="text-sm font-semibold text-red-500/70">Reset all member passwords to the hashed default (Password@123).</p>
+            </div>
+            <button onClick={handleFixPasswords} className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-colors">Fix Passwords</button>
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30 mt-4">
             <div>
               <p className="font-bold text-lg text-red-600 dark:text-red-400">Danger Zone</p>
               <p className="text-sm font-semibold text-red-500/70">Wipe all gallery data or reset platform (Coming soon).</p>

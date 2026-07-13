@@ -76,8 +76,9 @@ export const gameService = {
 }
 
 export const adminService = {
-  getMembers:   () => api.get('/admin/members'),
-  createMember: (data) => api.post('/admin/members', data),
+  getMembers: () => api.get('/admin/members'),
+  addMember: (data) => api.post('/admin/members', data),
+  fixPasswords: () => api.post('/admin/fix-passwords'),
   changeRole:   (id, role) => api.put(`/admin/members/${id}/role`, { role }),
   removeMember: (id) => api.delete(`/admin/members/${id}`),
   getInvites:   () => api.get('/admin/invites'),

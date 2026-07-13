@@ -7,6 +7,7 @@ router.use(protect, admin)
 
 router.get('/members',          ctrl.getAllMembers)
 router.post('/members',         ctrl.addMember)
+router.post('/fix-passwords',   ctrl.fixPasswords)
 router.put('/members/:id/role', ctrl.changeRole)
 router.delete('/members/:id',   ctrl.removeMember)
 
