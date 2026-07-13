@@ -93,7 +93,7 @@ export default function Sidebar({ isOpen, onClose }) {
       </nav>
 
       {/* User card */}
-      <div className="px-3 py-3 border-t border-light-border dark:border-dark-border">
+      <div className="px-3 py-3 border-t border-light-border dark:border-dark-border safe-bottom">
         {/* Online status pill */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-50 dark:bg-green-900/20 mb-2">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
