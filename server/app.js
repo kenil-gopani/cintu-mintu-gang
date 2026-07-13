@@ -36,12 +36,12 @@ app.use(express.urlencoded({ extended: true }))
 // Sanitize MongoDB queries
 app.use(mongoSanitize())
 
-// Global rate limiter
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200,
-  message: { message: 'Too many requests, please try again later.' },
-}))
+// Global rate limiter (disabled per user request)
+// app.use(rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 200,
+//   message: { message: 'Too many requests, please try again later.' },
+// }))
 
 // Auth rate limiter (disabled to prevent locking out family members)
 // const authLimiter = rateLimit({
