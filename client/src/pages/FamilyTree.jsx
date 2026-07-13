@@ -268,51 +268,51 @@ export default function FamilyTree() {
         <Background variant="dots" color="#d1d5db" gap={28} size={1.5} className="dark:opacity-20" />
         <Controls position="bottom-right" className="m-4" />
         
-        <Panel position="top-left" className="m-4 max-w-[calc(100vw-32px)]">
-          <div className="glass rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div>
-              <h1 className="text-xl font-extrabold gradient-text">Family Tree</h1>
-              <p className="text-xs font-bold text-gray-500">Pan & Zoom to explore</p>
+        <Panel position="top-left" className="m-4 sm:m-6 max-w-[calc(100vw-32px)]">
+          <div className="glass rounded-[24px] p-3 sm:p-4 shadow-xl border border-light-border dark:border-dark-border flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex-shrink-0 pr-2">
+              <h1 className="text-lg sm:text-xl font-extrabold gradient-text leading-tight">Family Tree</h1>
+              <p className="text-[10px] sm:text-xs font-bold text-gray-500">Pan & Zoom to explore</p>
             </div>
-            <div className="h-8 w-px bg-gray-200 dark:bg-gray-700" />
-            <div className="relative">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="Find member..."
-                className="pl-9 pr-4 py-2 rounded-xl text-sm font-semibold bg-gray-100 dark:bg-black/20 border-transparent focus:border-coral outline-none text-gray-800 dark:text-gray-200 w-48 transition-all focus:w-64"
-              />
-              {search && (
-                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-coral">
-                  <X size={14} />
-                </button>
-              )}
-            </div>
+            <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700" />
             
-            {/* Edit Mode toggle — visible to ALL members */}
-              <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-                <div className="hidden sm:block h-8 w-px bg-gray-200 dark:bg-gray-700" />
-                <button 
-                  onClick={() => setIsEditMode(!isEditMode)} 
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-bold transition-all ${isEditMode ? 'bg-coral text-white shadow-lg shadow-coral/30' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10'}`}
-                >
-                  <Edit size={14} /> {isEditMode ? 'Exit Edit Mode' : '✏️ Edit Tree'}
-                </button>
-                {isEditMode && (
-                  <button onClick={() => setAddModalOpen(true)} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-sm font-bold bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-600 transition-colors">
-                    <Plus size={14} /> Add Member
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <div className="relative flex-1 sm:flex-none">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="Find member..."
+                  className="w-full sm:w-48 pl-9 pr-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/50 dark:bg-black/20 border border-transparent focus:border-primary outline-none text-light-text dark:text-dark-text transition-all focus:sm:w-64 shadow-sm min-h-[40px] placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                />
+                {search && (
+                  <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-coral transition-colors">
+                    <X size={14} />
                   </button>
                 )}
               </div>
+              
+              <button 
+                onClick={() => setIsEditMode(!isEditMode)} 
+                className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold min-h-[40px] transition-all duration-300 ${isEditMode ? 'bg-coral text-white shadow-md shadow-coral/20' : 'bg-white/50 dark:bg-black/20 text-light-text dark:text-dark-text hover:bg-white/80 dark:hover:bg-white/10 shadow-sm border border-transparent'}`}
+              >
+                <Edit size={14} /> {isEditMode ? 'Exit Edit' : 'Edit Tree'}
+              </button>
+              
+              {isEditMode && (
+                <button onClick={() => setAddModalOpen(true)} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold bg-teal-500 text-white shadow-md shadow-teal-500/20 hover:bg-teal-600 min-h-[40px] transition-colors">
+                  <Plus size={14} /> Add
+                </button>
+              )}
+            </div>
           </div>
         </Panel>
 
-        <Panel position="bottom-left" className="m-4">
-          <div className="glass rounded-xl p-3 shadow-lg flex flex-col gap-2 text-xs font-bold text-gray-600 dark:text-gray-300">
-            <div className="flex items-center gap-2"><div className="w-4 h-1 bg-teal-400 rounded-full" /> Parent-Child</div>
-            <div className="flex items-center gap-2"><div className="w-4 h-1 bg-purple-400 border-b-2 border-dashed border-white rounded-full" /> Marriage</div>
+        <Panel position="bottom-left" className="m-4 sm:m-6">
+          <div className="glass rounded-[24px] p-3 sm:p-4 shadow-xl border border-light-border dark:border-dark-border flex flex-col gap-2.5 text-[11px] sm:text-xs font-bold text-light-muted dark:text-dark-muted">
+            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-teal-400 rounded-full shadow-sm" /> Parent-Child</div>
+            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-purple-400 border-b-2 border-dashed border-white/50 rounded-full shadow-sm" /> Marriage</div>
           </div>
         </Panel>
       </ReactFlow>
