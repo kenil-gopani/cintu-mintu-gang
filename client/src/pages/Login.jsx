@@ -1,24 +1,23 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import toast from 'react-hot-toast'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
-  const [showPw, setShowPw] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
-  const navigate = useNavigate()
+  const [showPw, setShowPw]     = useState(false)
+  const [loading, setLoading]   = useState(false)
+  const { login }   = useAuth()
+  const navigate    = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     try {
-      await login(email, password, rememberMe)
+      await login(email, password)
       navigate('/home')
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed. Check your credentials.')
@@ -28,98 +27,101 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-screen bg-dark-bg flex items-center justify-center p-4 overflow-hidden">
-      <div className="blob blob-coral w-80 h-80 top-[-60px] right-[-60px] animate-float" />
-      <div className="blob blob-teal w-72 h-72 bottom-[-60px] left-[-40px] animate-float" style={{ animationDelay: '2s' }} />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 40%, #ECFDF5 100%)' }}
+    >
+      {/* Blurred gradient blobs */}
+      <div className="absolute w-96 h-96 rounded-full opacity-40 -top-20 -right-20 blur-3xl"
+        style={{ background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)' }} />
+      <div className="absolute w-80 h-80 rounded-full opacity-30 -bottom-16 -left-16 blur-3xl"
+        style={{ background: 'linear-gradient(135deg, #6ee7b7, #34d399)' }} />
+      <div className="absolute w-48 h-48 rounded-full opacity-20 top-1/3 left-1/4 blur-2xl"
+        style={{ background: '#818cf8' }} />
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-sm"
       >
-        <div className="glass rounded-4xl p-8 text-white">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/60">
+
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="text-5xl mb-3">🏠</div>
-            <h1 className="text-2xl font-extrabold gradient-text">Welcome Back!</h1>
-            <p className="text-dark-muted text-sm mt-1 font-semibold">Sign in to your family space</p>
+            <div className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-4 text-2xl shadow-md"
+              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+              🏠
+            </div>
+            <h1 className="text-2xl font-black text-gray-900">Hello Again!</h1>
+            <p className="text-gray-400 text-sm mt-1 font-medium">Welcome back, sign in to continue</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
             {/* Email */}
             <div className="relative">
-              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-muted" />
+              <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Email address"
                 required
-                className="input-field pl-10"
-                style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.15)', color: '#E2E8F0' }}
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400 transition-all"
               />
             </div>
 
             {/* Password */}
             <div className="relative">
-              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-muted" />
+              <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type={showPw ? 'text' : 'password'}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Password"
                 required
-                className="input-field pl-10 pr-11"
-                style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.15)', color: '#E2E8F0' }}
+                className="w-full pl-10 pr-11 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400 transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPw(v => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-dark-muted hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
               >
-                {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between text-sm mt-2">
-              <label className="flex items-center gap-2 cursor-pointer text-dark-muted hover:text-white transition-colors">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-white/20 bg-white/10 text-coral focus:ring-coral focus:ring-offset-dark-bg"
-                />
-                <span className="font-semibold">Remember me</span>
-              </label>
-              <Link to="/forgot-password" className="text-coral hover:underline font-bold">
-                Forgot password?
+            {/* Forgot password */}
+            <div className="text-right">
+              <Link to="/forgot-password" className="text-xs font-semibold text-indigo-500 hover:text-indigo-700">
+                Forgot Password?
               </Link>
             </div>
 
+            {/* Submit */}
             <motion.button
               type="submit"
               disabled={loading}
               whileTap={{ scale: 0.97 }}
-              className="btn-primary w-full flex items-center justify-center gap-2 text-base mt-2"
+              className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 hover:shadow-lg active:scale-95 flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #10B981, #14B8A6)' }}
             >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-              ) : (
-                <><span>Sign In</span><ArrowRight size={18} /></>
-              )}
+              {loading
+                ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                : 'Sign In'
+              }
             </motion.button>
           </form>
 
-          <p className="text-center text-sm text-dark-muted mt-6 font-semibold">
+          {/* Register link */}
+          <p className="text-center text-sm text-gray-400 mt-6 font-medium">
             New member?{' '}
-            <Link to="/register" className="text-coral hover:underline">
-              Join with invite code
+            <Link to="/register" className="text-indigo-500 font-semibold hover:text-indigo-700">
+              Register Now
             </Link>
           </p>
+
           <p className="text-center mt-2">
-            <Link to="/" className="text-xs text-dark-muted hover:text-white">← Back to home</Link>
+            <Link to="/" className="text-xs text-gray-300 hover:text-gray-500 transition-colors">← Back to home</Link>
           </p>
         </div>
       </motion.div>

@@ -1,119 +1,121 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Heart, Lock, Star } from 'lucide-react'
+import { ArrowRight, Image, Calendar, Users, Shield } from 'lucide-react'
 
-const floatingEmojis = ['🏠', '❤️', '🎉', '🌟', '🎂', '📸', '🌈', '🎊', '👨‍👩‍👧‍👦', '💫']
+const features = [
+  { icon: Image,    label: 'Memory Wall',  desc: 'Share photos & videos with the whole family.' },
+  { icon: Calendar, label: 'Events',       desc: 'Plan gatherings and never miss a date.' },
+  { icon: Users,    label: 'Family Tree',  desc: 'Visualise your family connections.' },
+  { icon: Shield,   label: '100% Private', desc: 'Invite-only. Your memories stay yours.' },
+]
 
 export default function Landing() {
-
   return (
-    <div className="relative min-h-screen overflow-hidden bg-dark-bg flex flex-col items-center justify-center">
-      {/* Animated blobs */}
-      <div className="blob blob-coral w-96 h-96 top-[-100px] left-[-100px] animate-float" />
-      <div className="blob blob-teal w-80 h-80 bottom-[-80px] right-[-80px] animate-float" style={{ animationDelay: '2s' }} />
-      <div className="blob blob-purple w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow" />
+    <div className="min-h-screen bg-[#F5F6FA] flex flex-col lg:flex-row overflow-hidden">
 
-      {/* Floating emojis */}
-      {floatingEmojis.map((emoji, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-2xl select-none pointer-events-none"
-          style={{
-            left: `${8 + (i * 9) % 84}%`,
-            top:  `${10 + (i * 13) % 80}%`,
-          }}
-          animate={{
-            y: [0, -20, 0],
-            rotate: [-5, 5, -5],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 4 + i * 0.5,
-            repeat: Infinity,
-            delay: i * 0.3,
-            ease: 'easeInOut',
-          }}
-        >
-          {emoji}
-        </motion.div>
-      ))}
-
-      {/* Main card */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-md mx-4"
+      {/* ── LEFT PANEL ── */}
+      <div className="relative lg:w-1/2 flex items-center justify-center p-10 min-h-[45vh] lg:min-h-screen overflow-hidden"
+        style={{ background: 'linear-gradient(145deg, #6366F1 0%, #8B5CF6 55%, #10B981 100%)' }}
       >
-        <div className="glass rounded-4xl p-10 text-center text-white">
-          {/* Logo */}
-          <motion.div
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-7xl mb-4 inline-block"
-          >
-            🏠
-          </motion.div>
+        {/* soft circle decorations */}
+        <div className="absolute w-80 h-80 rounded-full bg-white/10 -top-20 -left-20" />
+        <div className="absolute w-56 h-56 rounded-full bg-white/10 -bottom-14 right-10" />
+        <div className="absolute w-32 h-32 rounded-full bg-black/10 top-1/2 -right-10" />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-4xl font-black mb-2"
-            style={{
-              background: 'linear-gradient(135deg, #FF6B6B, #FF8E53, #4ECDC4)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+        {/* floating emojis */}
+        {['🏠','❤️','🎉','📸','🌟','🎂','👨‍👩‍👧‍👦','🌈'].map((e, i) => (
+          <motion.span
+            key={i}
+            className="absolute text-3xl select-none pointer-events-none"
+            style={{ left: `${8 + (i * 11) % 78}%`, top: `${12 + (i * 14) % 75}%` }}
+            animate={{ y: [0, -14, 0], opacity: [0.4, 0.85, 0.4] }}
+            transition={{ duration: 4 + i * 0.6, repeat: Infinity, delay: i * 0.4, ease: 'easeInOut' }}
           >
-            Cintu-Mintu Gang
-          </motion.h1>
+            {e}
+          </motion.span>
+        ))}
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35 }}
-            className="text-dark-muted text-sm mb-8 font-semibold"
-          >
-            A private space for our family to laugh, share & celebrate together 💕
-          </motion.p>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-white text-center lg:text-left"
+        >
+          {/* logo badge */}
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
+            <span className="text-lg">🏠</span>
+            <span className="text-sm font-bold tracking-wide">Cintu-Mintu Gang</span>
+          </div>
 
-          {/* Features */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex justify-center gap-6 mb-8"
-          >
-            {[
-              { icon: Heart, label: 'Memories' },
-              { icon: Star,  label: 'Events' },
-              { icon: Lock,  label: 'Private' },
-            ].map(({ icon: Icon, label }) => (
-              <div key={label} className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center">
-                  <Icon size={18} className="text-coral" />
+          <h1 className="text-4xl lg:text-5xl font-black leading-tight mb-4">
+            Your family's<br/>
+            <span className="text-white/80">private space</span>
+          </h1>
+          <p className="text-white/70 text-base font-medium max-w-xs leading-relaxed">
+            Share memories, plan events, and stay close — all in one invite-only space built just for your family.
+          </p>
+
+          {/* feature pills */}
+          <div className="flex flex-wrap gap-2 mt-6 justify-center lg:justify-start">
+            {['📸 Memories', '🎉 Events', '🌳 Family Tree', '🔒 Private'].map(tag => (
+              <span key={tag} className="bg-white/15 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ── RIGHT PANEL ── */}
+      <div className="lg:w-1/2 flex items-center justify-center p-8 lg:p-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="w-full max-w-sm"
+        >
+          <h2 className="text-3xl font-black text-gray-900 mb-2">Welcome to the Gang 👋</h2>
+          <p className="text-gray-500 text-sm mb-8 font-medium">Sign in to your private family space.</p>
+
+          {/* Feature list */}
+          <div className="space-y-4 mb-10">
+            {features.map(({ icon: Icon, label, desc }) => (
+              <div key={label} className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'linear-gradient(135deg, #EEF2FF, #F5F3FF)' }}>
+                  <Icon size={17} className="text-indigo-500" />
                 </div>
-                <span className="text-xs font-bold text-dark-muted">{label}</span>
+                <div>
+                  <p className="font-semibold text-sm text-gray-800">{label}</p>
+                  <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
+                </div>
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
-            className="space-y-3"
-          >
-            <Link to="/login" className="btn-primary w-full flex items-center justify-center gap-2 text-base">
+          <div className="space-y-3">
+            <Link
+              to="/login"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-bold text-white text-sm transition-all hover:opacity-90 hover:shadow-lg active:scale-95"
+              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}
+            >
               Sign In to the Gang
-              <ArrowRight size={18} />
+              <ArrowRight size={17} />
             </Link>
+            <Link
+              to="/register"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-indigo-600 text-sm border-2 border-indigo-100 hover:bg-indigo-50 transition-all active:scale-95"
+            >
+              Join with Invite Code
+            </Link>
+          </div>
 
-          </motion.div>
-        </div>
-      </motion.div>
+          <p className="text-center text-xs text-gray-400 mt-6 font-medium">
+            🔒 Invite-only • Your memories are private
+          </p>
+        </motion.div>
+      </div>
     </div>
   )
 }

@@ -63,7 +63,7 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                     active
-                      ? 'bg-coral/8 text-coral font-semibold border-l-[3px] border-coral pl-[calc(0.75rem-3px)]'
+                      ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-semibold border-l-[3px] border-indigo-500 pl-[calc(0.75rem-3px)]'
                       : 'text-light-muted dark:text-dark-muted hover:bg-light-bg dark:hover:bg-dark-bg hover:text-light-text dark:hover:text-dark-text'
                   }`}
                 >
@@ -80,7 +80,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 onClick={onClose}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                   location.pathname === '/admin'
-                    ? 'bg-coral/8 text-coral font-semibold border-l-[3px] border-coral pl-[calc(0.75rem-3px)]'
+                    ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-semibold border-l-[3px] border-indigo-500 pl-[calc(0.75rem-3px)]'
                     : 'text-light-muted dark:text-dark-muted hover:bg-light-bg dark:hover:bg-dark-bg hover:text-light-text dark:hover:text-dark-text'
                 }`}
               >
