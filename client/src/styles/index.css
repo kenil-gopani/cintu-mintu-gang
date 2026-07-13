@@ -36,6 +36,7 @@
 
   .dark body {
     @apply bg-dark-bg text-dark-text;
+    color-scheme: dark;
   }
 
   /* Prevent zoom on iOS when focusing inputs */
@@ -47,6 +48,12 @@
   button {
     -webkit-appearance: none;
     appearance: none;
+  }
+
+  /* Make date picker calendar icon visible in dark mode */
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(100%);
   }
 }
 
