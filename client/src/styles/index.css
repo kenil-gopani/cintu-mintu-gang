@@ -190,16 +190,20 @@
 
   /* ===== React Flow Overrides ===== */
   .react-flow__controls {
-    @apply shadow-card rounded-2xl overflow-hidden border border-light-border dark:border-dark-border !important;
+    @apply shadow-card rounded-2xl overflow-hidden border border-light-border !important;
   }
   .react-flow__controls-button {
-    @apply bg-white dark:bg-dark-card border-b border-light-border dark:border-dark-border transition-colors flex items-center justify-center !important;
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .react-flow__controls-button:hover {
-    @apply bg-light-bg dark:bg-dark-bg !important;
+    background-color: #F8FAFC !important;
   }
   .react-flow__controls-button svg {
-    @apply fill-light-text dark:fill-dark-text !important;
+    fill: #0F172A !important; /* Always keep icons black/dark slate */
   }
 }
 
