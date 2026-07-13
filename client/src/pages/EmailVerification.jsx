@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Loader from '../components/common/Loader'
 import { Link, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { authService } from '../services/services'
@@ -39,7 +40,7 @@ export default function EmailVerification() {
         <div className="glass rounded-4xl p-8 text-white text-center">
           {status === 'verifying' && (
             <>
-              <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-6" />
+              <Loader scale={0.5} />
               <h1 className="text-2xl font-extrabold mb-2">Verifying Email...</h1>
               <p className="text-dark-muted text-sm font-semibold">Please wait a moment.</p>
             </>

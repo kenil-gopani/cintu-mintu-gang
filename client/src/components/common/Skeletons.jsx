@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Loader from './Loader'
 
 const SkeletonPulse = ({ className }) => (
   <motion.div 
@@ -44,7 +45,7 @@ export const PageSpinner = () => (
   <div className="min-h-[60vh] flex flex-col items-center justify-center">
     <div className="relative w-16 h-16">
       <div className="absolute inset-0 border-4 border-coral/20 rounded-full"></div>
-      <div className="absolute inset-0 border-4 border-coral border-t-transparent rounded-full animate-spin"></div>
+      <div className="absolute inset-0 flex items-center justify-center"><Loader scale={0.5} /></div>
     </div>
     <p className="mt-4 font-bold text-gray-400 animate-pulse">Loading amazing things...</p>
   </div>

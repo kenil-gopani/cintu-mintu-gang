@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Loader from '../components/common/Loader'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, ArrowRight } from 'lucide-react'
@@ -72,7 +73,7 @@ export default function ForgotPassword() {
                   className="btn-primary w-full flex items-center justify-center gap-2 text-base"
                 >
                   {loading ? (
-                    <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                    <Loader scale={0.2} />
                   ) : (
                     <><span>Send Reset Link</span><ArrowRight size={18} /></>
                   )}

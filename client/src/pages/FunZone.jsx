@@ -203,7 +203,7 @@ export default function FunZone() {
             )}
           </div>
           <button onClick={handleCreate} disabled={saving} className="btn-primary w-full">
-            {saving ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin mx-auto" /> : '🗳️ Launch Poll'}
+            {saving ? <Loader scale={0.2} /> : '🗳️ Launch Poll'}
           </button>
         </div>
       </Modal>

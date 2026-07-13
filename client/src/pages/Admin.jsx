@@ -308,7 +308,7 @@ export default function Admin() {
             <textarea required value={pushData.message} onChange={e => setPushData({...pushData, message: e.target.value})} placeholder="Type your broadcast message here..." className="input-field w-full h-32 text-base resize-none bg-gray-50 dark:bg-black/20" />
           </div>
           <button type="submit" disabled={pushing} className="btn-primary w-full h-14 text-lg shadow-xl shadow-coral/30 flex items-center justify-center gap-2">
-            {pushing ? <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"/> : <><Send size={20} /> Send to {analytics.users} Users</>}
+            {pushing ? <Loader scale={0.2} /> : <><Send size={20} /> Send to {analytics.users} Users</>}
           </button>
         </form>
       </div>
@@ -366,7 +366,7 @@ export default function Admin() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-coral border-t-transparent rounded-full animate-spin shadow-lg"/></div>
+        <div className="flex justify-center py-20"><Loader scale={0.5} />
       ) : (
         <div className="flex flex-col md:flex-row gap-8">
           

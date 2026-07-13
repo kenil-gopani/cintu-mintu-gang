@@ -1,6 +1,16 @@
-export default function Loader({ fullscreen = false }) {
+export default function Loader({ fullscreen = false, scale = 1 }) {
+  // If scale is not 1, we should restrict the layout size of the wrapper so it fits in buttons.
+  // The base loader is 100x100 pixels.
+  const wrapperStyle = scale !== 1 ? {
+    width: `${100 * scale}px`,
+    height: `${100 * scale}px`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  } : {}
+
   const content = (
-    <div className="cmg-custom-loader-wrapper">
+    <div className="cmg-custom-loader-wrapper" style={wrapperStyle}>
       <style>{`
         .cmg-custom-loader-wrapper .loader {
           --color-one: #ffbf48;
@@ -9,7 +19,7 @@ export default function Loader({ fullscreen = false }) {
           --color-four: #bf4a1d80;
           --color-five: #ffbf4740;
           --time-animation: 2s;
-          --size: 1;
+          --size: ${scale};
           position: relative;
           border-radius: 50%;
           transform: scale(var(--size));

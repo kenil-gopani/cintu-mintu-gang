@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Loader from '../components/common/Loader'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Eye, EyeOff } from 'lucide-react'
@@ -102,7 +103,7 @@ export default function Login() {
                 className="w-full mt-6 py-3.5 rounded-full font-bold text-white text-base transition-all hover:opacity-90 shadow-lg active:scale-95 flex items-center justify-center bg-[#219673]"
               >
                 {loading
-                  ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                  ? <Loader scale={0.2} />
                   : 'Sign In'
                 }
               </motion.button>

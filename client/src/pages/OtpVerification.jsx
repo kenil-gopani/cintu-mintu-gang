@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Loader from '../components/common/Loader'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { authService } from '../services/services'
@@ -98,7 +99,7 @@ export default function OtpVerification() {
               whileTap={{ scale: 0.97 }}
               className="btn-primary w-full"
             >
-              {loading ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin mx-auto" /> : 'Verify OTP'}
+              {loading ? <Loader scale={0.2} /> : 'Verify OTP'}
             </motion.button>
           </form>
 

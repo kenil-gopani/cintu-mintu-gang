@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Loader from '../components/common/Loader'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Plus, Calendar as CalIcon, MapPin, Users, X, Map, CreditCard, Image as ImageIcon,
@@ -194,7 +195,7 @@ export default function Events() {
 
       {/* Main Content */}
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"/></div>
+        <div className="flex justify-center py-20"><Loader scale={0.3} />
       ) : view === 'calendar' ? (
         renderCalendar()
       ) : filtered.length === 0 ? (
@@ -439,7 +440,7 @@ export default function Events() {
             </select>
           </div>
           <button onClick={handleCreate} disabled={saving} className="btn-primary w-full mt-4">
-            {saving ? <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin mx-auto" /> : '🎉 Create Event'}
+            {saving ? <Loader scale={0.2} /> : '🎉 Create Event'}
           </button>
         </div>
       </Modal>

@@ -239,7 +239,7 @@ export default function FamilyTree() {
     })
   }
 
-  if (loading) return <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin text-coral" size={48} /></div>
+  if (loading) return <div className="h-full flex items-center justify-center"><Loader scale={0.5} /></div>
 
   return (
     <div className="relative w-full h-[calc(100dvh-72px)] bg-gray-50 dark:bg-[#0a0a0f]">

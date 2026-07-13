@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Loader from '../components/common/Loader'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Image as ImageIcon, Video, Upload, Heart, MessageCircle, 
@@ -295,7 +296,7 @@ export default function Gallery() {
 
       {/* Main Content */}
       {loading ? (
-        <div className="flex justify-center py-32"><div className="w-10 h-10 border-4 border-coral border-t-transparent rounded-full animate-spin shadow-lg shadow-coral/20"/></div>
+        <div className="flex justify-center py-32"><Loader scale={0.5} />
       ) : memories.length === 0 && viewMode !== 'albums' ? (
         <div className="text-center py-32 text-gray-400">
           <ImageIcon size={64} className="mx-auto mb-6 opacity-20" />
@@ -353,7 +354,7 @@ export default function Gallery() {
               </motion.div>
             )
           })}
-          {loadingMore && <div className="py-10 flex justify-center w-full col-span-full"><div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"/></div>}
+          {loadingMore && <div className="py-10 flex justify-center w-full col-span-full"><Loader scale={0.3} />}
         </div>
 
       ) : (
@@ -434,7 +435,7 @@ export default function Gallery() {
               </motion.div>
             )
           })}
-          {loadingMore && <div className="py-10 flex justify-center w-full"><div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"/></div>}
+          {loadingMore && <div className="py-10 flex justify-center w-full"><Loader scale={0.3} />}
         </div>
       )}
 
@@ -559,7 +560,7 @@ export default function Gallery() {
                 </div>
 
                 <button type="submit" disabled={uploading} className="btn-primary w-full h-14 text-lg mt-4 shadow-xl shadow-coral/30">
-                  {uploading ? <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"/> : 'Upload Memory'}
+                  {uploading ? <Loader scale={0.2} /> : 'Upload Memory'}
                 </button>
               </form>
             </motion.div>
