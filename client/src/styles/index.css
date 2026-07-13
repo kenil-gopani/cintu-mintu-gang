@@ -67,14 +67,14 @@
 
   /* ===== Cards ===== */
   .card {
-    @apply rounded-2xl shadow-card transition-all duration-200;
+    @apply rounded-3xl shadow-card transition-all duration-300;
     @apply bg-white border border-light-border;
   }
   .dark .card {
     @apply bg-dark-card border-dark-border;
   }
   .card-hover {
-    @apply hover:-translate-y-0.5 hover:shadow-card-hover cursor-pointer;
+    @apply hover:-translate-y-1 hover:shadow-card-hover cursor-pointer;
   }
 
   /* ===== Member Card (cover photo style) ===== */
@@ -109,15 +109,15 @@
 
   /* ===== Buttons ===== */
   .btn-primary {
-    @apply px-5 py-2.5 rounded-lg font-semibold text-white text-sm transition-all duration-200;
-    @apply bg-primary hover:bg-indigo-600 shadow-sm;
+    @apply px-5 py-2.5 rounded-2xl font-semibold text-white text-sm transition-all duration-300;
+    @apply bg-gradient-to-r from-secondary to-primary hover:opacity-90 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-secondary {
-    @apply px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200;
-    @apply border border-primary/20 text-primary bg-primary/5 hover:bg-primary/10;
+    @apply px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300;
+    @apply border border-primary text-primary bg-white dark:bg-dark-card hover:bg-primary/5 active:scale-95 shadow-sm;
   }
   .btn-ghost {
-    @apply px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200;
+    @apply px-4 py-2 rounded-2xl font-semibold text-sm transition-all duration-300;
     @apply text-light-muted dark:text-dark-muted hover:bg-light-border dark:hover:bg-dark-border;
   }
   .btn-icon {
@@ -127,21 +127,21 @@
 
   /* ===== Input ===== */
   .input-field {
-    @apply w-full px-4 py-2.5 rounded-lg outline-none transition-all duration-200 text-sm;
+    @apply w-full px-4 py-2.5 rounded-2xl outline-none transition-all duration-300 text-sm;
     @apply bg-white dark:bg-dark-bg border border-light-border dark:border-dark-border;
     @apply text-light-text dark:text-dark-text placeholder-light-sub dark:placeholder-dark-sub;
-    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary/50 shadow-sm;
+    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm;
   }
 
   /* ===== Badge ===== */
   .badge {
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
-  .badge-coral    { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
-  .badge-teal     { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
-  .badge-gold     { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
-  .badge-lavender { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
-  .badge-green    { @apply badge bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200; }
+  .badge-coral    { @apply badge bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary; }
+  .badge-teal     { @apply badge bg-secondary/10 text-secondary dark:bg-secondary/20 dark:text-secondary; }
+  .badge-gold     { @apply badge bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
+  .badge-lavender { @apply badge bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent; }
+  .badge-green    { @apply badge bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400; }
 
   /* ===== Avatar ===== */
   .avatar {

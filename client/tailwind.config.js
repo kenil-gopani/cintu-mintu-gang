@@ -9,33 +9,33 @@ export default {
         inter:  ['Inter', 'sans-serif'],
       },
       colors: {
-        // Monochrome Theme
-        primary:   '#000000',   // Black
-        secondary: '#4B5563',   // Gray-600
-        accent:    '#111827',   // Gray-900
-        // Legacy colors mapped to grays for monochrome look
-        teal:      '#374151',
-        mint:      '#9CA3AF',
-        lavender:  '#D1D5DB',
-        gold:      '#6B7280',
-        coral:     '#000000',
-        tangerine: '#374151',
-        verified:  '#000000',
+        // Premium SaaS Theme (Stripe/Linear inspired)
+        primary:   '#2563EB',   // Primary Blue
+        secondary: '#3B82F6',   // Secondary Blue
+        accent:    '#60A5FA',   // Accent Blue
+        // Legacy colors mapped to maintain compatibility but match new theme
+        teal:      '#3B82F6',
+        mint:      '#93C5FD',
+        lavender:  '#BFDBFE',
+        gold:      '#F59E0B',
+        coral:     '#2563EB',
+        tangerine: '#3B82F6',
+        verified:  '#22C55E',
         // Light theme
         light: {
-          bg:     '#F5F6FA',
-          card:   '#FFFFFF',
-          border: '#E5E7EB',
-          text:   '#111827',
-          muted:  '#6B7280',
-          sub:    '#9CA3AF',
+          bg:     '#F8FAFC',    // Slate 50
+          card:   '#FFFFFF',    // Surface
+          border: '#E2E8F0',    // Slate 200
+          text:   '#0F172A',    // Slate 900
+          muted:  '#64748B',    // Slate 500
+          sub:    '#94A3B8',    // Slate 400
         },
-        // Dark theme
+        // Dark theme (adapted for SaaS look)
         dark: {
-          bg:     '#0F1117',
-          card:   '#1A1D27',
-          border: '#2D3148',
-          text:   '#F1F5F9',
+          bg:     '#0F172A',
+          card:   '#1E293B',
+          border: '#334155',
+          text:   '#F8FAFC',
           muted:  '#94A3B8',
           sub:    '#64748B',
         },
@@ -51,8 +51,8 @@ export default {
       },
       backdropBlur: { xs: '2px' },
       boxShadow: {
-        'card':          '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        'card-hover':    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card':          '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+        'card-hover':    '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
         'glow-coral':    'none',
         'glow-teal':     'none',
         'glow-green':    'none',
@@ -60,9 +60,9 @@ export default {
         'inset-sm':      'inset 0 1px 2px rgba(0,0,0,0.06)',
       },
       borderRadius: {
-        '2xl': '0.5rem',
-        '3xl': '0.75rem',
-        '4xl': '1rem',
+        '2xl': '16px', // 16px as requested
+        '3xl': '20px', // 20px for cards
+        '4xl': '24px', // 24px as requested
       },
       animation: {
         'float':       'float 6s ease-in-out infinite',
