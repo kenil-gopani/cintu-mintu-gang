@@ -112,13 +112,7 @@ export default function Login() {
             </motion.button>
           </form>
 
-          {/* Register link */}
-          <p className="text-center text-sm text-gray-400 mt-6 font-medium">
-            New member?{' '}
-            <Link to="/register" className="text-indigo-500 font-semibold hover:text-indigo-700">
-              Register Now
-            </Link>
-          </p>
+
 
           <p className="text-center mt-2">
             <Link to="/" className="text-xs text-gray-300 hover:text-gray-500 transition-colors">← Back to home</Link>

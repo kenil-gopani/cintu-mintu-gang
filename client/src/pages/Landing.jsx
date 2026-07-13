@@ -103,12 +103,6 @@ export default function Landing() {
               Sign In to the Gang
               <ArrowRight size={17} />
             </Link>
-            <Link
-              to="/register"
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-indigo-600 text-sm border-2 border-indigo-100 hover:bg-indigo-50 transition-all active:scale-95"
-            >
-              Join with Invite Code
-            </Link>
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6 font-medium">
