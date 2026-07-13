@@ -285,7 +285,7 @@ export default function Chat() {
           </div>
 
           <div className="flex-1 overflow-y-auto sidebar-scroll">
-            {loading ? <div className="p-8 text-center text-gray-400"><Loader scale={0.2} /> : 
+            {loading ? <div className="p-8 text-center text-gray-400"><Loader scale={0.2} /></div> : 
              rooms.length === 0 ? <div className="p-8 text-center text-gray-400 font-bold text-sm">No conversations yet.<br/>Start a new chat!</div> :
              rooms.map(room => {
                const isActive = activeRoom?._id === room._id

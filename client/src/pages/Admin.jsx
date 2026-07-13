@@ -366,7 +366,7 @@ export default function Admin() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><Loader scale={0.5} />
+        <div className="flex justify-center py-20"><Loader scale={0.5} /></div>
       ) : (
         <div className="flex flex-col md:flex-row gap-8">
           

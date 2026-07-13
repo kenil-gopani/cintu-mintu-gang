@@ -296,7 +296,7 @@ export default function Gallery() {
 
       {/* Main Content */}
       {loading ? (
-        <div className="flex justify-center py-32"><Loader scale={0.5} />
+        <div className="flex justify-center py-32"><Loader scale={0.5} /></div>
       ) : memories.length === 0 && viewMode !== 'albums' ? (
         <div className="text-center py-32 text-gray-400">
           <ImageIcon size={64} className="mx-auto mb-6 opacity-20" />
@@ -354,7 +354,7 @@ export default function Gallery() {
               </motion.div>
             )
           })}
-          {loadingMore && <div className="py-10 flex justify-center w-full col-span-full"><Loader scale={0.3} />}
+          {loadingMore && <div className="py-10 flex justify-center w-full col-span-full"><Loader scale={0.3} /></div>}
         </div>
 
       ) : (
@@ -435,7 +435,7 @@ export default function Gallery() {
               </motion.div>
             )
           })}
-          {loadingMore && <div className="py-10 flex justify-center w-full"><Loader scale={0.3} />}
+          {loadingMore && <div className="py-10 flex justify-center w-full"><Loader scale={0.3} /></div>}
         </div>
       )}
 

@@ -195,7 +195,7 @@ export default function Events() {
 
       {/* Main Content */}
       {loading ? (
-        <div className="flex justify-center py-20"><Loader scale={0.3} />
+        <div className="flex justify-center py-20"><Loader scale={0.3} /></div>
       ) : view === 'calendar' ? (
         renderCalendar()
       ) : filtered.length === 0 ? (
