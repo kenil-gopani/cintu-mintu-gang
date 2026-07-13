@@ -7,15 +7,13 @@
   * {
     @apply box-border m-0 p-0;
     scrollbar-width: thin;
-    scrollbar-color: #FF6B6B transparent;
-    /* Prevent iOS tap highlight blue flash */
+    scrollbar-color: #E5E7EB transparent;
     -webkit-tap-highlight-color: transparent;
-    /* Improve touch responsiveness */
     touch-action: manipulation;
   }
-  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar { width: 4px; height: 4px; }
   *::-webkit-scrollbar-track { background: transparent; }
-  *::-webkit-scrollbar-thumb { background: #FF6B6B; border-radius: 9999px; }
+  *::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 9999px; }
 
   html {
     scroll-behavior: smooth;
@@ -23,14 +21,12 @@
   }
 
   body {
-    @apply font-nunito antialiased transition-colors duration-300;
+    font-family: 'Inter', 'Nunito', sans-serif;
+    @apply antialiased transition-colors duration-300;
     @apply bg-light-bg text-light-text;
-    /* iOS momentum scrolling */
     -webkit-overflow-scrolling: touch;
-    /* Use dvh (dynamic viewport height) to account for iOS Safari toolbar */
     min-height: 100vh;
     min-height: 100dvh;
-    /* Prevent elastic overscroll on body */
     overscroll-behavior: none;
   }
 
@@ -39,52 +35,70 @@
     color-scheme: dark;
   }
 
-  /* Prevent zoom on iOS when focusing inputs */
+  /* Prevent zoom on iOS */
   input, select, textarea {
     font-size: 16px !important;
+    font-family: 'Inter', sans-serif;
   }
 
-  /* Fix button appearance on iOS */
   button {
     -webkit-appearance: none;
     appearance: none;
+    font-family: 'Inter', sans-serif;
   }
 
-  /* Make date picker calendar icon visible in dark mode */
+  /* Dark mode date picker icon */
   .dark input[type="date"]::-webkit-calendar-picker-indicator,
   .dark input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1) brightness(100%);
   }
 }
 
-
-/* ===== Glassmorphism ===== */
+/* ===== Components ===== */
 @layer components {
+
+  /* ===== Glass ===== */
   .glass {
     @apply backdrop-blur-xl border border-white/20 shadow-glass;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.6);
   }
-
-  .glass-light {
-    @apply backdrop-blur-xl border border-white/40 shadow-glass;
-    background: rgba(255, 255, 255, 0.65);
-  }
-
   .dark .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(31, 41, 55, 0.7);
     @apply border-white/10;
   }
 
   /* ===== Cards ===== */
   .card {
-    @apply rounded-3xl shadow-card transition-all duration-300;
-    @apply bg-white/80 border border-light-border;
+    @apply rounded-2xl shadow-card transition-all duration-200;
+    @apply bg-white border border-light-border;
   }
   .dark .card {
     @apply bg-dark-card border-dark-border;
   }
   .card-hover {
-    @apply hover:-translate-y-1 hover:shadow-glow-coral cursor-pointer;
+    @apply hover:-translate-y-0.5 hover:shadow-card-hover cursor-pointer;
+  }
+
+  /* ===== Member Card (cover photo style) ===== */
+  .member-card {
+    @apply card card-hover overflow-hidden flex flex-col;
+  }
+  .member-card-cover {
+    @apply w-full object-cover;
+    height: 180px;
+    background: linear-gradient(135deg, #f0f4ff, #fdf2f8);
+  }
+  .member-card-body {
+    @apply px-4 py-3 flex flex-col gap-1;
+  }
+  .member-card-name {
+    @apply flex items-center gap-1.5 font-bold text-base text-light-text dark:text-dark-text;
+  }
+  .dark .member-card-name {
+    @apply text-dark-text;
+  }
+  .verified-tick {
+    @apply inline-flex items-center justify-center w-5 h-5 rounded-full bg-verified text-white shrink-0;
   }
 
   /* ===== Gradient Text ===== */
@@ -99,95 +113,90 @@
 
   /* ===== Buttons ===== */
   .btn-primary {
-    @apply px-6 py-3 rounded-2xl font-bold text-white transition-all duration-300;
-    @apply bg-gradient-warm hover:shadow-glow-coral hover:scale-105 active:scale-95;
+    @apply px-5 py-2.5 rounded-xl font-semibold text-white text-sm transition-all duration-200;
+    @apply bg-gradient-warm hover:opacity-90 hover:shadow-glow-coral active:scale-95;
   }
   .btn-secondary {
-    @apply px-6 py-3 rounded-2xl font-bold transition-all duration-300;
-    @apply border-2 border-coral text-coral hover:bg-coral hover:text-white;
-    @apply hover:shadow-glow-coral hover:scale-105 active:scale-95;
+    @apply px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200;
+    @apply border border-coral/40 text-coral bg-coral/5 hover:bg-coral hover:text-white active:scale-95;
   }
   .btn-ghost {
-    @apply px-4 py-2 rounded-xl font-semibold transition-all duration-200;
-    @apply hover:bg-black/5 dark:hover:bg-white/10 active:scale-95;
+    @apply px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-200;
+    @apply text-light-muted dark:text-dark-muted hover:bg-light-border dark:hover:bg-dark-border active:scale-95;
   }
   .btn-icon {
-    @apply p-2.5 rounded-xl transition-all duration-200;
-    @apply hover:bg-black/5 dark:hover:bg-white/10 active:scale-95;
+    @apply p-2 rounded-xl transition-all duration-200;
+    @apply text-light-muted dark:text-dark-muted hover:bg-light-border dark:hover:bg-dark-border active:scale-95;
   }
 
   /* ===== Input ===== */
   .input-field {
-    @apply w-full px-4 py-3 rounded-2xl outline-none transition-all duration-200;
-    @apply bg-black/5 dark:bg-white/5 border border-light-border dark:border-dark-border;
-    @apply text-light-text dark:text-dark-text placeholder-light-muted dark:placeholder-dark-muted;
-    @apply focus:ring-2 focus:ring-coral/50 focus:border-coral;
+    @apply w-full px-4 py-2.5 rounded-xl outline-none transition-all duration-200 text-sm;
+    @apply bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border;
+    @apply text-light-text dark:text-dark-text placeholder-light-sub dark:placeholder-dark-sub;
+    @apply focus:ring-2 focus:ring-coral/30 focus:border-coral/50;
   }
 
   /* ===== Badge ===== */
   .badge {
-    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold;
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
-  .badge-coral   { @apply badge bg-coral/10 text-coral; }
-  .badge-teal    { @apply badge bg-teal/10 text-teal; }
-  .badge-gold    { @apply badge bg-gold/10 text-yellow-600; }
-  .badge-lavender { @apply badge bg-lavender/10 text-purple-600; }
+  .badge-coral    { @apply badge bg-coral/10 text-coral; }
+  .badge-teal     { @apply badge bg-teal/10 text-teal; }
+  .badge-gold     { @apply badge bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
+  .badge-lavender { @apply badge bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400; }
+  .badge-green    { @apply badge bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400; }
 
   /* ===== Avatar ===== */
   .avatar {
-    @apply rounded-full object-cover ring-2 ring-white/50 dark:ring-dark-border;
+    @apply rounded-full object-cover ring-2 ring-white dark:ring-dark-border;
   }
 
   /* ===== Skeleton ===== */
   .skeleton {
-    @apply rounded-2xl animate-pulse;
-    background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
+    @apply rounded-xl animate-pulse bg-light-border dark:bg-dark-border;
   }
 
   /* ===== Online dot ===== */
   .online-dot {
-    @apply w-3 h-3 rounded-full bg-green-400 border-2 border-white dark:border-dark-bg;
-    box-shadow: 0 0 6px rgba(74,222,128,0.8);
+    @apply rounded-full bg-green-400 border-2 border-white dark:border-dark-card;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
   }
 
   /* ===== Page container ===== */
   .page-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6;
   }
 
   /* ===== Section title ===== */
   .section-title {
-    @apply text-2xl font-extrabold tracking-tight mb-6;
+    @apply text-lg font-bold tracking-tight mb-4 text-light-text dark:text-dark-text;
+  }
+
+  /* ===== Stat Card ===== */
+  .stat-card {
+    @apply card p-5 flex items-center gap-4;
+  }
+  .stat-icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center shrink-0;
+  }
+
+  /* ===== Nav item ===== */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200;
+    @apply text-light-muted dark:text-dark-muted;
+    @apply hover:bg-light-bg dark:hover:bg-dark-bg hover:text-light-text dark:hover:text-dark-text;
+  }
+  .nav-item-active {
+    @apply bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text font-semibold;
+    @apply border-l-[3px] border-coral -ml-px pl-[calc(0.75rem-3px)];
   }
 }
 
 @layer utilities {
-  .bg-gradient-animated {
-    background: linear-gradient(-45deg, #FF6B6B, #6C63FF, #FFD93D, #FF6B6B);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-  }
-
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+  .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+  .animate-slide-up { animation: slideUp 0.4s ease-out; }
 }
-
-/* ===== Floating blobs background ===== */
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  pointer-events: none;
-}
-.blob-coral  { background: #FF6B6B; }
-.blob-teal   { background: #4ECDC4; }
-.blob-purple { background: #C3B1E1; }
 
 /* ===== Masonry gallery ===== */
 .masonry-grid {
@@ -204,16 +213,17 @@
 
 /* ===== Chat bubbles ===== */
 .chat-bubble-mine {
-  @apply bg-gradient-warm text-white rounded-3xl rounded-br-sm px-4 py-3 max-w-xs;
+  @apply bg-gradient-warm text-white rounded-2xl rounded-br-sm px-4 py-2.5 max-w-xs text-sm;
 }
 .chat-bubble-other {
-  @apply glass text-light-text dark:text-dark-text rounded-3xl rounded-bl-sm px-4 py-3 max-w-xs;
+  @apply bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text rounded-2xl rounded-bl-sm px-4 py-2.5 max-w-xs text-sm border border-light-border dark:border-dark-border;
 }
 
 /* ===== Calendar overrides ===== */
 .react-calendar {
-  @apply w-full rounded-3xl border-0 shadow-none font-nunito;
+  @apply w-full rounded-2xl border-0 shadow-none;
   background: transparent !important;
+  font-family: 'Inter', sans-serif !important;
 }
 .react-calendar__tile {
   @apply rounded-xl transition-colors duration-200;
@@ -222,72 +232,57 @@
   @apply bg-gradient-warm text-white font-bold;
 }
 .react-calendar__tile:hover {
-  @apply bg-coral/10;
+  @apply bg-light-border dark:bg-dark-border;
 }
 
-/* ===== Confetti canvas ===== */
-#confetti-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* ===== Sidebar scrollbar ===== */
+/* ===== Sidebar ===== */
 .sidebar-scroll {
   scrollbar-width: none;
 }
 .sidebar-scroll::-webkit-scrollbar { display: none; }
 
-/* ===== Page transitions ===== */
-.page-enter {
-  opacity: 0;
-  transform: translateY(12px);
-}
-.page-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.35s ease;
-}
-
-/* ===== iOS Safe Area Insets (notch / home-indicator) ===== */
+/* ===== iOS Safe Area Insets ===== */
 .safe-top    { padding-top:    env(safe-area-inset-top); }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 .safe-left   { padding-left:   env(safe-area-inset-left); }
 .safe-right  { padding-right:  env(safe-area-inset-right); }
 
-/* ===== Mobile Bottom Navigation ===== */
 .mobile-nav {
   padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
 }
 
-/* ===== h-screen fix for iOS Safari ===== */
 .h-screen-safe {
   height: 100dvh;
 }
 
-/* ===== Scrollable containers on iOS ===== */
 .scroll-ios {
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
 }
 
-/* ===== Chat input area - stay above keyboard on iOS ===== */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .chat-input-bar {
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }
 }
 
-/* ===== Prevent overscroll bounce within scrollable containers ===== */
 .no-overscroll {
   overscroll-behavior: contain;
 }
 
-/* ===== Full-height fix for mobile layout ===== */
 .layout-height {
   height: 100vh;
   height: 100dvh;
 }
 
+/* ===== Blob decorations ===== */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.08;
+  pointer-events: none;
+}
+.blob-coral  { background: #FF6B6B; }
+.blob-teal   { background: #4ECDC4; }
+.blob-purple { background: #C3B1E1; }

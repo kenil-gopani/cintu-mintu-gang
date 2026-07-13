@@ -156,69 +156,70 @@ export default function Home() {
         
         {/* ROW 1 ------------------------------------------------ */}
         
-        {/* Welcome Banner (Span 2) */}
-        <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 rounded-3xl p-8 relative overflow-hidden flex flex-col justify-center min-h-[200px]" style={{ background: 'linear-gradient(135deg, #FF6B6B 0%, #6C63FF 100%)' }}>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-40 h-40 bg-black/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
-          
-          <div className="relative z-10 text-white">
-            <h1 className="text-4xl font-extrabold tracking-tight mb-2">
+        {/* Welcome Banner */}
+        <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 card p-7 flex flex-col justify-center min-h-[160px] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-gradient-warm opacity-10 -translate-y-10 translate-x-10" />
+          <div className="relative z-10">
+            <p className="text-xs font-semibold text-light-sub dark:text-dark-sub uppercase tracking-wider mb-1">
+              {format(new Date(), 'EEEE, MMMM do')}
+            </p>
+            <h1 className="text-2xl font-bold text-light-text dark:text-dark-text">
               {getGreeting()}, {user?.nickname || user?.name?.split(' ')[0]} 👋
             </h1>
-            <p className="text-white/80 font-medium text-lg">
-              {format(new Date(), 'EEEE, MMMM do')} • <span className="font-bold text-white">{onlineUsers.length}</span> family members online right now.
+            <p className="text-sm text-light-muted dark:text-dark-muted mt-1">
+              <span className="font-semibold text-green-500">{onlineUsers.length}</span> family members online right now.
             </p>
           </div>
         </motion.div>
 
         {/* Weather Widget */}
-        <motion.div variants={stagger.child} className="card p-6 flex flex-col justify-between min-h-[200px] bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/20 dark:to-dark-card relative overflow-hidden">
+        <motion.div variants={stagger.child} className="card p-5 flex flex-col justify-between min-h-[160px] relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
-              <p className="font-bold text-gray-500 dark:text-gray-400 text-sm tracking-widest uppercase">Weather</p>
-              <h2 className="text-3xl font-extrabold mt-1">{weather ? `${weather.temp}°C` : '--°C'}</h2>
-              <div className="flex items-center text-sm font-semibold text-gray-600 dark:text-gray-300 mt-2 gap-1">
-                <MapPin size={14} /> {weather ? weather.city : 'Loading...'}
+              <p className="text-xs font-semibold text-light-sub dark:text-dark-sub uppercase tracking-wider">Weather</p>
+              <h2 className="text-3xl font-bold text-light-text dark:text-dark-text mt-1">{weather ? `${weather.temp}°C` : '--°C'}</h2>
+              <div className="flex items-center text-xs font-medium text-light-muted dark:text-dark-muted mt-1.5 gap-1">
+                <MapPin size={12} /> {weather ? weather.city : 'Loading...'}
               </div>
             </div>
-            {weather && getWeatherIcon(weather.code)}
+            {weather && <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl">{getWeatherIcon(weather.code)}</div>}
           </div>
         </motion.div>
 
         {/* Quote of the Day */}
-        <motion.div variants={stagger.child} className="card p-6 flex flex-col justify-between min-h-[200px] bg-gradient-to-br from-yellow-50 to-white dark:from-yellow-900/10 dark:to-dark-card relative">
-          <Quote size={40} className="text-yellow-400/30 absolute top-4 left-4" />
-          <div className="relative z-10 flex-1 flex items-center justify-center text-center mt-4">
-            <p className="font-bold text-lg leading-snug italic text-gray-800 dark:text-gray-200">
-              "{quote}"
+        <motion.div variants={stagger.child} className="card p-5 flex flex-col justify-between min-h-[160px] relative">
+          <Quote size={32} className="text-amber-300/40 absolute top-3 left-3" />
+          <div className="relative z-10 flex-1 flex items-center justify-center text-center mt-2">
+            <p className="font-semibold text-sm leading-relaxed italic text-light-muted dark:text-dark-muted">
+              &ldquo;{quote}&rdquo;
             </p>
           </div>
-          <p className="text-xs text-center font-bold text-yellow-500 uppercase tracking-widest mt-4">Quote of the Day</p>
+          <p className="text-xs text-center font-semibold text-amber-500 uppercase tracking-wider mt-3">Quote of the Day</p>
         </motion.div>
 
 
         {/* ROW 2 ------------------------------------------------ */}
 
-        {/* Today's Birthday or Stats placeholder */}
+        {/* Today's Birthday or Stats */}
         <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1">
           {todayBdays.length > 0 ? (
-            <div className="card p-6 h-full flex flex-col items-center justify-center text-center border-2 border-coral bg-coral/5 relative overflow-hidden">
-              <div className="text-4xl mb-3">🎂</div>
-              <h3 className="font-extrabold text-xl mb-1 text-coral">Happy Birthday!</h3>
-              <p className="font-bold text-sm">{todayBdays.map(b => b.nickname || b.name).join(' & ')}</p>
-              <Link to="/birthday" className="mt-4 text-xs font-bold bg-coral text-white px-4 py-2 rounded-full">Send Wishes 💌</Link>
+            <div className="card p-5 h-full flex flex-col items-center justify-center text-center border-l-4 border-coral">
+              <div className="text-4xl mb-2">🎂</div>
+              <h3 className="font-bold text-lg mb-1 text-coral">Happy Birthday!</h3>
+              <p className="font-semibold text-sm text-light-text dark:text-dark-text">{todayBdays.map(b => b.nickname || b.name).join(' & ')}</p>
+              <Link to="/birthday" className="mt-3 text-xs font-semibold bg-coral text-white px-4 py-1.5 rounded-lg">Send Wishes 💌</Link>
             </div>
           ) : (
-             <div className="card p-6 h-full flex flex-col justify-between bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/10 dark:to-dark-card">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-4">
-                    <Users size={20} />
-                  </div>
-                  <p className="text-sm font-bold text-gray-500 dark:text-gray-400">Total Family</p>
-                  <h3 className="text-4xl font-extrabold mt-1">{stats.totalMembers}</h3>
+            <div className="card p-5 h-full flex flex-col justify-between">
+              <div>
+                <div className="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-3">
+                  <Users size={18} />
                 </div>
-                <Link to="/members" className="text-sm font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight size={14} /></Link>
-             </div>
+                <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Total Family</p>
+                <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">{stats.totalMembers}</h3>
+              </div>
+              <Link to="/members" className="text-xs font-semibold text-coral flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight size={12} /></Link>
+            </div>
           )}
         </motion.div>
 
@@ -269,16 +270,16 @@ export default function Home() {
            )}
         </motion.div>
 
-        {/* Stats 2 */}
-        <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1 card p-6 h-full flex flex-col justify-between bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/10 dark:to-dark-card">
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
-                <Image size={20} />
-              </div>
-              <p className="text-sm font-bold text-gray-500 dark:text-gray-400">Total Memories</p>
-              <h3 className="text-4xl font-extrabold mt-1">{stats.totalMemories}</h3>
+        {/* Stats: Memories */}
+        <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1 card p-5 h-full flex flex-col justify-between">
+          <div>
+            <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-3">
+              <Image size={18} />
             </div>
-            <Link to="/gallery" className="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 hover:gap-2 transition-all">Go to gallery <ArrowRight size={14} /></Link>
+            <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Total Memories</p>
+            <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">{stats.totalMemories}</h3>
+          </div>
+          <Link to="/gallery" className="text-xs font-semibold text-coral flex items-center gap-1 hover:gap-2 transition-all">Gallery <ArrowRight size={12} /></Link>
         </motion.div>
 
 

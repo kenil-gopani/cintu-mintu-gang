@@ -95,9 +95,9 @@ exports.getDashboardStats = async (req, res) => {
 
     // Build Leaderboard (very simple points system based on uploaded items)
     const users = await User.find({ isActive: true }).select('name avatar')
-    const memories = await Memory.find().select('uploader')
-    const events = await Event.find().select('creator')
-    const polls = await Poll.find().select('creator')
+    const memories = await Memory.find().select('uploadedBy')
+    const events = await Event.find().select('createdBy')
+    const polls = await Poll.find().select('createdBy')
 
     const userStats = users.map(u => ({
       _id: u._id,
@@ -107,16 +107,16 @@ exports.getDashboardStats = async (req, res) => {
     }))
 
     memories.forEach(m => {
-      const u = userStats.find(us => us._id.toString() === m.uploader?.toString())
-      if (u) u.points += 5 // 5 pts for memory
+      const u = userStats.find(us => us._id.toString() === m.uploadedBy?.toString())
+      if (u) u.points += 5
     })
     events.forEach(e => {
-      const u = userStats.find(us => us._id.toString() === e.creator?.toString())
-      if (u) u.points += 10 // 10 pts for event
+      const u = userStats.find(us => us._id.toString() === e.createdBy?.toString())
+      if (u) u.points += 10
     })
     polls.forEach(p => {
-      const u = userStats.find(us => us._id.toString() === p.creator?.toString())
-      if (u) u.points += 2 // 2 pts for poll
+      const u = userStats.find(us => us._id.toString() === p.createdBy?.toString())
+      if (u) u.points += 2
     })
 
     const leaderboard = userStats.sort((a, b) => b.points - a.points).slice(0, 5)
@@ -136,41 +136,41 @@ exports.getDashboardStats = async (req, res) => {
 // GET /api/users/activities
 exports.getActivities = async (req, res) => {
   try {
-    const memories = await Memory.find().sort({ createdAt: -1 }).limit(10).populate('uploader', 'name avatar')
-    const events = await Event.find().sort({ createdAt: -1 }).limit(10).populate('creator', 'name avatar')
-    const polls = await Poll.find().sort({ createdAt: -1 }).limit(10).populate('creator', 'name avatar')
+    const memories = await Memory.find().sort({ createdAt: -1 }).limit(10).populate('uploadedBy', 'name avatar nickname')
+    const events   = await Event.find().sort({ createdAt: -1 }).limit(10).populate('createdBy', 'name avatar nickname')
+    const polls    = await Poll.find().sort({ createdAt: -1 }).limit(10).populate('createdBy', 'name avatar nickname')
 
     let activities = []
-    
+
     memories.forEach(m => activities.push({
-      id: m._id,
-      type: 'memory',
+      id:    m._id,
+      type:  'memory',
       title: 'added a new memory',
-      user: m.uploader,
-      date: m.createdAt,
+      user:  m.uploadedBy,
+      date:  m.createdAt,
       extra: m.caption
     }))
 
     events.forEach(e => activities.push({
-      id: e._id,
-      type: 'event',
+      id:    e._id,
+      type:  'event',
       title: 'created a new event',
-      user: e.creator,
-      date: e.createdAt,
+      user:  e.createdBy,
+      date:  e.createdAt,
       extra: e.title
     }))
 
     polls.forEach(p => activities.push({
-      id: p._id,
-      type: 'poll',
+      id:    p._id,
+      type:  'poll',
       title: 'started a new poll',
-      user: p.creator,
-      date: p.createdAt,
+      user:  p.createdBy,
+      date:  p.createdAt,
       extra: p.question
     }))
 
     activities.sort((a, b) => new Date(b.date) - new Date(a.date))
-    
+
     res.json({ activities: activities.slice(0, 15) })
   } catch (err) {
     res.status(500).json({ message: err.message })

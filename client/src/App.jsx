@@ -62,12 +62,12 @@ export default function App() {
                   <Route path="/members"      element={<Members />} />
                   <Route path="/tree"         element={<FamilyTree />} />
                   <Route path="/polls"        element={<Polls />} />
+                  <Route path="/birthday"     element={<Birthdays />} />
                   <Route path="/profile/:id?" element={<Profile />} />
 
                   {/* Accessible by members and admins only */}
                   <Route element={<RoleGuard allowedRoles={['admin', 'member']} />}>
                     <Route path="/chat"      element={<Chat />} />
-                    <Route path="/birthday"  element={<Birthdays />} />
                     <Route path="/games"     element={<Games />} />
                   </Route>
 
