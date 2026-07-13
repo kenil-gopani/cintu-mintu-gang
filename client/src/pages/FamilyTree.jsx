@@ -266,7 +266,7 @@ export default function FamilyTree() {
           </defs>
         </svg>
         <Background variant="dots" color="#d1d5db" gap={28} size={1.5} className="dark:opacity-20" />
-        <Controls position="bottom-right" className="bg-white/90 dark:bg-dark-card/90 border border-gray-100 dark:border-gray-800 shadow-2xl rounded-2xl overflow-hidden backdrop-blur-xl m-4" />
+        <Controls position="bottom-right" className="m-4" />
         
         <Panel position="top-left" className="m-4 max-w-[calc(100vw-32px)]">
           <div className="glass rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-start sm:items-center gap-4">
