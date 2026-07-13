@@ -216,7 +216,7 @@ export default function Home() {
                   <Users size={18} />
                 </div>
                 <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Total Family</p>
-                <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">{stats.totalMembers}</h3>
+                <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">8</h3>
               </div>
               <Link to="/members" className="text-xs font-semibold text-coral flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight size={12} /></Link>
             </div>
