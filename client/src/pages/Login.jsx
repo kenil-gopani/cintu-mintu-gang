@@ -33,10 +33,10 @@ export default function Login() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: radial-gradient(circle at 10% 20%, rgba(255, 178, 196, 0.8) 0%, transparent 40%),
-                      radial-gradient(circle at 90% 10%, rgba(183, 233, 255, 0.8) 0%, transparent 40%),
-                      radial-gradient(circle at 80% 90%, rgba(255, 236, 179, 0.8) 0%, transparent 40%),
-                      radial-gradient(circle at 20% 80%, rgba(255, 192, 203, 0.6) 0%, transparent 40%);
+          background-image: url('/login-bg.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           background-color: #fcebeb; /* Fallback base */
           padding: 2rem;
         }
