@@ -35,8 +35,8 @@ export default function Sidebar({ isOpen, onClose }) {
             <p className="text-[10px] font-semibold text-light-muted dark:text-dark-muted">Gang 🏠</p>
           </div>
         </div>
-        <button onClick={onClose} className="btn-icon lg:hidden">
-          <X size={18} />
+        <button type="button" onClick={onClose} className="p-2 rounded-xl bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text lg:hidden cursor-pointer active:scale-95">
+          <X size={20} />
         </button>
       </div>
 
@@ -47,8 +47,8 @@ export default function Sidebar({ isOpen, onClose }) {
             const active = location.pathname === to
             if (comingSoon) {
               return (
-                <li key={to}>
-                  <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium opacity-40 cursor-not-allowed text-light-muted dark:text-dark-muted select-none">
+                <li key={to} onClick={onClose} className="cursor-pointer">
+                  <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium opacity-40 text-light-muted dark:text-dark-muted select-none">
                     <Icon size={17} />
                     <span className="flex-1">{label}</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-light-border dark:bg-dark-border text-light-muted dark:text-dark-muted px-1.5 py-0.5 rounded-full">Soon</span>
@@ -144,7 +144,7 @@ export default function Sidebar({ isOpen, onClose }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden cursor-pointer"
             />
             <motion.div
               initial={{ x: -260 }}
