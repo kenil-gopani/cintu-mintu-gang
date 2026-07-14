@@ -4,6 +4,7 @@ import { Bell, Calendar, Image as ImageIcon, MessageCircle, BarChart3, Cake, Shi
 import { notificationService } from '../../services/services'
 import { useSocket } from '../../hooks/useSocket'
 import { useNavigate } from 'react-router-dom'
+import Avatar from './Avatar'
 import { formatDistanceToNow } from 'date-fns'
 import { toast } from 'sonner'
 
@@ -158,15 +159,26 @@ export default function NotificationCenter() {
                 <div className="divide-y divide-gray-100 dark:divide-gray-800/50">
                   {notifications.map(notif => {
                     const { icon: Icon, color } = getIcon(notif.type)
-                    return (
-                      <div 
-                        key={notif._id} 
-                        onClick={() => markAsRead(notif._id, notif.link)}
-                        className={`p-4 flex gap-3 cursor-pointer transition-colors ${notif.read ? 'hover:bg-gray-50 dark:hover:bg-white/5 opacity-70' : 'bg-blue-50/50 dark:bg-blue-900/10 hover:bg-blue-50 dark:hover:bg-blue-900/20'}`}
-                      >
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${color} shadow-sm`}>
-                          <Icon size={18} />
-                        </div>
+                      const extractName = (msg) => {
+                        const clean = (msg || '').replace(/^[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, '').trim()
+                        const words = clean.split(' ')
+                        if (words[0] === 'Admin' || words[0] === 'System') return 'Admin'
+                        if (words.length >= 2 && /^[A-Z]/.test(words[1])) return `${words[0]} ${words[1]}`
+                        return words[0] || '?'
+                      }
+
+                      return (
+                        <div 
+                          key={notif._id} 
+                          onClick={() => markAsRead(notif._id, notif.link)}
+                          className={`p-4 flex gap-3 cursor-pointer transition-colors ${notif.read ? 'hover:bg-gray-50 dark:hover:bg-white/5 opacity-70' : 'bg-blue-50/50 dark:bg-blue-900/10 hover:bg-blue-50 dark:hover:bg-blue-900/20'}`}
+                        >
+                          <div className="relative shrink-0">
+                            <Avatar name={extractName(notif.message)} size={40} />
+                            <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center ${color} border-2 border-white dark:border-dark-card`}>
+                              <Icon size={10} />
+                            </div>
+                          </div>
                         <div className="flex-1 min-w-0">
                           <p className={`text-sm ${notif.read ? 'text-gray-600 dark:text-gray-300' : 'text-gray-900 dark:text-white font-bold'}`}>
                             {notif.message}

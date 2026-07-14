@@ -687,7 +687,14 @@ export default function Chat() {
           {/* DMs */}
           <div className="px-3 mt-3">
             <p className="text-[9px] font-black uppercase tracking-wider text-light-muted dark:text-dark-muted px-2 mb-1">Direct Messages</p>
-            {members.filter(m => m._id !== user._id).map(m => {
+            {members.filter(m => m._id !== user._id).sort((a, b) => {
+              const roomA = dmRooms.find(r => r.participants?.some(p => (p._id || p).toString() === a._id.toString()))
+              const roomB = dmRooms.find(r => r.participants?.some(p => (p._id || p).toString() === b._id.toString()))
+              const timeA = roomA?.lastMessage?.createdAt ? new Date(roomA.lastMessage.createdAt).getTime() : (roomA?.updatedAt ? new Date(roomA.updatedAt).getTime() : 0)
+              const timeB = roomB?.lastMessage?.createdAt ? new Date(roomB.lastMessage.createdAt).getTime() : (roomB?.updatedAt ? new Date(roomB.updatedAt).getTime() : 0)
+              if (timeA !== timeB) return timeB - timeA
+              return (a.nickname || a.name).localeCompare(b.nickname || b.name)
+            }).map(m => {
               const dmRoom     = dmRooms.find(r => r.participants?.some(p => (p._id || p).toString() === m._id.toString()))
               const isOnline   = onlineUsers.includes(m._id)
               const isActive   = dmRoom && section === `dm:${dmRoom._id}`
