@@ -284,7 +284,7 @@ exports.aiChat = async (req, res) => {
           'Authorization': `Bearer ${GROQ_KEY}`
         },
         body: JSON.stringify({
-          model: 'llama-3.1-8b-instant',
+          model: 'openai/gpt-oss-20b',
           messages: [
             { role: 'system', content: 'You are a helpful AI assistant for the Cintu-Mintu Gang, a close-knit family group. Be friendly, warm, and helpful.' },
             { role: 'user', content: message }
