@@ -7,6 +7,7 @@ router.use(protect)
 
 // Rooms
 router.get('/rooms',                         ctrl.getRooms)
+router.post('/gang-init',                    ctrl.initGangChat)
 router.post('/room/private/:userId',         ctrl.getOrCreatePrivateRoom)
 router.post('/room/group',                   ctrl.createGroupRoom)
 

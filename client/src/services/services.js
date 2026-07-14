@@ -49,6 +49,7 @@ export const memberService = {
 
 export const chatService = {
   getRooms:               () => api.get('/chat/rooms'),
+  initGangChat:           () => api.post('/chat/gang-init'),
   getOrCreatePrivateRoom: (userId) => api.post(`/chat/room/private/${userId}`),
   createGroupRoom:        (data) => api.post('/chat/room/group', data),
   getMessages:            (roomId) => api.get(`/chat/room/${roomId}/messages`),

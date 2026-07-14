@@ -19,6 +19,45 @@ exports.getRooms = async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }) }
 }
 
+// ── POST /api/chat/gang-init ──────────────────────────────────────
+// Creates the permanent Gang Chat with ALL users if it doesn't exist yet.
+// Safe to call multiple times — idempotent.
+exports.initGangChat = async (req, res) => {
+  try {
+    const GANG_CHAT_NAME = 'Cintu Mintu Gang'
+
+    // Find all active users
+    const allUsers = await User.find({ isActive: true }).select('_id')
+    const allUserIds = allUsers.map(u => u._id.toString())
+
+    // Look for existing gang chat
+    let gangRoom = await ChatRoom.findOne({ isGroup: true, name: GANG_CHAT_NAME })
+      .populate('participants', 'name nickname avatar lastSeen')
+      .populate({ path: 'lastMessage', populate: { path: 'sender', select: 'name nickname avatar' } })
+
+    if (!gangRoom) {
+      // Create it fresh with all users
+      gangRoom = await ChatRoom.create({
+        isGroup:      true,
+        name:         GANG_CHAT_NAME,
+        participants: allUserIds,
+      })
+      await gangRoom.populate('participants', 'name nickname avatar lastSeen')
+    } else {
+      // Ensure any new users are added as participants
+      const existingIds = gangRoom.participants.map(p => (p._id || p).toString())
+      const missing     = allUserIds.filter(id => !existingIds.includes(id))
+      if (missing.length > 0) {
+        gangRoom.participants.push(...missing)
+        await gangRoom.save()
+        await gangRoom.populate('participants', 'name nickname avatar lastSeen')
+      }
+    }
+
+    res.json({ room: gangRoom })
+  } catch (err) { res.status(500).json({ message: err.message }) }
+}
+
 // ── POST /api/chat/room/private/:userId ──────────────────────────
 exports.getOrCreatePrivateRoom = async (req, res) => {
   try {

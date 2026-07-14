@@ -84,17 +84,21 @@ export default function Chat() {
   // Init
   // ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    Promise.all([
-      chatService.getRooms(),
-      memberService.getAll()
-    ]).then(([roomsRes, membersRes]) => {
-      setRooms(roomsRes.data.rooms)
-      setMembers(membersRes.data.users)
-      // Auto-select gang chat
-      const gang = roomsRes.data.rooms.find(r => r.isGroup && r.name === GANG_CHAT_NAME)
-      if (gang) { setActiveRoom(gang); setSection('gang') }
-      setLoading(false)
-    }).catch(() => setLoading(false))
+    // First ensure the permanent Gang Chat exists (idempotent), then load all rooms
+    chatService.initGangChat().catch(() => {}).finally(() => {
+      Promise.all([
+        chatService.getRooms(),
+        memberService.getAll()
+      ]).then(([roomsRes, membersRes]) => {
+        const fetchedRooms = roomsRes.data.rooms
+        setRooms(fetchedRooms)
+        setMembers(membersRes.data.users)
+        // Auto-select gang chat
+        const gang = fetchedRooms.find(r => r.isGroup && r.name === GANG_CHAT_NAME)
+        if (gang) { setActiveRoom(gang); setSection('gang') }
+        setLoading(false)
+      }).catch(() => setLoading(false))
+    })
   }, [])
 
   // ─────────────────────────────────────────────────────────────
