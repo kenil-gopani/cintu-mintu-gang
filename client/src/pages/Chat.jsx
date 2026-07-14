@@ -92,7 +92,20 @@ export default function Chat() {
         ])
 
         const fetchedRooms = roomsRes.data.rooms || []
-        const fetchedMembers = membersRes.data.users || []
+        const allFetchedMembers = membersRes.data.users || []
+        
+        // Only allow these 8 users in the DM list
+        const allowedEmails = [
+          'gopanikenil26@gmail.com',
+          'krish.miyani@cintumintugang.com',
+          'hasti.miyani@cintumintugang.com',
+          'maitri.gopani@cintumintugang.com',
+          'krisha.sutariya@cintumintugang.com',
+          'harshil.sutariya@cintumintugang.com',
+          'het.sheta@cintumintugang.com',
+          'rutvi.sheta@cintumintugang.com'
+        ]
+        const fetchedMembers = allFetchedMembers.filter(m => allowedEmails.includes(m.email))
 
         setRooms(fetchedRooms)
         setMembers(fetchedMembers)
