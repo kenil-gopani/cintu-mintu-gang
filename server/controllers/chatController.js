@@ -263,37 +263,44 @@ exports.aiChat = async (req, res) => {
     const { message } = req.body
     if (!message?.trim()) return res.status(400).json({ message: 'Message required' })
 
-    // Use Gemini API if available, otherwise fallback
-    const GEMINI_KEY = process.env.GEMINI_API_KEY
-    if (!GEMINI_KEY) {
+    // Use Groq API if available, otherwise fallback
+    const GROQ_KEY = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY // fallback in case they put it in the wrong var
+    if (!GROQ_KEY) {
       // Intelligent fallback responses
       const responses = [
         "That's a great question! I'm your family AI assistant. While I'm in limited mode right now, feel free to ask me about family planning, recipes, travel ideas, or anything else!",
         "Interesting! As the Cintu-Mintu Gang AI, I love helping with creative ideas. Could you tell me more about what you're looking for?",
-        "Great question! I'd be happy to help. For the best experience, make sure the GEMINI_API_KEY is configured on the server.",
+        "Great question! I'd be happy to help. For the best experience, make sure the GROQ_API_KEY is configured on the server.",
       ]
       return res.json({ reply: responses[Math.floor(Math.random() * responses.length)] })
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_KEY}`
+        },
         body: JSON.stringify({
-          contents: [{
-            parts: [{ text: `You are a helpful AI assistant for the Cintu-Mintu Gang, a close-knit family group. Be friendly, warm, and helpful. User says: ${message}` }]
-          }]
+          model: 'llama3-8b-8192',
+          messages: [
+            { role: 'system', content: 'You are a helpful AI assistant for the Cintu-Mintu Gang, a close-knit family group. Be friendly, warm, and helpful.' },
+            { role: 'user', content: message }
+          ]
         })
       }
     )
+    
     const data = await response.json()
     if (!response.ok) {
-      console.error('Gemini API Error:', data)
+      console.error('Groq API Error:', data)
       const errorMsg = data.error?.message || JSON.stringify(data)
-      return res.json({ reply: `Google API Error: ${errorMsg}. Please check your GEMINI_API_KEY.` })
+      return res.json({ reply: `Groq API Error: ${errorMsg}. Please check your GROQ_API_KEY.` })
     }
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not process that. Please try again!'
+    
+    const reply = data.choices?.[0]?.message?.content || 'Sorry, I could not process that. Please try again!'
     res.json({ reply })
   } catch (err) {
     res.json({ reply: 'Sorry, the AI is taking a break! Please try again shortly.' })
