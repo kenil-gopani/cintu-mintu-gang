@@ -290,7 +290,8 @@ exports.aiChat = async (req, res) => {
     const data = await response.json()
     if (!response.ok) {
       console.error('Gemini API Error:', data)
-      return res.json({ reply: 'Sorry, I am having trouble connecting to my brain right now! (API Error)' })
+      const errorMsg = data.error?.message || JSON.stringify(data)
+      return res.json({ reply: `Google API Error: ${errorMsg}. Please check your GEMINI_API_KEY.` })
     }
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not process that. Please try again!'
     res.json({ reply })
