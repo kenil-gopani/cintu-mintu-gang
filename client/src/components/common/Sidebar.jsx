@@ -5,7 +5,6 @@ import { useAuth } from '../../hooks/useAuth'
 import Avatar from './Avatar'
 import { useSocket } from '../../hooks/useSocket'
 import { useEffect } from 'react'
-import ThemeSelector from './ThemeSelector'
 
 const navItems = [
   { to: '/home',     icon: Home,          label: 'Home' },
@@ -138,9 +137,6 @@ export default function Sidebar({ isOpen, onClose }) {
           <LogOut size={17} />
           Logout
         </button>
-        <div className="lg:hidden">
-          <ThemeSelector mobile />
-        </div>
       </div>
     </div>
   )

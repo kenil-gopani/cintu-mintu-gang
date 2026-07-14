@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import Loader from '../components/common/Loader'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -461,9 +462,10 @@ export default function Gallery() {
       )}
 
       {/* 🎇 LIGHTBOX / SLIDESHOW MODAL */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center touch-none">
+      {createPortal(
+        <AnimatePresence>
+          {lightboxIndex !== null && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center touch-none">
             
             {/* Top Controls (Safe Area Supported) */}
             <div className="absolute top-0 left-0 w-full p-4 md:p-6 flex justify-between items-start z-[105] bg-gradient-to-b from-black/80 to-transparent pointer-events-none" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)', paddingLeft: 'calc(env(safe-area-inset-left) + 16px)' }}>
@@ -544,12 +546,15 @@ export default function Gallery() {
             )}
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
 
       {/* Upload Modal (Same as before) */}
-      <AnimatePresence>
-        {showUpload && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+      {createPortal(
+        <AnimatePresence>
+          {showUpload && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
@@ -618,7 +623,9 @@ export default function Gallery() {
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
 
     </div>
   )
