@@ -65,7 +65,12 @@ exports.getOrCreatePrivateRoom = async (req, res) => {
     let room = await ChatRoom.findOne({
       isGroup: false,
       participants: { $all: [req.user._id, otherUserId], $size: 2 }
-    }).populate('participants', 'name nickname avatar lastSeen')
+    })
+      .populate('participants', 'name nickname avatar lastSeen')
+      .populate({
+        path: 'lastMessage',
+        populate: { path: 'sender', select: 'name nickname avatar' }
+      })
 
     if (!room) {
       room = await ChatRoom.create({
