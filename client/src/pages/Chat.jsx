@@ -690,8 +690,9 @@ export default function Chat() {
             {members.filter(m => m._id !== user._id).sort((a, b) => {
               const roomA = dmRooms.find(r => r.participants?.some(p => (p._id || p).toString() === a._id.toString()))
               const roomB = dmRooms.find(r => r.participants?.some(p => (p._id || p).toString() === b._id.toString()))
-              const timeA = roomA?.lastMessage?.createdAt ? new Date(roomA.lastMessage.createdAt).getTime() : (roomA?.updatedAt ? new Date(roomA.updatedAt).getTime() : 0)
-              const timeB = roomB?.lastMessage?.createdAt ? new Date(roomB.lastMessage.createdAt).getTime() : (roomB?.updatedAt ? new Date(roomB.updatedAt).getTime() : 0)
+              // Only sort by ACTUAL message time, ignore empty room creation time
+              const timeA = roomA?.lastMessage?.createdAt ? new Date(roomA.lastMessage.createdAt).getTime() : 0
+              const timeB = roomB?.lastMessage?.createdAt ? new Date(roomB.lastMessage.createdAt).getTime() : 0
               if (timeA !== timeB) return timeB - timeA
               return (a.nickname || a.name).localeCompare(b.nickname || b.name)
             }).map(m => {
