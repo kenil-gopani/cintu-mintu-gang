@@ -26,15 +26,12 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  const login = useCallback(async (email, password, rememberMe) => {
-    const res = await api.post('/auth/login', { email, password, rememberMe })
+  const login = useCallback(async (email, password) => {
+    const res = await api.post('/auth/login', { email, password, rememberMe: true })
     const { token, user: userData } = res.data
     
-    if (rememberMe) {
-      localStorage.setItem('cmg-token', token)
-    } else {
-      sessionStorage.setItem('cmg-token', token)
-    }
+    // Always store permanently so they don't get logged out on browser close
+    localStorage.setItem('cmg-token', token)
     
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`
     setUser(userData)
@@ -45,8 +42,8 @@ export function AuthProvider({ children }) {
   const register = useCallback(async (data) => {
     const res = await api.post('/auth/register', data)
     const { token, user: userData } = res.data
-    // Usually login after register is rememberMe true or false depending on UI, but by default false
-    sessionStorage.setItem('cmg-token', token)
+    // Always store permanently
+    localStorage.setItem('cmg-token', token)
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`
     setUser(userData)
     toast.success(`Welcome to the gang, ${userData.nickname || userData.name}! 🏠 Check your email to verify.`)
