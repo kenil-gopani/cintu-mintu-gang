@@ -5,7 +5,7 @@ import Avatar from '../components/common/Avatar'
 import Loader from '../components/common/Loader'
 import { format, isToday, differenceInDays, setYear } from 'date-fns'
 import confetti from 'canvas-confetti'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import { useAuth } from '../hooks/useAuth'
 import { useSocket } from '../hooks/useSocket'
 
@@ -53,7 +53,7 @@ export default function Birthdays() {
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`card p-4 flex items-center gap-4 ${highlight ? 'border-coral/30 shadow-glow-coral' : ''}`}
+        className={`card p-4 flex items-center gap-4 ${highlight ? 'border-primary/30 shadow-glow-coral' : ''}`}
       >
         <Avatar src={member.avatar} name={member.name} size={56} />
         <div className="flex-1">
@@ -61,7 +61,7 @@ export default function Birthdays() {
           <p className="text-sm text-light-muted dark:text-dark-muted font-semibold">
             🎂 {format(new Date(member.birthday), 'MMMM d')}
           </p>
-          <p className={`text-sm font-bold mt-0.5 ${isToday(member.nextBirthday) ? 'text-coral' : 'text-light-muted dark:text-dark-muted'}`}>
+          <p className={`text-sm font-bold mt-0.5 ${isToday(member.nextBirthday) ? 'text-primary' : 'text-light-muted dark:text-dark-muted'}`}>
             {isToday(member.nextBirthday) ? '🎉 Today!' : `in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}`}
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function Birthdays() {
           </button>
         )}
         {!isToday(member.nextBirthday) && daysLeft <= 7 && (
-          <span className="badge badge-gold">Soon!</span>
+          <span className="badge badge-warning">Soon!</span>
         )}
       </motion.div>
     )

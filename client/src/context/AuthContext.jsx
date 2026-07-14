@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
 import api from '../services/api'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export const AuthContext = createContext(null)
 

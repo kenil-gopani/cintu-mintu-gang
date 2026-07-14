@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth'
 import Avatar from './Avatar'
 import { useSocket } from '../../hooks/useSocket'
 import { useEffect } from 'react'
+import ThemeSelector from './ThemeSelector'
 
 const navItems = [
   { to: '/home',     icon: Home,          label: 'Home' },
@@ -40,7 +41,7 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Logo */}
       <div className="flex items-center justify-between px-5 py-5 border-b border-light-border dark:border-dark-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-warm flex items-center justify-center shadow-sm shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shadow-sm shrink-0">
             <span className="text-white text-sm font-black">C</span>
           </div>
           <div>
@@ -74,10 +75,10 @@ export default function Sidebar({ isOpen, onClose }) {
                 <Link
                   to={to}
                   onClick={onClose}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-[14px] text-sm font-medium transition-all duration-150 ${
                     active
-                      ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-semibold border-l-[3px] border-indigo-500 pl-[calc(0.75rem-3px)]'
-                      : 'text-light-muted dark:text-dark-muted hover:bg-light-bg dark:hover:bg-dark-bg hover:text-light-text dark:hover:text-dark-text'
+                      ? 'bg-primary text-white font-semibold shadow-sm'
+                      : 'text-light-muted dark:text-dark-muted hover:bg-primary-light hover:text-primary dark:hover:bg-primary/20 dark:hover:text-white'
                   }`}
                 >
                   <Icon size={17} />
@@ -91,10 +92,10 @@ export default function Sidebar({ isOpen, onClose }) {
               <Link
                 to="/admin"
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-[14px] text-sm font-medium transition-all duration-150 ${
                   location.pathname === '/admin'
-                    ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 font-semibold border-l-[3px] border-indigo-500 pl-[calc(0.75rem-3px)]'
-                    : 'text-light-muted dark:text-dark-muted hover:bg-light-bg dark:hover:bg-dark-bg hover:text-light-text dark:hover:text-dark-text'
+                    ? 'bg-primary text-white font-semibold shadow-sm'
+                    : 'text-light-muted dark:text-dark-muted hover:bg-primary-light hover:text-primary dark:hover:bg-primary/20 dark:hover:text-white'
                 }`}
               >
                 <Shield size={17} />
@@ -110,7 +111,7 @@ export default function Sidebar({ isOpen, onClose }) {
         {/* Online status pill */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-50 dark:bg-green-900/20 mb-2">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-xs font-semibold text-green-700 dark:text-green-400">{onlineUsers.length} online</span>
+          <span className="text-xs font-semibold text-green-700 dark:text-green-400">{onlineUsers.length} Online</span>
         </div>
 
         <Link
@@ -132,11 +133,14 @@ export default function Sidebar({ isOpen, onClose }) {
 
         <button
           onClick={logout}
-          className="mt-1 w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          className="mt-1 w-full flex items-center gap-3 px-3 py-2.5 rounded-[14px] text-sm font-medium text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
         >
           <LogOut size={17} />
           Logout
         </button>
+        <div className="lg:hidden">
+          <ThemeSelector mobile />
+        </div>
       </div>
     </div>
   )

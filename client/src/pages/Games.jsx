@@ -7,7 +7,7 @@ import {
 import { useAuth } from '../hooks/useAuth'
 import { gameService, memberService, galleryService } from '../services/services'
 import Avatar from '../components/common/Avatar'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import confetti from 'canvas-confetti'
 
 // --- GAME COMPONENTS ---
@@ -35,11 +35,11 @@ const TruthOrDare = ({ onScore }) => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 h-full">
-      <Dices size={64} className="text-coral mb-6" />
+      <Dices size={64} className="text-primary mb-6" />
       <h2 className="text-3xl font-extrabold mb-8">Truth or Dare</h2>
       
       {active && (
-        <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="card p-8 mb-8 text-center max-w-md w-full border-2 border-coral">
+        <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="card p-8 mb-8 text-center max-w-md w-full border-2 border-primary">
           <Avatar src={active.user.avatar} name={active.user.name} size={64} className="mx-auto mb-4" />
           <h3 className="text-xl font-bold mb-2">{active.user.nickname || active.user.name}</h3>
           <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold mb-4 ${active.type === 'Truth' ? 'bg-blue-100 text-blue-600' : 'bg-red-100 text-red-600'}`}>{active.type}</span>
@@ -51,7 +51,7 @@ const TruthOrDare = ({ onScore }) => {
         {active ? 'Spin Again' : 'Start Playing'}
       </button>
       
-      {active && <button onClick={() => { onScore(50); setActive(null) }} className="mt-4 text-gray-500 font-bold hover:text-coral transition-colors">Task Completed (+50 pts)</button>}
+      {active && <button onClick={() => { onScore(50); setActive(null) }} className="mt-4 text-gray-500 font-bold hover:text-primary transition-colors">Task Completed (+50 pts)</button>}
     </div>
   )
 }
@@ -87,14 +87,14 @@ const Quiz = ({ onScore }) => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 h-full max-w-2xl mx-auto">
-      <HelpCircle size={48} className="text-purple-500 mb-6" />
+      <HelpCircle size={48} className="text-primary mb-6" />
       <div className="w-full bg-gray-200 h-2 rounded-full mb-8 overflow-hidden">
-        <div className="bg-purple-500 h-full transition-all duration-300" style={{ width: `${(current / questions.length) * 100}%` }} />
+        <div className="bg-primary h-full transition-all duration-300" style={{ width: `${(current / questions.length) * 100}%` }} />
       </div>
       <h3 className="text-2xl font-extrabold mb-8 text-center">{questions[current].q}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         {questions[current].options.map((opt, i) => (
-          <button key={i} onClick={() => handleAnswer(i)} className="p-4 card hover:border-purple-500 hover:shadow-md transition-all font-bold text-lg">{opt}</button>
+          <button key={i} onClick={() => handleAnswer(i)} className="p-4 card hover:border-primary hover:shadow-md transition-all font-bold text-lg">{opt}</button>
         ))}
       </div>
     </div>
@@ -143,7 +143,7 @@ const MemoryGame = ({ onScore }) => {
 
   if (solved.length === cards.length) return (
     <div className="flex flex-col items-center justify-center p-8 h-full text-center">
-      <Trophy size={80} className="text-teal-400 mb-6" />
+      <Trophy size={80} className="text-secondary mb-6" />
       <h2 className="text-3xl font-extrabold mb-2">You matched everyone!</h2>
       <p className="text-xl font-bold text-gray-500 mb-8">Completed in {moves} moves</p>
     </div>
@@ -168,11 +168,11 @@ const MemoryGame = ({ onScore }) => {
               transition={{ duration: 0.6, type: 'spring' }}
             >
               {/* Front (Hidden state) */}
-              <div className="absolute inset-0 backface-hidden bg-gradient-warm rounded-xl shadow-md border-2 border-white/20 flex items-center justify-center">
+              <div className="absolute inset-0 backface-hidden bg-primary rounded-xl shadow-md border-2 border-white/20 flex items-center justify-center">
                 <Grid size={32} className="text-white/50" />
               </div>
               {/* Back (Revealed state) */}
-              <div className="absolute inset-0 backface-hidden bg-white dark:bg-dark-card rounded-xl shadow-lg border-2 border-teal-500 overflow-hidden flex flex-col items-center justify-center p-2" style={{ transform: 'rotateY(180deg)' }}>
+              <div className="absolute inset-0 backface-hidden bg-white dark:bg-dark-card rounded-xl shadow-lg border-2 border-secondary overflow-hidden flex flex-col items-center justify-center p-2" style={{ transform: 'rotateY(180deg)' }}>
                 <Avatar src={card.user.avatar} name={card.user.name} size={48} className="mb-2" />
                 <span className="text-[10px] font-bold text-center truncate w-full">{card.user.nickname || card.user.name}</span>
               </div>
@@ -193,9 +193,9 @@ export default function Games() {
   const [history, setHistory] = useState([])
 
   const gamesList = [
-    { id: 'truth-dare', title: 'Truth or Dare', icon: Dices, color: 'text-coral', bg: 'bg-coral/10' },
-    { id: 'quiz', title: 'Family Quiz', icon: HelpCircle, color: 'text-purple-500', bg: 'bg-purple-500/10' },
-    { id: 'memory', title: 'Memory Match', icon: Grid, color: 'text-teal-500', bg: 'bg-teal-500/10' },
+    { id: 'truth-dare', title: 'Truth or Dare', icon: Dices, color: 'text-primary', bg: 'bg-primary/10' },
+    { id: 'quiz', title: 'Family Quiz', icon: HelpCircle, color: 'text-primary', bg: 'bg-primary/10' },
+    { id: 'memory', title: 'Memory Match', icon: Grid, color: 'text-secondary', bg: 'bg-secondary/10' },
     { id: 'spin', title: 'Spin the Wheel', icon: CircleDashed, color: 'text-yellow-500', bg: 'bg-yellow-500/10' },
     { id: 'puzzle', title: 'Photo Puzzle', icon: ImageIcon, color: 'text-blue-500', bg: 'bg-blue-500/10' },
   ]
@@ -249,7 +249,7 @@ export default function Games() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-gradient-warm rounded-2xl flex items-center justify-center text-white shadow-lg shadow-coral/30">
+          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/30">
             <Gamepad2 size={32} />
           </div>
           <div>
@@ -262,7 +262,7 @@ export default function Games() {
         <div className="card p-4 flex items-center gap-6">
           <div>
             <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Total Score</p>
-            <p className="text-2xl font-extrabold text-coral">{user?.gamePoints || 0} pts</p>
+            <p className="text-2xl font-extrabold text-primary">{user?.gamePoints || 0} pts</p>
           </div>
           <div className="h-10 w-px bg-gray-200 dark:bg-gray-800" />
           <div>
@@ -280,7 +280,7 @@ export default function Games() {
         {activeGame ? (
           /* GAME WINDOW */
           <motion.div key="game" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} className="card min-h-[600px] flex flex-col relative overflow-hidden bg-white/50 dark:bg-black/20 backdrop-blur-3xl">
-            <button onClick={() => setActiveGame(null)} className="absolute top-6 left-6 btn-icon z-10 bg-white dark:bg-dark-card shadow-sm hover:bg-coral hover:text-white transition-colors">
+            <button onClick={() => setActiveGame(null)} className="absolute top-6 left-6 btn-icon z-10 bg-white dark:bg-dark-card shadow-sm hover:bg-primary hover:text-white transition-colors">
               <ChevronLeft size={24} />
             </button>
             {renderActiveGame()}
@@ -291,7 +291,7 @@ export default function Games() {
             
             {/* Game Selection Grid */}
             <div className="lg:col-span-2">
-              <h2 className="text-xl font-extrabold mb-4 flex items-center gap-2"><Gamepad2 className="text-coral" size={20} /> Select a Game</h2>
+              <h2 className="text-xl font-extrabold mb-4 flex items-center gap-2"><Gamepad2 className="text-primary" size={20} /> Select a Game</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {gamesList.map(game => (
                   <div key={game.id} onClick={() => setActiveGame(game.id)} className={`card p-6 cursor-pointer group hover:shadow-xl hover:-translate-y-1 transition-all border-2 border-transparent hover:border-${game.color.split('-')[1]} overflow-hidden relative`}>
@@ -323,7 +323,7 @@ export default function Games() {
                       <div className="flex-1 min-w-0">
                         <p className="font-bold text-sm truncate">{member.nickname || member.name}</p>
                       </div>
-                      <span className="font-black text-coral">{member.gamePoints}</span>
+                      <span className="font-black text-primary">{member.gamePoints}</span>
                     </div>
                   ))}
                 </div>

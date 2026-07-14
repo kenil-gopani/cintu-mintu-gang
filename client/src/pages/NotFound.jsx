@@ -9,8 +9,8 @@ export default function NotFound() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-dark-bg p-4 relative overflow-hidden">
       
       {/* Decorative background blobs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-coral/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
       
       <motion.div 
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
@@ -32,7 +32,7 @@ export default function NotFound() {
           </button>
           <Link 
             to="/home" 
-            className="btn-primary h-14 px-8 flex items-center justify-center gap-2 text-lg shadow-xl shadow-coral/30 hover:-translate-y-1 transition-transform"
+            className="btn-primary h-14 px-8 flex items-center justify-center gap-2 text-lg shadow-xl shadow-primary/30 hover:-translate-y-1 transition-transform"
           >
             <Home size={20} /> Take me Home
           </Link>

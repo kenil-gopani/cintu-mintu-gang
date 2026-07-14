@@ -29,7 +29,7 @@ export class ErrorBoundary extends React.Component {
             </p>
             <button 
               onClick={() => window.location.reload()} 
-              className="btn-primary w-full h-14 flex items-center justify-center gap-2 text-lg shadow-xl shadow-coral/30"
+              className="btn-primary w-full h-14 flex items-center justify-center gap-2 text-lg shadow-xl shadow-primary/30"
             >
               <RefreshCcw size={20} /> Reload Page
             </button>

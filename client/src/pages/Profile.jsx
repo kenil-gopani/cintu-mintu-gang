@@ -7,7 +7,7 @@ import { memberService, galleryService } from '../services/services'
 import Avatar from '../components/common/Avatar'
 import Loader from '../components/common/Loader'
 import { format } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const COVER_GRADIENTS = [
   'linear-gradient(135deg, #fce4ec, #f8bbd0)',
@@ -109,7 +109,7 @@ export default function Profile() {
               <div className="absolute top-3 right-3 flex gap-2">
                 {editing ? (
                   <>
-                    <button onClick={handleSave} disabled={saving} className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-coral rounded-lg text-xs font-semibold shadow hover:shadow-md transition-all">
+                    <button onClick={handleSave} disabled={saving} className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-primary rounded-lg text-xs font-semibold shadow hover:shadow-md transition-all">
                       <Save size={13} /> Save
                     </button>
                     <button onClick={() => { setEditing(false); setForm(profile) }} className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-light-muted rounded-lg text-xs font-semibold shadow hover:shadow-md transition-all">
@@ -141,7 +141,7 @@ export default function Profile() {
                 <>
                   <button
                     onClick={() => avatarRef.current?.click()}
-                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-coral text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                   >
                     <Camera size={12} />
                   </button>
@@ -188,15 +188,15 @@ export default function Profile() {
 
             {/* Badges */}
             <div className="flex gap-2 flex-wrap mb-3">
-              <span className={`badge ${profile.role === 'admin' ? 'badge-coral' : 'badge-teal'}`}>
+              <span className={`badge ${profile.role === 'admin' ? 'badge-primary' : 'badge-secondary'}`}>
                 {profile.role === 'admin' ? '👑 Admin' : '👤 Member'}
               </span>
               {profile.birthday && (
-                <span className="badge badge-gold">
+                <span className="badge badge-warning">
                   🎂 {format(new Date(profile.birthday), 'MMMM d')}
                 </span>
               )}
-              <span className="badge badge-lavender">
+              <span className="badge badge-primary">
                 📅 Joined {format(new Date(profile.joinedAt || Date.now()), 'MMM yyyy')}
               </span>
             </div>
@@ -226,7 +226,7 @@ export default function Profile() {
             <h3 className="section-title">🌟 Fun Facts</h3>
             <div className="flex flex-wrap gap-2 mb-3">
               {(editing ? form.funFacts : profile.funFacts || []).map((fact, i) => (
-                <div key={i} className="badge badge-lavender flex items-center gap-1.5">
+                <div key={i} className="badge badge-primary flex items-center gap-1.5">
                   {fact}
                   {editing && (
                     <button onClick={() => removeFact(i)} className="hover:text-red-500 ml-0.5">
@@ -258,7 +258,7 @@ export default function Profile() {
           <div className="card p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="section-title mb-0">📸 Memories ({photos.length})</h3>
-              <Link to="/gallery" className="text-xs font-semibold text-coral hover:underline">See all</Link>
+              <Link to="/gallery" className="text-xs font-semibold text-primary hover:underline">See all</Link>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {photos.map(p => (

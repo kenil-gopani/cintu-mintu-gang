@@ -24,11 +24,11 @@ const FamilyNode = memo(({ data }) => {
           flex flex-col items-center text-center px-4 pt-5 pb-4 rounded-3xl
           border-2 transition-all duration-300
           ${isSearchMatch
-            ? 'border-coral shadow-[0_0_0_4px_rgba(255,107,107,0.25),0_12px_40px_rgba(255,107,107,0.3)] bg-white dark:bg-gray-900 scale-110'
+            ? 'border-primary shadow-[0_0_0_4px_rgba(255,107,107,0.25),0_12px_40px_rgba(255,107,107,0.3)] bg-white dark:bg-gray-900 scale-110'
             : 'border-white/30 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] bg-white/80 dark:bg-gray-900/80'
           }
           backdrop-blur-2xl
-          group-hover:border-coral/60 group-hover:shadow-[0_12px_40px_rgba(255,107,107,0.2)]
+          group-hover:border-primary/60 group-hover:shadow-[0_12px_40px_rgba(255,107,107,0.2)]
           group-hover:-translate-y-1
         `}
       >
@@ -38,10 +38,10 @@ const FamilyNode = memo(({ data }) => {
             className={`
               p-0.5 rounded-full
               ${isSearchMatch
-                ? 'bg-gradient-to-br from-coral to-orange-400'
+                ? 'bg-gradient-to-br from-primary to-orange-400'
                 : 'bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700'
               }
-              group-hover:bg-gradient-to-br group-hover:from-coral group-hover:to-orange-400
+              group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-orange-400
               transition-all duration-300
             `}
           >

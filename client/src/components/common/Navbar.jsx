@@ -1,6 +1,7 @@
 import { Menu, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
+import ThemeSelector from './ThemeSelector'
 import Avatar from './Avatar'
 import NotificationCenter from './NotificationCenter'
 import { useAuth } from '../../hooks/useAuth'
@@ -28,6 +29,7 @@ export default function Navbar({ onMenuClick }) {
 
       {/* Right */}
       <div className="flex items-center gap-1.5">
+        <ThemeSelector />
         <ThemeToggle />
         <NotificationCenter />
         <Link to={`/profile/${user?._id}`} className="ml-1">

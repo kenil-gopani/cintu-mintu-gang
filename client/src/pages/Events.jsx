@@ -14,7 +14,7 @@ import {
   endOfMonth, startOfWeek, endOfWeek, addDays, subMonths, 
   addMonths, isSameMonth, isSameDay
 } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const EVENT_TYPES = ['birthday', 'reunion', 'festival', 'trip', 'other']
 const RSVP_LABELS = { going: '✅ Going', maybe: '🤔 Maybe', notGoing: '❌ Not Going' }
@@ -122,7 +122,7 @@ export default function Events() {
         
         days.push(
           <div key={day} className={`min-h-[100px] p-2 border border-gray-100 dark:border-gray-800 flex flex-col ${!isSameMonth(day, monthStart) ? 'bg-gray-50/50 dark:bg-black/20 text-gray-400' : 'bg-white dark:bg-dark-card'}`}>
-            <span className={`text-xs font-bold mb-1 ${isSameDay(day, new Date()) ? 'bg-coral text-white w-6 h-6 flex items-center justify-center rounded-full' : ''}`}>{formattedDate}</span>
+            <span className={`text-xs font-bold mb-1 ${isSameDay(day, new Date()) ? 'bg-primary text-white w-6 h-6 flex items-center justify-center rounded-full' : ''}`}>{formattedDate}</span>
             <div className="flex-1 overflow-y-auto space-y-1">
               {dayEvents.map(e => (
                 <div key={e._id} onClick={() => setSelectedEvent(e)} className={`text-[10px] font-bold p-1 rounded bg-${typeColors[e.type]}/10 text-${typeColors[e.type]} truncate cursor-pointer hover:opacity-80`}>
@@ -185,7 +185,7 @@ export default function Events() {
             key={v.id}
             onClick={() => setView(v.id)}
             className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-              view === v.id ? 'bg-white dark:bg-dark-card text-coral shadow' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+              view === v.id ? 'bg-white dark:bg-dark-card text-primary shadow' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
             {v.label}
@@ -216,24 +216,24 @@ export default function Events() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   onClick={() => setSelectedEvent(ev)}
-                  className="card group cursor-pointer hover:border-coral/30 hover:shadow-xl transition-all overflow-hidden flex flex-col"
+                  className="card group cursor-pointer hover:border-primary/30 hover:shadow-xl transition-all overflow-hidden flex flex-col"
                 >
                   <div className={`h-2 bg-${typeColors[ev.type]}`} />
                   <div className="p-5 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-3">
                       <span className={`badge badge-${typeColors[ev.type]} text-xs`}>{typeEmojis[ev.type]} {ev.type}</span>
                       {view === 'upcoming' && (
-                        <span className="text-xs font-black text-coral bg-coral/10 px-2 py-1 rounded-lg">
+                        <span className="text-xs font-black text-primary bg-primary/10 px-2 py-1 rounded-lg">
                           {daysLeft === 0 ? 'TODAY' : `${daysLeft}d left`}
                         </span>
                       )}
                     </div>
-                    <h3 className="text-xl font-extrabold leading-tight mb-2 group-hover:text-coral transition-colors">{ev.title}</h3>
+                    <h3 className="text-xl font-extrabold leading-tight mb-2 group-hover:text-primary transition-colors">{ev.title}</h3>
                     
                     <div className="space-y-2 mt-auto text-sm font-semibold text-gray-500 dark:text-gray-400">
-                      <div className="flex items-center gap-2"><CalIcon size={14} className="text-teal-500" /> {format(new Date(ev.date), 'MMM d, yyyy - h:mm a')}</div>
+                      <div className="flex items-center gap-2"><CalIcon size={14} className="text-secondary" /> {format(new Date(ev.date), 'MMM d, yyyy - h:mm a')}</div>
                       {ev.location && <div className="flex items-center gap-2"><MapPin size={14} className="text-blue-500" /> {ev.location}</div>}
-                      <div className="flex items-center gap-2"><Users size={14} className="text-purple-500" /> {goingCount} going</div>
+                      <div className="flex items-center gap-2"><Users size={14} className="text-primary" /> {goingCount} going</div>
                     </div>
                   </div>
                 </motion.div>
@@ -271,7 +271,7 @@ export default function Events() {
                   { id: 'ledger', icon: Wallet, label: 'Ledger' },
                   { id: 'gallery', icon: ImageIcon, label: 'Gallery' }
                 ].map(t => (
-                  <button key={t.id} onClick={() => setActiveTab(t.id)} className={`flex items-center gap-2 py-4 px-4 font-bold text-sm border-b-2 transition-colors ${activeTab === t.id ? 'border-coral text-coral' : 'border-transparent text-gray-500 hover:text-gray-800 dark:hover:text-gray-300'}`}>
+                  <button key={t.id} onClick={() => setActiveTab(t.id)} className={`flex items-center gap-2 py-4 px-4 font-bold text-sm border-b-2 transition-colors ${activeTab === t.id ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-800 dark:hover:text-gray-300'}`}>
                     <t.icon size={16} /> {t.label}
                   </button>
                 ))}
@@ -310,7 +310,7 @@ export default function Events() {
                           {Object.entries(RSVP_LABELS).map(([status, label]) => {
                             const myRsvp = selectedEvent.rsvp?.find(r => r.user._id === user?._id)?.status
                             return (
-                              <button key={status} onClick={() => handleRsvp(selectedEvent._id, status)} className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all border ${myRsvp === status ? 'bg-gradient-warm text-white border-transparent' : 'bg-white dark:bg-dark-card border-gray-200 dark:border-gray-700 hover:border-coral/50'}`}>
+                              <button key={status} onClick={() => handleRsvp(selectedEvent._id, status)} className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all border ${myRsvp === status ? 'bg-primary text-white border-transparent' : 'bg-white dark:bg-dark-card border-gray-200 dark:border-gray-700 hover:border-primary/50'}`}>
                                 {label}
                               </button>
                             )
@@ -321,13 +321,13 @@ export default function Events() {
 
                     <div>
                       <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center justify-between">
-                        Who's Going? <span className="bg-coral text-white px-2 py-0.5 rounded-full">{selectedEvent.rsvp?.filter(r=>r.status==='going').length || 0}</span>
+                        Who's Going? <span className="bg-primary text-white px-2 py-0.5 rounded-full">{selectedEvent.rsvp?.filter(r=>r.status==='going').length || 0}</span>
                       </h3>
                       <div className="bg-white dark:bg-dark-card p-4 rounded-xl border border-gray-100 dark:border-gray-800 min-h-[200px]">
                         <div className="flex flex-wrap gap-3">
                           {selectedEvent.rsvp?.filter(r => r.status === 'going').map(r => (
                             <div key={r.user._id} className="flex flex-col items-center group cursor-help">
-                              <Avatar src={r.user.avatar} name={r.user.name} size={48} className="border-2 border-transparent group-hover:border-coral transition-colors" />
+                              <Avatar src={r.user.avatar} name={r.user.name} size={48} className="border-2 border-transparent group-hover:border-primary transition-colors" />
                               <span className="text-[10px] font-bold mt-1 max-w-[60px] truncate text-center">{r.user.nickname || r.user.name.split(' ')[0]}</span>
                             </div>
                           ))}
@@ -351,7 +351,7 @@ export default function Events() {
                               <p className="text-xs font-semibold text-gray-500">Paid by {exp.paidBy.nickname || exp.paidBy.name} on {format(new Date(exp.date), 'MMM d')}</p>
                             </div>
                           </div>
-                          <span className="font-extrabold text-lg text-coral">₹{exp.amount}</span>
+                          <span className="font-extrabold text-lg text-primary">₹{exp.amount}</span>
                         </div>
                       ))}
                       {!selectedEvent.expenses?.length && (
@@ -362,7 +362,7 @@ export default function Events() {
                       )}
                     </div>
                     <div>
-                      <div className="bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-6 text-white shadow-lg mb-6">
+                      <div className="bg-gradient-to-br from-secondary to-emerald-600 rounded-2xl p-6 text-white shadow-lg mb-6">
                         <p className="text-sm font-bold opacity-80 uppercase tracking-widest mb-1">Total Cost</p>
                         <h3 className="text-4xl font-extrabold">₹{selectedEvent.expenses?.reduce((sum, e) => sum + e.amount, 0) || 0}</h3>
                       </div>

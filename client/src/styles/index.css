@@ -2,8 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== Base ===== */
 @layer base {
+  :root {
+    /* DEFAULT THEME (Blue) */
+    --color-primary: 37 99 235;        /* #2563EB */
+    --color-primary-hover: 29 78 216;  /* #1D4ED8 */
+    --color-primary-light: 219 234 254;/* #DBEAFE */
+    --color-secondary: 59 130 246;     /* #3B82F6 */
+    --color-accent: 96 165 250;        /* #60A5FA */
+
+    /* Light Mode Basics */
+    --color-light-bg: 248 250 252;     /* #F8FAFC */
+    --color-light-card: 255 255 255;   /* #FFFFFF */
+    --color-light-border: 226 232 240; /* #E2E8F0 */
+    --color-light-text: 15 23 42;      /* #0F172A */
+    --color-light-muted: 100 116 139;  /* #64748B */
+    --color-light-sub: 148 163 184;    /* #94A3B8 */
+
+    /* Dark Mode Basics */
+    --color-dark-bg: 15 23 42;         /* #0F172A */
+    --color-dark-card: 30 41 59;       /* #1E293B */
+    --color-dark-border: 51 65 85;     /* #334155 */
+    --color-dark-text: 248 250 252;    /* #F8FAFC */
+    --color-dark-muted: 203 213 225;   /* #CBD5E1 */
+    --color-dark-sub: 148 163 184;     /* #94A3B8 */
+  }
+
+  [data-theme="purple"] {
+    --color-primary: 124 58 237;       /* #7C3AED */
+    --color-primary-hover: 109 40 217; /* #6D28D9 */
+    --color-primary-light: 237 233 254;/* #EDE9FE */
+    --color-secondary: 139 92 246;     /* #8B5CF6 */
+    --color-accent: 167 139 250;       /* #A78BFA */
+
+    /* Custom Dark Mode for Purple Theme */
+    --color-dark-bg: 17 24 39;         /* #111827 */
+    --color-dark-card: 31 41 55;       /* #1F2937 */
+    --color-dark-border: 55 65 81;     /* #374151 */
+  }
+
+  [data-theme="emerald"] {
+    --color-primary: 16 185 129;       /* #10B981 */
+    --color-primary-hover: 5 150 105;  /* #059669 */
+    --color-primary-light: 209 250 229;/* #D1FAE5 */
+    --color-secondary: 52 211 153;     /* #34D399 */
+    --color-accent: 52 211 153;        /* #34D399 */
+
+    /* Custom Dark Mode for Emerald Theme */
+    --color-dark-bg: 2 6 23;           /* #020617 */
+    --color-dark-card: 15 23 42;       /* #0F172A */
+    --color-dark-border: 51 65 85;     /* #334155 */
+  }
+
+/* ===== Base ===== */
   * {
     @apply box-border m-0 p-0;
     scrollbar-width: thin;
@@ -109,20 +160,20 @@
 
   /* ===== Buttons ===== */
   .btn-primary {
-    @apply px-5 py-2.5 rounded-2xl font-semibold text-white text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
-    @apply bg-gradient-to-r from-secondary to-primary hover:opacity-90 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
+    @apply px-5 py-2.5 rounded-[14px] font-semibold text-white text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
+    @apply bg-primary hover:bg-[#1D4ED8] shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-secondary {
-    @apply px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
-    @apply border border-primary text-primary bg-white dark:bg-dark-card hover:bg-primary/5 active:scale-95 shadow-sm;
+    @apply px-5 py-2.5 rounded-[14px] font-semibold text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
+    @apply border border-primary text-primary bg-white dark:bg-dark-card hover:bg-primary/10 hover:text-[#1D4ED8] active:scale-95 shadow-sm;
   }
   .btn-ghost {
-    @apply px-4 py-2 rounded-2xl font-semibold text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
-    @apply text-light-muted dark:text-dark-muted hover:bg-light-border dark:hover:bg-dark-border;
+    @apply px-4 py-2 rounded-[14px] font-semibold text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
+    @apply text-primary bg-transparent hover:bg-primary/10 hover:text-[#1D4ED8] active:scale-95;
   }
   .btn-icon {
-    @apply p-2 rounded-xl transition-all duration-200;
-    @apply text-light-muted dark:text-dark-muted hover:bg-light-border dark:hover:bg-dark-border active:scale-95;
+    @apply p-2 rounded-[14px] transition-all duration-200;
+    @apply text-light-muted dark:text-dark-muted hover:bg-primary/10 hover:text-primary active:scale-95;
   }
 
   /* ===== Input ===== */
@@ -245,10 +296,10 @@
 
 /* ===== Chat bubbles ===== */
 .chat-bubble-mine {
-  @apply bg-gradient-warm text-white rounded-2xl rounded-br-sm px-4 py-2.5 max-w-xs text-sm;
+  @apply bg-primary text-white rounded-[20px] rounded-br-[4px] px-4 py-2.5 max-w-xs text-sm shadow-sm;
 }
 .chat-bubble-other {
-  @apply bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text rounded-2xl rounded-bl-sm px-4 py-2.5 max-w-xs text-sm border border-light-border dark:border-dark-border;
+  @apply bg-white dark:bg-dark-card text-light-text dark:text-dark-text rounded-[20px] rounded-bl-[4px] px-4 py-2.5 max-w-xs text-sm border border-light-border dark:border-dark-border shadow-sm;
 }
 
 /* ===== Calendar overrides ===== */
@@ -318,3 +369,44 @@
 .blob-coral  { background: #FF6B6B; }
 .blob-teal   { background: #4ECDC4; }
 .blob-purple { background: #C3B1E1; }
+
+/* ===== Sonner Toast Customizations ===== */
+[data-sonner-toaster] {
+  font-family: 'Inter', sans-serif !important;
+  right: 24px !important;
+  bottom: 24px !important;
+}
+
+@media (max-width: 1024px) {
+  [data-sonner-toaster] {
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-sonner-toaster] {
+    right: 16px !important;
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+.cmg-toast {
+  @apply backdrop-blur-xl shadow-2xl;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #111827 !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  border-radius: 16px !important;
+  font-weight: 600 !important;
+}
+
+.dark .cmg-toast {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: #F8FAFC !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+.cmg-toast[data-type="success"] { border-left: 4px solid #4ECDC4 !important; }
+.cmg-toast[data-type="error"] { border-left: 4px solid #FF6B6B !important; }
+.cmg-toast[data-type="info"] { border-left: 4px solid #3B82F6 !important; }
+.cmg-toast[data-type="warning"] { border-left: 4px solid #F59E0B !important; }

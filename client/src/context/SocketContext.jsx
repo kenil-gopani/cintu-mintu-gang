@@ -21,7 +21,7 @@ export function SocketProvider({ children }) {
       return
     }
 
-    const token = localStorage.getItem('cmg-token')
+    const token = localStorage.getItem('cmg-token') || sessionStorage.getItem('cmg-token')
     const serverUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
     socketRef.current = io(serverUrl, {
       auth: { token },

@@ -9,17 +9,16 @@ import { useAuth } from '../hooks/useAuth'
 import { chatService, memberService } from '../services/services'
 import Avatar from '../components/common/Avatar'
 import { format, isSameDay } from 'date-fns'
-import toast from 'react-hot-toast'
-import io from 'socket.io-client'
+import { toast } from 'sonner'
+import { useSocket } from '../hooks/useSocket'
 
 const EMOJIS = ['😀','😂','🥰','😎','😭','🥺','🙏','👍','🔥','❤️','🎉','✨','👀','🤦‍♂️','🤷‍♀️']
 
 export default function Chat() {
   const { user } = useAuth()
+  const { socket, onlineUsers } = useSocket()
   
   // Socket
-  const [socket, setSocket] = useState(null)
-  const [onlineUsers, setOnlineUsers] = useState([])
   const [typingUsers, setTypingUsers] = useState({}) // { roomId: userId }
   
   // Data State
@@ -46,28 +45,10 @@ export default function Chat() {
   const [recordingTime, setRecordingTime] = useState(0)
   const timerRef = useRef(null)
 
-  // Initialize Socket & Data
+  // Initialize Data
   useEffect(() => {
-    const token = localStorage.getItem('cmg-token')
-    const serverUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
-    const s = io(serverUrl, {
-      auth: { token },
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    })
-    setSocket(s)
-    
-    s.on('connect', () => console.log('✅ Chat socket connected'))
-    s.on('connect_error', (e) => console.error('❌ Socket error:', e.message))
-    
     chatService.getRooms().then(r => { setRooms(r.data.rooms); setLoading(false) })
     memberService.getAll().then(r => setMembers(r.data.users))
-
-    s.on('online-users', setOnlineUsers)
-    
-    return () => s.disconnect()
   }, [])
 
   // Handle Socket Events for Active Room
@@ -208,7 +189,7 @@ export default function Chat() {
   }
   
   const getRoomAvatar = (room) => {
-    if (room.isGroup) return <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-md"><Users size={20}/></div>
+    if (room.isGroup) return <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold shadow-md"><Users size={20}/></div>
     const other = room.participants.find(p => p._id !== user._id)
     const isOnline = onlineUsers.includes(other?._id)
     return (
@@ -241,13 +222,13 @@ export default function Chat() {
           <div className={`max-w-[75%] md:max-w-[60%] flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
             {!isMe && activeRoom.isGroup && <span className="text-[10px] font-bold text-gray-500 ml-1 mb-1">{msg.sender.nickname || msg.sender.name}</span>}
             
-            <div className={`relative px-4 py-2.5 rounded-2xl shadow-sm ${isMe ? 'bg-gradient-warm text-white rounded-br-sm' : 'bg-white dark:bg-dark-card rounded-bl-sm'}`}>
+            <div className={`relative px-4 py-2.5 rounded-2xl shadow-sm ${isMe ? 'bg-primary text-white rounded-br-sm' : 'bg-white dark:bg-dark-card rounded-bl-sm'}`}>
               
               {msg.type === 'image' && <img src={msg.mediaUrl} alt="" className="max-w-full rounded-xl mb-2 cursor-pointer hover:opacity-90" onClick={()=>window.open(msg.mediaUrl)} />}
               
               {msg.type === 'audio' && (
                 <div className="flex items-center gap-2 mb-1 w-48">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isMe ? 'bg-white/20' : 'bg-coral/10 text-coral'}`}><Mic size={18}/></div>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isMe ? 'bg-white/20' : 'bg-primary/10 text-primary'}`}><Mic size={18}/></div>
                   <audio src={msg.mediaUrl} controls className={`h-8 w-full ${isMe ? 'invert sepia saturate-0 hue-rotate-180 brightness-200' : ''}`} />
                 </div>
               )}
@@ -274,13 +255,13 @@ export default function Chat() {
         <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-gray-100 dark:border-gray-800 ${activeRoom ? 'hidden md:flex' : 'flex'}`}>
           <div className="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-black/20">
             <h2 className="text-2xl font-extrabold gradient-text">Messages</h2>
-            <button onClick={() => setShowMembers(true)} className="btn-icon bg-coral/10 text-coral hover:bg-coral hover:text-white"><Plus size={20} /></button>
+            <button onClick={() => setShowMembers(true)} className="btn-icon bg-primary/10 text-primary hover:bg-primary hover:text-white"><Plus size={20} /></button>
           </div>
           
           <div className="p-3">
             <div className="relative">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input type="text" placeholder="Search chats..." className="w-full bg-gray-100 dark:bg-white/5 rounded-xl pl-9 pr-4 py-2.5 text-sm font-medium outline-none border border-transparent focus:border-coral/50 transition-colors" />
+              <input type="text" placeholder="Search chats..." className="w-full bg-gray-100 dark:bg-white/5 rounded-xl pl-9 pr-4 py-2.5 text-sm font-medium outline-none border border-transparent focus:border-primary/50 transition-colors" />
             </div>
           </div>
 
@@ -290,7 +271,7 @@ export default function Chat() {
              rooms.map(room => {
                const isActive = activeRoom?._id === room._id
                return (
-                 <div key={room._id} onClick={() => setActiveRoom(room)} className={`flex items-center gap-4 p-3 mx-2 rounded-2xl cursor-pointer transition-all ${isActive ? 'bg-gradient-warm text-white shadow-md' : 'hover:bg-gray-50 dark:hover:bg-white/5'}`}>
+                 <div key={room._id} onClick={() => setActiveRoom(room)} className={`flex items-center gap-4 p-3 mx-2 rounded-2xl cursor-pointer transition-all ${isActive ? 'bg-primary text-white shadow-md' : 'hover:bg-gray-50 dark:hover:bg-white/5'}`}>
                    {getRoomAvatar(room)}
                    <div className="flex-1 min-w-0">
                      <div className="flex justify-between items-center mb-0.5">
@@ -320,7 +301,7 @@ export default function Chat() {
                   <h3 className="font-extrabold text-sm">{getRoomName(activeRoom)}</h3>
                   {!activeRoom.isGroup && (
                     <p className="text-xs font-bold text-gray-500">
-                      {typingUsers[activeRoom._id] ? <span className="text-coral animate-pulse">Typing...</span> : 
+                      {typingUsers[activeRoom._id] ? <span className="text-primary animate-pulse">Typing...</span> : 
                        (onlineUsers.includes(activeRoom.participants.find(p=>p._id!==user._id)?._id) ? <span className="text-green-500">Online</span> : 'Offline')}
                     </p>
                   )}
@@ -379,8 +360,8 @@ export default function Chat() {
                 </div>
               ) : (
                 <form onSubmit={handleSend} className="flex items-center gap-2">
-                  <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="btn-icon text-gray-400 hover:text-coral"><Smile size={22} /></button>
-                  <button type="button" onClick={() => fileInputRef.current?.click()} className="btn-icon text-gray-400 hover:text-coral"><Paperclip size={22} /></button>
+                  <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="btn-icon text-gray-400 hover:text-primary"><Smile size={22} /></button>
+                  <button type="button" onClick={() => fileInputRef.current?.click()} className="btn-icon text-gray-400 hover:text-primary"><Paperclip size={22} /></button>
                   <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={e => setMediaFile(e.target.files[0])} />
                   
                   <input 
@@ -388,13 +369,13 @@ export default function Chat() {
                     value={text} 
                     onChange={handleTyping}
                     placeholder="Type a message..." 
-                    className="flex-1 bg-gray-100 dark:bg-white/5 border-none rounded-full px-5 py-3 text-sm focus:ring-2 focus:ring-coral/20 outline-none transition-shadow"
+                    className="flex-1 bg-gray-100 dark:bg-white/5 border-none rounded-full px-5 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-shadow"
                   />
                   
                   {text.trim() || mediaFile ? (
-                    <button type="submit" className="w-12 h-12 rounded-full bg-coral text-white flex items-center justify-center hover:bg-coral-dark shadow-lg shadow-coral/30 transition-transform active:scale-95"><Send size={20} className="ml-1" /></button>
+                    <button type="submit" className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark shadow-lg shadow-primary/30 transition-transform active:scale-95"><Send size={20} className="ml-1" /></button>
                   ) : (
-                    <button type="button" onClick={startRecording} className="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/10 text-gray-500 flex items-center justify-center hover:bg-coral/10 hover:text-coral transition-colors active:scale-95"><Mic size={22} /></button>
+                    <button type="button" onClick={startRecording} className="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/10 text-gray-500 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors active:scale-95"><Mic size={22} /></button>
                   )}
                 </form>
               )}
@@ -402,7 +383,7 @@ export default function Chat() {
           </div>
         ) : (
           <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-[#F8F9FA] dark:bg-[#0A0A0A] text-gray-400">
-            <div className="w-24 h-24 bg-coral/10 rounded-full flex items-center justify-center text-coral mb-4"><Send size={40} className="ml-2" /></div>
+            <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4"><Send size={40} className="ml-2" /></div>
             <h2 className="text-xl font-extrabold text-gray-800 dark:text-gray-200 mb-2">Cintu-Mintu Messages</h2>
             <p className="text-sm font-semibold">Select a conversation or start a new one to chat.</p>
             <p className="text-[10px] mt-4 opacity-50 font-bold uppercase tracking-widest">End-to-End Family Encryption</p>

@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Avatar from '../components/common/Avatar'
 import { useAuth } from '../hooks/useAuth'
 import Modal from '../components/common/Modal'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const nodeTypes = { family: FamilyNode }
 
@@ -287,7 +287,7 @@ export default function FamilyTree() {
                   className="w-full sm:w-48 pl-9 pr-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold bg-white/50 dark:bg-black/20 border border-transparent focus:border-primary outline-none text-light-text dark:text-dark-text transition-all focus:sm:w-64 shadow-sm min-h-[40px] placeholder:text-gray-400 dark:placeholder:text-gray-500"
                 />
                 {search && (
-                  <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-coral transition-colors">
+                  <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors">
                     <X size={14} />
                   </button>
                 )}
@@ -295,13 +295,13 @@ export default function FamilyTree() {
               
               <button 
                 onClick={() => setIsEditMode(!isEditMode)} 
-                className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold min-h-[40px] transition-all duration-300 ${isEditMode ? 'bg-coral text-white shadow-md shadow-coral/20' : 'bg-white/50 dark:bg-black/20 text-light-text dark:text-dark-text hover:bg-white/80 dark:hover:bg-white/10 shadow-sm border border-transparent'}`}
+                className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold min-h-[40px] transition-all duration-300 ${isEditMode ? 'bg-primary text-white shadow-md shadow-primary/20' : 'bg-white/50 dark:bg-black/20 text-light-text dark:text-dark-text hover:bg-white/80 dark:hover:bg-white/10 shadow-sm border border-transparent'}`}
               >
                 <Edit size={14} /> {isEditMode ? 'Exit Edit' : 'Edit Tree'}
               </button>
               
               {isEditMode && (
-                <button onClick={() => setAddModalOpen(true)} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold bg-teal-500 text-white shadow-md shadow-teal-500/20 hover:bg-teal-600 min-h-[40px] transition-colors">
+                <button onClick={() => setAddModalOpen(true)} className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold bg-secondary text-white shadow-md shadow-secondary/20 hover:bg-secondary min-h-[40px] transition-colors">
                   <Plus size={14} /> Add
                 </button>
               )}
@@ -311,8 +311,8 @@ export default function FamilyTree() {
 
         <Panel position="bottom-left" className="m-4 sm:m-6">
           <div className="glass rounded-[24px] p-3 sm:p-4 shadow-xl border border-light-border dark:border-dark-border flex flex-col gap-2.5 text-[11px] sm:text-xs font-bold text-light-muted dark:text-dark-muted">
-            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-teal-400 rounded-full shadow-sm" /> Parent-Child</div>
-            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-purple-400 border-b-2 border-dashed border-white/50 rounded-full shadow-sm" /> Marriage</div>
+            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-secondary rounded-full shadow-sm" /> Parent-Child</div>
+            <div className="flex items-center gap-2.5"><div className="w-4 h-1.5 bg-primary border-b-2 border-dashed border-white/50 rounded-full shadow-sm" /> Marriage</div>
           </div>
         </Panel>
       </ReactFlow>
@@ -338,7 +338,7 @@ export default function FamilyTree() {
               <div className="flex flex-col items-center mt-6 text-center">
                 <Avatar src={selectedUser.avatar} name={selectedUser.name} size={96} className="border-4 border-white shadow-xl mb-4" />
                 <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">{selectedUser.name}</h2>
-                {selectedUser.nickname && <p className="text-sm font-bold text-coral">"{selectedUser.nickname}"</p>}
+                {selectedUser.nickname && <p className="text-sm font-bold text-primary">"{selectedUser.nickname}"</p>}
                 
                 <div className="mt-6 w-full space-y-4 text-left">
                   {selectedUser.occupation && (
@@ -360,7 +360,7 @@ export default function FamilyTree() {
                     
                     {selectedUser.spouse && usersMap[selectedUser.spouse] && (
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold w-16 text-purple-500">Spouse</span>
+                        <span className="text-xs font-bold w-16 text-primary">Spouse</span>
                         <Avatar src={usersMap[selectedUser.spouse].avatar} name={usersMap[selectedUser.spouse].name} size={20} />
                         <span className="text-sm font-semibold truncate">{usersMap[selectedUser.spouse].name}</span>
                       </div>
@@ -382,7 +382,7 @@ export default function FamilyTree() {
 
                     {selectedUser.children?.length > 0 && (
                       <div className="flex items-start gap-2 pt-1 border-t border-gray-200 dark:border-gray-700">
-                        <span className="text-xs font-bold w-16 text-teal-500 mt-1">Children</span>
+                        <span className="text-xs font-bold w-16 text-secondary mt-1">Children</span>
                         <div className="flex flex-col gap-1">
                           {selectedUser.children.map(cid => usersMap[cid] && (
                             <div key={cid} className="flex items-center gap-2">
@@ -446,7 +446,7 @@ export default function FamilyTree() {
             <div className="max-h-32 overflow-y-auto bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 rounded-xl p-2 space-y-1">
               {allUsers.filter(u => u._id !== editRelationsUser?._id).map(u => (
                 <label key={`p-${u._id}`} className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg cursor-pointer transition-colors">
-                  <input type="checkbox" checked={relationsData.parents.includes(u._id)} onChange={() => toggleSelection('parents', u._id)} className="w-4 h-4 text-coral rounded border-gray-300 focus:ring-coral" />
+                  <input type="checkbox" checked={relationsData.parents.includes(u._id)} onChange={() => toggleSelection('parents', u._id)} className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary" />
                   <span className="text-sm font-semibold">{u.name}</span>
                 </label>
               ))}
@@ -474,7 +474,7 @@ export default function FamilyTree() {
             <div className="max-h-32 overflow-y-auto bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 rounded-xl p-2 space-y-1">
               {allUsers.filter(u => u._id !== editRelationsUser?._id).map(u => (
                 <label key={`c-${u._id}`} className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg cursor-pointer transition-colors">
-                  <input type="checkbox" checked={relationsData.children.includes(u._id)} onChange={() => toggleSelection('children', u._id)} className="w-4 h-4 text-coral rounded border-gray-300 focus:ring-coral" />
+                  <input type="checkbox" checked={relationsData.children.includes(u._id)} onChange={() => toggleSelection('children', u._id)} className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary" />
                   <span className="text-sm font-semibold">{u.name}</span>
                 </label>
               ))}

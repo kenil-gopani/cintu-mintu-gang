@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { User, Mail, Lock, Key, Calendar, Eye, EyeOff, ArrowRight, Camera } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { memberService } from '../services/services'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import Avatar from '../components/common/Avatar'
 
 export default function Register() {

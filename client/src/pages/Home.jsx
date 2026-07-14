@@ -11,7 +11,7 @@ import { memberService, galleryService, eventService, pollService } from '../ser
 import Avatar from '../components/common/Avatar'
 import { format, isToday, differenceInDays } from 'date-fns'
 import confetti from 'canvas-confetti'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import Modal from '../components/common/Modal'
 
 // --- Quotes Data ---
@@ -158,7 +158,7 @@ export default function Home() {
         
         {/* Welcome Banner */}
         <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 card p-7 flex flex-col justify-center min-h-[160px] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-gradient-warm opacity-10 -translate-y-10 translate-x-10" />
+          <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-primary opacity-10 -translate-y-10 translate-x-10" />
           <div className="relative z-10">
             <p className="text-xs font-semibold text-light-sub dark:text-dark-sub uppercase tracking-wider mb-1">
               {format(new Date(), 'EEEE, MMMM do')}
@@ -203,22 +203,22 @@ export default function Home() {
         {/* Today's Birthday or Stats */}
         <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1">
           {todayBdays.length > 0 ? (
-            <div className="card p-5 h-full flex flex-col items-center justify-center text-center border-l-4 border-coral">
+            <div className="card p-5 h-full flex flex-col items-center justify-center text-center border-l-4 border-primary">
               <div className="text-4xl mb-2">🎂</div>
-              <h3 className="font-bold text-lg mb-1 text-coral">Happy Birthday!</h3>
+              <h3 className="font-bold text-lg mb-1 text-primary">Happy Birthday!</h3>
               <p className="font-semibold text-sm text-light-text dark:text-dark-text">{todayBdays.map(b => b.nickname || b.name).join(' & ')}</p>
-              <Link to="/birthday" className="mt-3 text-xs font-semibold bg-coral text-white px-4 py-1.5 rounded-lg">Send Wishes 💌</Link>
+              <Link to="/birthday" className="mt-3 text-xs font-semibold bg-primary text-white px-4 py-1.5 rounded-lg">Send Wishes 💌</Link>
             </div>
           ) : (
             <div className="card p-5 h-full flex flex-col justify-between">
               <div>
-                <div className="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-primary dark:bg-primary/30 flex items-center justify-center text-primary dark:text-primary mb-3">
                   <Users size={18} />
                 </div>
-                <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Total Family</p>
+                <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Gang Member</p>
                 <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">8</h3>
               </div>
-              <Link to="/members" className="text-xs font-semibold text-coral flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight size={12} /></Link>
+              <Link to="/members" className="text-xs font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight size={12} /></Link>
             </div>
           )}
         </motion.div>
@@ -226,8 +226,8 @@ export default function Home() {
         {/* Quick Poll (Span 2) */}
         <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 card p-6">
            <div className="flex justify-between items-start mb-4">
-              <h2 className="font-extrabold text-lg flex items-center gap-2"><CheckCircle2 className="text-teal-500" size={20} /> Quick Poll</h2>
-              <Link to="/polls" className="text-sm font-bold text-coral">More polls</Link>
+              <h2 className="font-extrabold text-lg flex items-center gap-2"><CheckCircle2 className="text-secondary" size={20} /> Quick Poll</h2>
+              <Link to="/polls" className="text-sm font-bold text-primary">More polls</Link>
            </div>
            
            {latestPoll ? (
@@ -241,9 +241,9 @@ export default function Home() {
                       const isVoted = opt.votes.includes(user._id)
                       return (
                         <div key={i} className="relative h-10 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center px-4 z-10 border border-gray-200 dark:border-gray-700">
-                          <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={`absolute left-0 top-0 bottom-0 -z-10 ${isVoted ? 'bg-teal-500/20' : 'bg-gray-300/30 dark:bg-gray-600/30'}`} />
+                          <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={`absolute left-0 top-0 bottom-0 -z-10 ${isVoted ? 'bg-secondary/20' : 'bg-gray-300/30 dark:bg-gray-600/30'}`} />
                           <div className="flex justify-between w-full font-bold text-sm">
-                            <span className={isVoted ? 'text-teal-600 dark:text-teal-400' : ''}>{opt.text} {isVoted && '✓'}</span>
+                            <span className={isVoted ? 'text-secondary dark:text-secondary' : ''}>{opt.text} {isVoted && '✓'}</span>
                             <span>{percent}%</span>
                           </div>
                         </div>
@@ -253,7 +253,7 @@ export default function Home() {
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {latestPoll.options.map((opt, i) => (
-                      <button key={i} onClick={() => handleVote(i)} className="p-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm hover:border-coral hover:text-coral transition-colors">
+                      <button key={i} onClick={() => handleVote(i)} className="p-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm hover:border-primary hover:text-primary transition-colors">
                         {opt.text}
                       </button>
                     ))}
@@ -279,7 +279,7 @@ export default function Home() {
             <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Total Memories</p>
             <h3 className="text-3xl font-bold mt-0.5 text-light-text dark:text-dark-text">{stats.totalMemories}</h3>
           </div>
-          <Link to="/gallery" className="text-xs font-semibold text-coral flex items-center gap-1 hover:gap-2 transition-all">Gallery <ArrowRight size={12} /></Link>
+          <Link to="/gallery" className="text-xs font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all">Gallery <ArrowRight size={12} /></Link>
         </motion.div>
 
 
@@ -289,7 +289,7 @@ export default function Home() {
         <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-3 card p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-extrabold text-lg flex items-center gap-2">📸 Recent Memories</h2>
-            <Link to="/gallery" className="text-sm font-bold text-coral">See all</Link>
+            <Link to="/gallery" className="text-sm font-bold text-primary">See all</Link>
           </div>
           {recentPhotos.length === 0 ? (
             <div className="h-32 flex items-center justify-center text-sm font-semibold text-gray-500">No memories uploaded yet.</div>
@@ -311,7 +311,7 @@ export default function Home() {
         <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1 card p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-extrabold text-lg flex items-center gap-2">🎁 Birthdays</h2>
-              <Link to="/birthday" className="text-sm font-bold text-coral">All</Link>
+              <Link to="/birthday" className="text-sm font-bold text-primary">All</Link>
             </div>
             <div className="space-y-4">
               {birthdays.filter(b => !isToday(new Date(b.nextBirthday))).slice(0, 3).map(b => (
@@ -331,7 +331,7 @@ export default function Home() {
 
         {/* Recent Activities (Span 2) */}
         <motion.div variants={stagger.child} className="md:col-span-2 lg:col-span-2 card p-6">
-            <h2 className="font-extrabold text-lg flex items-center gap-2 mb-6"><Activity className="text-coral" size={20} /> Family Timeline</h2>
+            <h2 className="font-extrabold text-lg flex items-center gap-2 mb-6"><Activity className="text-primary" size={20} /> Family Timeline</h2>
             
             {activities.length === 0 ? (
               <div className="h-32 flex items-center justify-center text-sm font-semibold text-gray-500">No recent activity.</div>
@@ -341,12 +341,12 @@ export default function Home() {
                   <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                     
                     {/* Marker */}
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-dark-bg bg-coral text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow absolute left-0 md:left-1/2 -translate-x-[2px] md:translate-x-0 z-10">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-dark-bg bg-primary text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow absolute left-0 md:left-1/2 -translate-x-[2px] md:translate-x-0 z-10">
                       {act.type === 'memory' ? <Image size={14} /> : act.type === 'event' ? <Calendar size={14} /> : <CheckCircle2 size={14} />}
                     </div>
 
                     {/* Card */}
-                    <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2.5rem)] card p-4 ml-12 md:ml-0 shadow-sm border border-transparent group-hover:border-coral/20 transition-colors">
+                    <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2.5rem)] card p-4 ml-12 md:ml-0 shadow-sm border border-transparent group-hover:border-primary/20 transition-colors">
                       <div className="flex items-center gap-2 mb-1">
                         <Avatar src={act.user?.avatar} name={act.user?.name} size={24} />
                         <p className="font-bold text-sm">{act.user?.nickname || act.user?.name}</p>
@@ -371,7 +371,7 @@ export default function Home() {
                   <Avatar src={u.avatar} name={u.name} size={36} />
                   <div className="flex-1">
                     <p className="font-bold text-sm">{u.name}</p>
-                    <p className="text-xs text-coral font-bold">{u.points} pts</p>
+                    <p className="text-xs text-primary font-bold">{u.points} pts</p>
                   </div>
                 </div>
               )) : (
@@ -384,7 +384,7 @@ export default function Home() {
         <motion.div variants={stagger.child} className="md:col-span-1 lg:col-span-1 card p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-extrabold text-lg flex items-center gap-2">📅 Events</h2>
-              <Link to="/events" className="text-sm font-bold text-coral">All</Link>
+              <Link to="/events" className="text-sm font-bold text-primary">All</Link>
             </div>
             <div className="space-y-4">
               {upcomingEvents.length === 0 ? (
@@ -392,12 +392,12 @@ export default function Home() {
               ) : (
                 upcomingEvents.map(ev => (
                   <Link to="/events" key={ev._id} className="flex gap-3 items-start group">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex flex-col items-center justify-center shrink-0 text-white shadow-md group-hover:scale-105 transition-transform">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex flex-col items-center justify-center shrink-0 text-white shadow-md group-hover:scale-105 transition-transform">
                       <p className="text-[10px] font-bold leading-none uppercase">{format(new Date(ev.date), 'MMM')}</p>
                       <p className="text-lg font-extrabold leading-none mt-0.5">{format(new Date(ev.date), 'd')}</p>
                     </div>
                     <div>
-                      <p className="font-bold text-sm leading-tight group-hover:text-coral transition-colors">{ev.title}</p>
+                      <p className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{ev.title}</p>
                       <p className="text-xs text-gray-500 font-semibold mt-1">in {differenceInDays(new Date(ev.date), new Date())} days</p>
                     </div>
                   </Link>
@@ -438,7 +438,7 @@ export default function Home() {
             {newPoll.options.length < 5 && (
               <button 
                 onClick={() => setNewPoll(p => ({ ...p, options: [...p.options, ''] }))}
-                className="text-coral text-xs font-bold flex items-center gap-1 mt-2"
+                className="text-primary text-xs font-bold flex items-center gap-1 mt-2"
               >
                 <Plus size={14} /> Add Option
               </button>

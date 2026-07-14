@@ -5,7 +5,7 @@ import { notificationService } from '../../services/services'
 import { useSocket } from '../../hooks/useSocket'
 import { useNavigate } from 'react-router-dom'
 import { formatDistanceToNow } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function NotificationCenter() {
   const [notifications, setNotifications] = useState([])
@@ -104,8 +104,8 @@ export default function NotificationCenter() {
     switch (type) {
       case 'birthday': return { icon: Cake, color: 'text-pink-500 bg-pink-100', emoji: '🎂' }
       case 'event': return { icon: Calendar, color: 'text-blue-500 bg-blue-100', emoji: '📅' }
-      case 'memory': return { icon: ImageIcon, color: 'text-purple-500 bg-purple-100', emoji: '📸' }
-      case 'poll': return { icon: BarChart3, color: 'text-teal-500 bg-teal-100', emoji: '📊' }
+      case 'memory': return { icon: ImageIcon, color: 'text-primary bg-primary', emoji: '📸' }
+      case 'poll': return { icon: BarChart3, color: 'text-secondary bg-secondary', emoji: '📊' }
       case 'message': return { icon: MessageCircle, color: 'text-green-500 bg-green-100', emoji: '💬' }
       case 'system': return { icon: ShieldAlert, color: 'text-red-500 bg-red-100', emoji: '🚨' }
       default: return { icon: Bell, color: 'text-gray-500 bg-gray-100', emoji: '🔔' }
@@ -118,9 +118,9 @@ export default function NotificationCenter() {
         onClick={() => setIsOpen(!isOpen)} 
         className="relative p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors focus:outline-none"
       >
-        <Bell size={24} className={unreadCount > 0 ? 'text-coral' : ''} />
+        <Bell size={24} className={unreadCount > 0 ? 'text-primary' : ''} />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-4 h-4 bg-coral text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-dark-bg">
+          <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-dark-bg">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -138,10 +138,10 @@ export default function NotificationCenter() {
             <div className="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-black/20">
               <h3 className="font-extrabold text-lg flex items-center gap-2">
                 Notifications
-                {unreadCount > 0 && <span className="bg-coral text-white text-xs px-2 py-0.5 rounded-full">{unreadCount} New</span>}
+                {unreadCount > 0 && <span className="bg-primary text-white text-xs px-2 py-0.5 rounded-full">{unreadCount} New</span>}
               </h3>
               {unreadCount > 0 && (
-                <button onClick={markAllAsRead} className="text-xs font-bold text-coral hover:text-coral-dark flex items-center gap-1 transition-colors">
+                <button onClick={markAllAsRead} className="text-xs font-bold text-primary hover:text-primary-dark flex items-center gap-1 transition-colors">
                   <Check size={14} /> Mark all read
                 </button>
               )}
@@ -175,7 +175,7 @@ export default function NotificationCenter() {
                             {formatDistanceToNow(new Date(notif.createdAt), { addSuffix: true })}
                           </p>
                         </div>
-                        {!notif.read && <div className="w-2 h-2 rounded-full bg-coral mt-2 shrink-0 shadow-sm shadow-coral/50" />}
+                        {!notif.read && <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0 shadow-sm shadow-primary/50" />}
                       </div>
                     )
                   })}

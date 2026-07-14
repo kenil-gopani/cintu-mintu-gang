@@ -30,7 +30,7 @@ export default function EmailVerification() {
 
   return (
     <div className="relative min-h-screen bg-dark-bg flex items-center justify-center p-4 overflow-hidden">
-      <div className={`blob w-80 h-80 top-[-60px] left-[-60px] animate-float ${status === 'success' ? 'blob-teal' : 'blob-coral'}`} />
+      <div className={`blob w-80 h-80 top-[-60px] left-[-60px] animate-float ${status === 'success' ? 'blob-secondary' : 'blob-primary'}`} />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -49,7 +49,7 @@ export default function EmailVerification() {
           {status === 'success' && (
             <>
               <div className="text-6xl mb-4">✅</div>
-              <h1 className="text-2xl font-extrabold text-teal-400 mb-2">Email Verified!</h1>
+              <h1 className="text-2xl font-extrabold text-secondary mb-2">Email Verified!</h1>
               <p className="text-dark-muted text-sm font-semibold mb-6">{message}</p>
               <Link to="/home" className="btn-primary w-full inline-block">Go to Home</Link>
             </>

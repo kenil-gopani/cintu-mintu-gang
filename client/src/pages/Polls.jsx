@@ -5,7 +5,7 @@ import { pollService } from '../services/services'
 import { useAuth } from '../hooks/useAuth'
 import Modal from '../components/common/Modal'
 import Loader from '../components/common/Loader'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function Polls() {
   const { user } = useAuth()
@@ -119,9 +119,9 @@ export default function Polls() {
                         const isMyVote = opt.votes.some(v => v._id === user._id || v === user._id)
                         return (
                           <div key={i} className="relative h-10 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center px-4 z-10 border border-gray-200 dark:border-gray-700">
-                            <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={`absolute left-0 top-0 bottom-0 -z-10 ${isMyVote ? 'bg-teal-500/20' : 'bg-gray-300/30 dark:bg-gray-600/30'}`} />
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className={`absolute left-0 top-0 bottom-0 -z-10 ${isMyVote ? 'bg-secondary/20' : 'bg-gray-300/30 dark:bg-gray-600/30'}`} />
                             <div className="flex justify-between w-full font-bold text-sm">
-                              <span className={isMyVote ? 'text-teal-600 dark:text-teal-400' : ''}>{opt.text} {isMyVote && '✓'}</span>
+                              <span className={isMyVote ? 'text-secondary dark:text-secondary' : ''}>{opt.text} {isMyVote && '✓'}</span>
                               <span>{percent}%</span>
                             </div>
                           </div>
@@ -131,7 +131,7 @@ export default function Polls() {
                   ) : (
                     <div className="space-y-3">
                       {poll.options.map((opt, i) => (
-                        <button key={i} onClick={() => handleVote(poll._id, i)} className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm hover:border-coral hover:text-coral transition-colors">
+                        <button key={i} onClick={() => handleVote(poll._id, i)} className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm hover:border-primary hover:text-primary transition-colors">
                           {opt.text}
                         </button>
                       ))}
@@ -179,7 +179,7 @@ export default function Polls() {
             {newPoll.options.length < 5 && (
               <button 
                 onClick={() => setNewPoll(p => ({ ...p, options: [...p.options, ''] }))}
-                className="text-coral text-xs font-bold flex items-center gap-1 mt-2"
+                className="text-primary text-xs font-bold flex items-center gap-1 mt-2"
               >
                 <Plus size={14} /> Add Option
               </button>

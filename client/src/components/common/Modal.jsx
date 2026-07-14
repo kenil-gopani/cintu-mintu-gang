@@ -41,7 +41,7 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' })
               <h2 className="text-xl font-extrabold gradient-text-warm">{title}</h2>
               <button
                 onClick={onClose}
-                className="btn-icon text-light-muted dark:text-dark-muted hover:text-coral"
+                className="btn-icon text-light-muted dark:text-dark-muted hover:text-primary"
               >
                 <X size={20} />
               </button>

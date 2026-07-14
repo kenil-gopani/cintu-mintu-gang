@@ -11,7 +11,7 @@ import Avatar from '../components/common/Avatar'
 import Loader from '../components/common/Loader'
 import { Navigate } from 'react-router-dom'
 import { format } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import { useTheme } from '../hooks/useTheme'
 
 export default function Admin() {
@@ -143,16 +143,16 @@ export default function Admin() {
   const renderDashboard = () => (
     <div className="space-y-6 animate-fade-in">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="card p-6 border-t-4 border-coral bg-gradient-to-b from-coral/5 to-transparent">
+        <div className="card p-6 border-t-4 border-primary bg-gradient-to-b from-primary/5 to-transparent">
           <div className="flex justify-between items-start mb-4">
-            <div className="p-2 bg-coral/10 rounded-lg text-coral"><Users size={24} /></div>
+            <div className="p-2 bg-primary/10 rounded-lg text-primary"><Users size={24} /></div>
           </div>
           <p className="text-3xl font-extrabold">{analytics.users}</p>
           <p className="text-sm font-bold text-gray-500 mt-1">Total Members</p>
         </div>
-        <div className="card p-6 border-t-4 border-purple-500 bg-gradient-to-b from-purple-500/5 to-transparent">
+        <div className="card p-6 border-t-4 border-primary bg-gradient-to-b from-primary/5 to-transparent">
           <div className="flex justify-between items-start mb-4">
-            <div className="p-2 bg-purple-500/10 rounded-lg text-purple-500"><ImageIcon size={24} /></div>
+            <div className="p-2 bg-primary/10 rounded-lg text-primary"><ImageIcon size={24} /></div>
           </div>
           <p className="text-3xl font-extrabold">{analytics.memories}</p>
           <p className="text-sm font-bold text-gray-500 mt-1">Gallery Memories</p>
@@ -164,9 +164,9 @@ export default function Admin() {
           <p className="text-3xl font-extrabold">{analytics.events}</p>
           <p className="text-sm font-bold text-gray-500 mt-1">Family Events</p>
         </div>
-        <div className="card p-6 border-t-4 border-teal-500 bg-gradient-to-b from-teal-500/5 to-transparent">
+        <div className="card p-6 border-t-4 border-secondary bg-gradient-to-b from-secondary/5 to-transparent">
           <div className="flex justify-between items-start mb-4">
-            <div className="p-2 bg-teal-500/10 rounded-lg text-teal-500"><BarChart3 size={24} /></div>
+            <div className="p-2 bg-secondary/10 rounded-lg text-secondary"><BarChart3 size={24} /></div>
           </div>
           <p className="text-3xl font-extrabold">{analytics.messages || 0}</p>
           <p className="text-sm font-bold text-gray-500 mt-1">Chat Messages</p>
@@ -179,7 +179,7 @@ export default function Admin() {
     <div className="grid lg:grid-cols-2 gap-8 animate-fade-in">
       {/* Members table */}
       <div className="card p-6 shadow-xl border border-gray-100 dark:border-gray-800">
-        <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><Users className="text-coral" /> Manage Members</h2>
+        <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><Users className="text-primary" /> Manage Members</h2>
         <div className="space-y-4">
           {members.map(member => (
             <div key={member._id} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700">
@@ -203,7 +203,7 @@ export default function Admin() {
                     </button>
                   </>
                 )}
-                <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm ${member.role === 'admin' ? 'bg-amber-100 text-amber-700' : 'bg-teal-100 text-teal-700'}`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm ${member.role === 'admin' ? 'bg-amber-100 text-amber-700' : 'bg-secondary text-secondary'}`}>
                   {member.role}
                 </span>
               </div>
@@ -216,7 +216,7 @@ export default function Admin() {
       <div className="card p-6 shadow-xl border border-gray-100 dark:border-gray-800">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-extrabold text-xl flex items-center gap-2">🎟️ Invite Codes</h2>
-          <button onClick={handleGenerateInvite} className="btn-primary flex items-center gap-1 text-sm px-4 py-2 shadow-lg shadow-coral/30">
+          <button onClick={handleGenerateInvite} className="btn-primary flex items-center gap-1 text-sm px-4 py-2 shadow-lg shadow-primary/30">
             <Plus size={16} /> Generate
           </button>
         </div>
@@ -227,7 +227,7 @@ export default function Admin() {
         ) : (
           <div className="space-y-3">
             {invites.map(inv => (
-              <div key={inv._id} className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all shadow-sm ${inv.isUsed ? 'border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-black/10 opacity-60' : 'border-coral/30 bg-gradient-to-r from-coral/5 to-transparent'}`}>
+              <div key={inv._id} className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all shadow-sm ${inv.isUsed ? 'border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-black/10 opacity-60' : 'border-primary/30 bg-gradient-to-r from-primary/5 to-transparent'}`}>
                 <div>
                   <p className="font-mono font-black text-xl tracking-widest text-gray-900 dark:text-white">{inv.code}</p>
                   <p className="text-xs text-gray-500 font-bold mt-1">
@@ -235,7 +235,7 @@ export default function Admin() {
                   </p>
                 </div>
                 {!inv.isUsed && (
-                  <button onClick={() => copyCode(inv.code)} className="btn-icon bg-white dark:bg-dark-card shadow-md text-coral hover:scale-110 transition-transform">
+                  <button onClick={() => copyCode(inv.code)} className="btn-icon bg-white dark:bg-dark-card shadow-md text-primary hover:scale-110 transition-transform">
                     {copiedCode === inv.code ? <Check size={18} /> : <Copy size={18} />}
                   </button>
                 )}
@@ -251,7 +251,7 @@ export default function Admin() {
   const renderContent = () => (
     <div className="grid lg:grid-cols-2 gap-8 animate-fade-in">
       <div className="card p-6">
-        <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><ImageIcon className="text-purple-500" /> Recent Gallery Uploads</h2>
+        <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><ImageIcon className="text-primary" /> Recent Gallery Uploads</h2>
         <div className="space-y-4">
           {recentMemories.map(memory => (
             <div key={memory._id} className="flex items-center gap-4 p-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-black/20">
@@ -291,7 +291,7 @@ export default function Admin() {
     <div className="max-w-2xl mx-auto animate-fade-in">
       <div className="card p-8 shadow-2xl border border-gray-100 dark:border-gray-800">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 bg-coral/10 text-coral rounded-xl flex items-center justify-center"><Bell size={24}/></div>
+          <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center"><Bell size={24}/></div>
           <div>
             <h2 className="font-extrabold text-2xl">Global Broadcast</h2>
             <p className="text-gray-500 font-semibold text-sm">Send a push notification to all family members.</p>
@@ -307,7 +307,7 @@ export default function Admin() {
             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Message Content *</label>
             <textarea required value={pushData.message} onChange={e => setPushData({...pushData, message: e.target.value})} placeholder="Type your broadcast message here..." className="input-field w-full h-32 text-base resize-none bg-gray-50 dark:bg-black/20" />
           </div>
-          <button type="submit" disabled={pushing} className="btn-primary w-full h-14 text-lg shadow-xl shadow-coral/30 flex items-center justify-center gap-2">
+          <button type="submit" disabled={pushing} className="btn-primary w-full h-14 text-lg shadow-xl shadow-primary/30 flex items-center justify-center gap-2">
             {pushing ? <Loader scale={0.2} /> : <><Send size={20} /> Send to {analytics.users} Users</>}
           </button>
         </form>
@@ -326,7 +326,7 @@ export default function Admin() {
               <p className="font-bold text-lg">System Theme Preference</p>
               <p className="text-sm font-semibold text-gray-500">Toggle your active dark mode state.</p>
             </div>
-            <button onClick={toggleTheme} className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-colors ${isDark ? 'bg-indigo-600 text-white' : 'bg-yellow-400 text-white'}`}>
+            <button onClick={toggleTheme} className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-colors ${isDark ? 'bg-primary text-white' : 'bg-yellow-400 text-white'}`}>
               {isDark ? <Moon size={24} /> : <Sun size={24} />}
             </button>
           </div>
@@ -384,7 +384,7 @@ export default function Admin() {
                   <button 
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-200 ${activeTab === tab.id ? 'bg-gradient-warm text-white shadow-md shadow-coral/20' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-200 ${activeTab === tab.id ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}
                   >
                     <tab.icon size={18} />
                     {tab.label}

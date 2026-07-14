@@ -10,7 +10,7 @@ import { galleryService, eventService } from '../services/services'
 import { useAuth } from '../hooks/useAuth'
 import Avatar from '../components/common/Avatar'
 import { format } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function Gallery() {
   const { user } = useAuth()
@@ -102,6 +102,18 @@ export default function Gallery() {
     }
     return () => clearInterval(timer)
   }, [isPlaying, lightboxIndex, memories.length])
+
+  // Body scroll lock for Lightbox
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [lightboxIndex])
 
   // Keyboard Navigation for Lightbox
   useEffect(() => {
@@ -246,20 +258,20 @@ export default function Gallery() {
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="bg-white dark:bg-dark-card rounded-xl p-1 shadow-sm flex border border-gray-100 dark:border-gray-800">
-            <button onClick={() => setViewMode('grid')} className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-coral text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
+            <button onClick={() => setViewMode('grid')} className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-primary text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
               <Grid size={18} />
             </button>
-            <button onClick={() => setViewMode('timeline')} className={`p-2 rounded-lg transition-colors ${viewMode === 'timeline' ? 'bg-coral text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
+            <button onClick={() => setViewMode('timeline')} className={`p-2 rounded-lg transition-colors ${viewMode === 'timeline' ? 'bg-primary text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
               <List size={18} />
             </button>
-            <button onClick={() => setViewMode('albums')} className={`p-2 rounded-lg transition-colors ${viewMode === 'albums' ? 'bg-coral text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
+            <button onClick={() => setViewMode('albums')} className={`p-2 rounded-lg transition-colors ${viewMode === 'albums' ? 'bg-primary text-white shadow' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}>
               <Folder size={18} />
             </button>
           </div>
-          <button onClick={() => setShowFilters(!showFilters)} className={`btn-icon ${showFilters || Object.values(filters).some(v=>v) ? 'text-coral border-coral bg-coral/10' : ''}`}>
+          <button onClick={() => setShowFilters(!showFilters)} className={`btn-icon ${showFilters || Object.values(filters).some(v=>v) ? 'text-primary border-primary bg-primary/10' : ''}`}>
             <Filter size={18} />
           </button>
-          <button onClick={() => setShowUpload(true)} className="btn-primary flex-1 md:flex-none shadow-coral/30 shadow-lg">
+          <button onClick={() => setShowUpload(true)} className="btn-primary flex-1 md:flex-none shadow-primary/30 shadow-lg">
             <Upload size={18} /> <span className="hidden sm:inline">Upload</span>
           </button>
         </div>
@@ -269,7 +281,7 @@ export default function Gallery() {
       <AnimatePresence>
         {showFilters && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mb-8">
-            <div className="card p-5 grid grid-cols-2 md:grid-cols-5 gap-4 border border-coral/20 bg-gradient-to-r from-coral/5 to-purple-500/5">
+            <div className="card p-5 grid grid-cols-2 md:grid-cols-5 gap-4 border border-primary/20 bg-gradient-to-r from-primary/5 to-primary/5">
               <div className="relative col-span-2 md:col-span-1">
                 <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input type="text" placeholder="Search..." value={filters.search} onChange={e => setFilters({...filters, search: e.target.value})} className="input-field pl-9 h-11 text-sm w-full bg-white dark:bg-black/40" />
@@ -314,9 +326,9 @@ export default function Gallery() {
               onClick={() => { setFilters({...filters, album}); setViewMode('grid') }}
               className="group cursor-pointer"
             >
-              <div className="aspect-square bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-3xl p-6 border-2 border-transparent group-hover:border-indigo-400 transition-all flex flex-col items-center justify-center shadow-lg hover:shadow-indigo-500/20 hover:-translate-y-2">
-                <Folder size={64} className="text-indigo-400 mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="text-lg font-extrabold capitalize text-gray-800 dark:text-gray-200 group-hover:text-indigo-500 transition-colors">{album}</h3>
+              <div className="aspect-square bg-gradient-to-br from-primary-light to-primary dark:from-primary/20 dark:to-primary/20 rounded-3xl p-6 border-2 border-transparent group-hover:border-accent transition-all flex flex-col items-center justify-center shadow-lg hover:shadow-primary/20 hover:-translate-y-2">
+                <Folder size={64} className="text-accent mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="text-lg font-extrabold capitalize text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors">{album}</h3>
               </div>
             </motion.div>
           ))}
@@ -356,7 +368,7 @@ export default function Gallery() {
                   </div>
                   {memory.caption && <p className="text-white/90 text-sm font-semibold truncate mb-3">{memory.caption}</p>}
                   <div className="flex items-center gap-4 text-white">
-                    <span className="flex items-center gap-1.5 text-xs font-bold"><Heart size={16} className={memory.likes.includes(user._id) ? 'fill-coral text-coral' : ''}/> {memory.likes.length}</span>
+                    <span className="flex items-center gap-1.5 text-xs font-bold"><Heart size={16} className={memory.likes.includes(user._id) ? 'fill-primary text-primary' : ''}/> {memory.likes.length}</span>
                     <span className="flex items-center gap-1.5 text-xs font-bold"><MessageCircle size={16}/> {memory.comments.length}</span>
                   </div>
                 </div>
@@ -383,7 +395,7 @@ export default function Gallery() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => handleDownload(memory)} className="btn-icon bg-white dark:bg-dark-card shadow-sm hover:text-coral"><Download size={18} /></button>
+                    <button onClick={() => handleDownload(memory)} className="btn-icon bg-white dark:bg-dark-card shadow-sm hover:text-primary"><Download size={18} /></button>
                     <button onClick={() => handleFavorite(memory._id)} className={`btn-icon bg-white dark:bg-dark-card shadow-sm ${memory.favorites?.includes(user._id) ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}><Star size={18} className={memory.favorites?.includes(user._id) ? 'fill-current' : ''}/></button>
                     {(user.role === 'admin' || user._id === memory.uploadedBy._id) && (
                       <button onClick={() => handleDelete(memory._id)} className="btn-icon bg-white dark:bg-dark-card shadow-sm text-gray-400 hover:text-red-500"><Trash2 size={18} /></button>
@@ -397,7 +409,7 @@ export default function Gallery() {
 
                 <div className="p-6">
                   <div className="flex items-center gap-6 mb-4">
-                    <button onClick={() => handleLike(memory._id)} className={`flex items-center gap-2 font-extrabold text-lg transition-colors ${memory.likes.includes(user._id) ? 'text-coral' : 'text-gray-500 hover:text-coral'}`}>
+                    <button onClick={() => handleLike(memory._id)} className={`flex items-center gap-2 font-extrabold text-lg transition-colors ${memory.likes.includes(user._id) ? 'text-primary' : 'text-gray-500 hover:text-primary'}`}>
                       <Heart size={28} className={memory.likes.includes(user._id) ? 'fill-current drop-shadow-md' : ''} /> {memory.likes.length}
                     </button>
                     <div className="flex items-center gap-2 font-extrabold text-lg text-gray-500">
@@ -414,7 +426,7 @@ export default function Gallery() {
 
                   {memory.tags?.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {memory.tags.map(t => <span key={t} className="text-xs font-bold text-coral bg-coral/10 border border-coral/20 px-3 py-1.5 rounded-lg">#{t}</span>)}
+                      {memory.tags.map(t => <span key={t} className="text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-lg">#{t}</span>)}
                     </div>
                   )}
 
@@ -437,7 +449,7 @@ export default function Gallery() {
                     <form onSubmit={(e) => handleComment(e, memory._id)} className="flex gap-3 mt-4">
                       <Avatar src={user.avatar} name={user.name} size={40} />
                       <input name="comment" type="text" placeholder="Add a comment..." className="input-field h-11 flex-1 text-sm rounded-full bg-gray-50 dark:bg-white/5 shadow-inner" />
-                      <button type="submit" className="text-white bg-coral hover:bg-coral-dark font-bold text-sm px-6 rounded-full transition-colors shadow-lg shadow-coral/30">Post</button>
+                      <button type="submit" className="text-white bg-primary hover:bg-primary-dark font-bold text-sm px-6 rounded-full transition-colors shadow-lg shadow-primary/30">Post</button>
                     </form>
                   </div>
                 </div>
@@ -451,53 +463,81 @@ export default function Gallery() {
       {/* 🎇 LIGHTBOX / SLIDESHOW MODAL */}
       <AnimatePresence>
         {lightboxIndex !== null && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center touch-none">
             
-            {/* Top Controls */}
-            <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-start z-10 bg-gradient-to-b from-black/80 to-transparent">
-              <div className="flex items-center gap-4 text-white">
+            {/* Top Controls (Safe Area Supported) */}
+            <div className="absolute top-0 left-0 w-full p-4 md:p-6 flex justify-between items-start z-[105] bg-gradient-to-b from-black/80 to-transparent pointer-events-none" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)', paddingLeft: 'calc(env(safe-area-inset-left) + 16px)' }}>
+              <div className="flex items-center gap-4 text-white pointer-events-auto">
                 <Avatar src={memories[lightboxIndex].uploadedBy.avatar} name={memories[lightboxIndex].uploadedBy.name} size={48} className="border-2 border-white/20" />
                 <div>
                   <h3 className="font-extrabold text-lg shadow-sm">{memories[lightboxIndex].uploadedBy.nickname || memories[lightboxIndex].uploadedBy.name}</h3>
                   <p className="text-sm text-white/70 font-semibold">{format(new Date(memories[lightboxIndex].createdAt), 'MMMM d, yyyy')}</p>
                 </div>
               </div>
-              <div className="flex gap-4">
-                {(user.role === 'admin' || user._id === memories[lightboxIndex].uploadedBy._id) && (
-                  <button onClick={() => handleDelete(memories[lightboxIndex]._id)} className="btn-icon bg-black/50 text-white border border-white/20 shadow-lg hover:bg-red-500 hover:border-red-500 transition-colors" title="Delete Memory"><Trash2 size={20} /></button>
-                )}
-                <button onClick={() => setIsPlaying(!isPlaying)} className={`btn-icon shadow-lg border border-white/20 hover:scale-110 transition-transform ${isPlaying ? 'bg-black text-white border-black' : 'bg-black/50 text-white'}`}>
-                  {isPlaying ? <Pause size={20} /> : <Play size={20} className="ml-1" />}
-                </button>
-                <button onClick={() => handleDownload(memories[lightboxIndex])} className="btn-icon bg-black/50 text-white border border-white/20 shadow-lg hover:bg-white hover:text-black transition-colors"><Download size={20} /></button>
-                <button onClick={() => { setLightboxIndex(null); setIsPlaying(false) }} className="btn-icon bg-red-500/80 text-white border border-red-400/50 shadow-lg hover:bg-red-500 transition-colors"><X size={20} /></button>
-              </div>
             </div>
 
-            {/* Nav Arrows */}
-            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(p => (p - 1 + memories.length) % memories.length) }} className="absolute left-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-black/50 border border-white/20 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all hover:scale-110 shadow-2xl">
+            {/* Floating Close & Actions (Safe Area Supported) */}
+            <div className="absolute right-0 top-0 p-4 md:p-6 flex gap-3 z-[110]" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)', paddingRight: 'calc(env(safe-area-inset-right) + 16px)' }}>
+              {(user.role === 'admin' || user._id === memories[lightboxIndex].uploadedBy._id) && (
+                <button onClick={(e) => { e.stopPropagation(); handleDelete(memories[lightboxIndex]._id) }} className="w-11 h-11 rounded-full flex items-center justify-center bg-black/50 text-white border border-white/20 shadow-lg hover:bg-red-500 hover:border-red-500 transition-colors backdrop-blur-md" title="Delete Memory"><Trash2 size={20} /></button>
+              )}
+              <button onClick={(e) => { e.stopPropagation(); setIsPlaying(!isPlaying) }} className={`w-11 h-11 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition-all backdrop-blur-md ${isPlaying ? 'bg-white text-black border-white scale-110' : 'bg-black/50 text-white hover:scale-110'}`}>
+                {isPlaying ? <Pause size={20} /> : <Play size={20} className="ml-1" />}
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); handleDownload(memories[lightboxIndex]) }} className="w-11 h-11 rounded-full flex items-center justify-center bg-black/50 text-white border border-white/20 shadow-lg hover:bg-white hover:text-black transition-colors backdrop-blur-md"><Download size={20} /></button>
+              
+              {/* Distinct Close Button */}
+              <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); setIsPlaying(false) }} className="w-11 h-11 ml-2 rounded-full flex items-center justify-center bg-red-500/90 text-white border border-red-400 shadow-2xl hover:bg-red-500 hover:scale-110 transition-all backdrop-blur-md"><X size={24} /></button>
+            </div>
+
+            {/* Nav Arrows (Safe Area Supported) */}
+            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(p => (p - 1 + memories.length) % memories.length) }} className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-black/50 border border-white/20 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all hover:scale-110 shadow-2xl backdrop-blur-md" style={{ marginLeft: 'env(safe-area-inset-left)' }}>
               <ChevronLeft size={32} className="-ml-1" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(p => (p + 1) % memories.length) }} className="absolute right-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-black/50 border border-white/20 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all hover:scale-110 shadow-2xl">
+            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(p => (p + 1) % memories.length) }} className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-black/50 border border-white/20 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all hover:scale-110 shadow-2xl backdrop-blur-md" style={{ marginRight: 'env(safe-area-inset-right)' }}>
               <ChevronRight size={32} className="-mr-1" />
             </button>
 
             {/* Main Media Viewer */}
-            <motion.div key={lightboxIndex} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }} className="w-full h-full max-h-screen p-20 flex items-center justify-center">
-              {memories[lightboxIndex].type === 'video' ? (
-                <video src={memories[lightboxIndex].imageUrl} controls autoPlay className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl ring-1 ring-white/20" />
-              ) : (
-                <img src={memories[lightboxIndex].imageUrl} className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl" />
-              )}
-            </motion.div>
+            <div className="w-full h-full max-h-[100dvh] flex items-center justify-center overflow-hidden p-0 md:p-12 z-0" onClick={() => { setLightboxIndex(null); setIsPlaying(false) }}>
+              <motion.div 
+                key={lightboxIndex} 
+                initial={{ opacity: 0, scale: 0.95 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                transition={{ duration: 0.3 }}
+                className="w-full h-full flex items-center justify-center"
+              >
+                {memories[lightboxIndex].type === 'video' ? (
+                  <video src={memories[lightboxIndex].imageUrl} controls autoPlay onClick={e => e.stopPropagation()} className="max-w-full max-h-[100dvh] md:max-h-[85vh] object-contain shadow-2xl" />
+                ) : (
+                  <motion.img 
+                    src={memories[lightboxIndex].imageUrl}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.8}
+                    onDragEnd={(e, { offset, velocity }) => {
+                      const swipe = Math.abs(offset.x) * velocity.x;
+                      if (swipe < -100 || offset.x < -75) {
+                        setLightboxIndex(p => (p + 1) % memories.length)
+                      } else if (swipe > 100 || offset.x > 75) {
+                        setLightboxIndex(p => (p - 1 + memories.length) % memories.length)
+                      }
+                    }}
+                    onClick={e => e.stopPropagation()}
+                    className="max-w-full max-h-[100dvh] md:max-h-[85vh] object-contain shadow-2xl pointer-events-auto"
+                    style={{ touchAction: 'pan-y pinch-zoom' }}
+                  />
+                )}
+              </motion.div>
+            </div>
 
             {/* Bottom Caption Overlay */}
             {memories[lightboxIndex].caption && (
-              <div className="absolute bottom-0 left-0 w-full p-8 pt-20 bg-gradient-to-t from-black via-black/80 to-transparent z-10 text-center">
-                <p className="text-white text-xl font-medium max-w-3xl mx-auto leading-relaxed drop-shadow-md">{memories[lightboxIndex].caption}</p>
+              <div className="absolute bottom-0 left-0 w-full p-6 pt-20 bg-gradient-to-t from-black via-black/80 to-transparent z-[105] text-center pointer-events-none" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 24px)' }}>
+                <p className="text-white text-base md:text-xl font-medium max-w-3xl mx-auto leading-relaxed drop-shadow-md pointer-events-auto">{memories[lightboxIndex].caption}</p>
                 {memories[lightboxIndex].tags?.length > 0 && (
-                  <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    {memories[lightboxIndex].tags.map(t => <span key={t} className="text-xs font-bold text-white/80 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md">#{t}</span>)}
+                  <div className="flex flex-wrap justify-center gap-2 mt-4 pointer-events-auto">
+                    {memories[lightboxIndex].tags.map(t => <span key={t} className="text-[10px] md:text-xs font-bold text-white/80 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md pointer-events-auto">#{t}</span>)}
                   </div>
                 )}
               </div>
@@ -524,7 +564,7 @@ export default function Gallery() {
               <form onSubmit={handleUploadSubmit} className="space-y-4 sm:space-y-6">
                 <div 
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full aspect-video rounded-3xl border-2 border-dashed border-coral/30 hover:border-coral flex flex-col items-center justify-center cursor-pointer transition-colors overflow-hidden bg-coral/5 group"
+                  className="w-full aspect-video rounded-3xl border-2 border-dashed border-primary/30 hover:border-primary flex flex-col items-center justify-center cursor-pointer transition-colors overflow-hidden bg-primary/5 group"
                 >
                   {uploadData.preview ? (
                     uploadData.file?.type.startsWith('video/') ? (
@@ -534,8 +574,8 @@ export default function Gallery() {
                     )
                   ) : (
                     <>
-                      <div className="w-16 h-16 bg-white dark:bg-dark-card rounded-2xl flex items-center justify-center text-coral mb-4 shadow-lg group-hover:scale-110 transition-transform"><Plus size={32} /></div>
-                      <p className="font-bold text-coral text-sm">Click to select photo or video</p>
+                      <div className="w-16 h-16 bg-white dark:bg-dark-card rounded-2xl flex items-center justify-center text-primary mb-4 shadow-lg group-hover:scale-110 transition-transform"><Plus size={32} /></div>
+                      <p className="font-bold text-primary text-sm">Click to select photo or video</p>
                     </>
                   )}
                 </div>
@@ -571,7 +611,7 @@ export default function Gallery() {
                   <input type="text" placeholder="e.g. goa, beach, fun" value={uploadData.tags} onChange={e => setUploadData({...uploadData, tags: e.target.value})} className="input-field w-full h-12" />
                 </div>
 
-                <button type="submit" disabled={uploading} className="btn-primary w-full h-14 text-lg mt-4 shadow-xl shadow-coral/30">
+                <button type="submit" disabled={uploading} className="btn-primary w-full h-14 text-lg mt-4 shadow-xl shadow-primary/30">
                   {uploading ? <Loader scale={0.2} /> : 'Upload Memory'}
                 </button>
               </form>

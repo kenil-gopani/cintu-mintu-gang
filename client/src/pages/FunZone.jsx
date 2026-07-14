@@ -6,7 +6,7 @@ import { pollService } from '../services/services'
 import Modal from '../components/common/Modal'
 import Loader from '../components/common/Loader'
 import { formatDistanceToNow } from 'date-fns'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const FUN_FACTS = [
   '🌶️ Who in the gang eats the spiciest food?',
@@ -79,7 +79,7 @@ export default function FunZone() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="card p-5 mb-6 border-2 border-dashed border-coral/30"
+        className="card p-5 mb-6 border-2 border-dashed border-primary/30"
       >
         <p className="font-extrabold text-lg mb-1">🎲 Daily Fun Prompt</p>
         <p className="text-light-muted dark:text-dark-muted font-semibold">{randomFact}</p>
@@ -115,7 +115,7 @@ export default function FunZone() {
                   >
                     <div className="flex items-start justify-between gap-2 mb-4">
                       <h3 className="font-extrabold text-base leading-snug">{poll.question}</h3>
-                      <span className="badge badge-lavender shrink-0">{totalVotes} votes</span>
+                      <span className="badge badge-primary shrink-0">{totalVotes} votes</span>
                     </div>
 
                     <div className="space-y-3">
@@ -129,16 +129,16 @@ export default function FunZone() {
                               disabled={voted}
                               className={`w-full text-left rounded-2xl border-2 px-4 py-3 transition-all duration-200 ${
                                 myVote
-                                  ? 'border-coral bg-coral/10 font-bold'
+                                  ? 'border-primary bg-primary/10 font-bold'
                                   : voted
                                   ? 'border-light-border dark:border-dark-border cursor-default'
-                                  : 'border-light-border dark:border-dark-border hover:border-coral/50 hover:bg-coral/5'
+                                  : 'border-light-border dark:border-dark-border hover:border-primary/50 hover:bg-primary/5'
                               }`}
                             >
                               <div className="flex items-center justify-between mb-1">
                                 <span className="text-sm font-semibold">{opt.text}</span>
-                                {myVote && <Check size={14} className="text-coral" />}
-                                {voted && <span className="text-sm font-bold text-coral">{pct}%</span>}
+                                {myVote && <Check size={14} className="text-primary" />}
+                                {voted && <span className="text-sm font-bold text-primary">{pct}%</span>}
                               </div>
                               {voted && (
                                 <div className="h-1.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
@@ -146,7 +146,7 @@ export default function FunZone() {
                                     initial={{ width: 0 }}
                                     animate={{ width: `${pct}%` }}
                                     transition={{ duration: 0.8, delay: 0.1 * j }}
-                                    className="h-full rounded-full bg-gradient-warm"
+                                    className="h-full rounded-full bg-primary"
                                   />
                                 </div>
                               )}
@@ -196,7 +196,7 @@ export default function FunZone() {
             {options.length < 6 && (
               <button
                 onClick={() => setOptions(prev => [...prev, ''])}
-                className="text-coral text-sm font-bold mt-2 hover:underline"
+                className="text-primary text-sm font-bold mt-2 hover:underline"
               >
                 + Add option
               </button>

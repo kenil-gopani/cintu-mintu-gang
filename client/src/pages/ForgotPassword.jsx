@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, ArrowRight } from 'lucide-react'
 import { authService } from '../services/services'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -27,7 +27,7 @@ export default function ForgotPassword() {
 
   return (
     <div className="relative min-h-screen bg-dark-bg flex items-center justify-center p-4 overflow-hidden">
-      <div className="blob blob-purple w-80 h-80 top-[-60px] left-[-60px] animate-float" />
+      <div className="blob blob-primary w-80 h-80 top-[-60px] left-[-60px] animate-float" />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}

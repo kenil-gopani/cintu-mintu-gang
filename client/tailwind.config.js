@@ -9,35 +9,42 @@ export default {
         inter:  ['Inter', 'sans-serif'],
       },
       colors: {
-        // Premium SaaS Theme (Stripe/Linear inspired)
-        primary:   '#2563EB',   // Primary Blue
-        secondary: '#3B82F6',   // Secondary Blue
-        accent:    '#60A5FA',   // Accent Blue
-        // Legacy colors mapped to maintain compatibility but match new theme
-        teal:      '#3B82F6',
+        // Dynamic Theme Variables
+        primary:   'rgb(var(--color-primary) / <alpha-value>)',
+        'primary-hover': 'rgb(var(--color-primary-hover) / <alpha-value>)',
+        'primary-light': 'rgb(var(--color-primary-light) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        accent:    'rgb(var(--color-accent) / <alpha-value>)',
+        // Semantic
+        success: '#22C55E',
+        warning: '#F59E0B',
+        danger:  '#EF4444',
+        info:    '#3B82F6',
+        // Legacy colors scoped strictly for Login/Landing page preservation
+        teal:      '#4ECDC4',
         mint:      '#93C5FD',
-        lavender:  '#BFDBFE',
+        lavender:  '#C3B1E1',
         gold:      '#F59E0B',
-        coral:     '#2563EB',
-        tangerine: '#3B82F6',
-        verified:  '#22C55E',
-        // Light theme
+        coral:     '#FF6B6B',
+        tangerine: '#FF8E53',
+        verified:  '#3B82F6',
+        // Light theme mapped to variables
         light: {
-          bg:     '#F8FAFC',    // Slate 50
-          card:   '#FFFFFF',    // Surface
-          border: '#E2E8F0',    // Slate 200
-          text:   '#0F172A',    // Slate 900
-          muted:  '#64748B',    // Slate 500
-          sub:    '#94A3B8',    // Slate 400
+          bg:     'rgb(var(--color-light-bg) / <alpha-value>)',
+          card:   'rgb(var(--color-light-card) / <alpha-value>)',
+          border: 'rgb(var(--color-light-border) / <alpha-value>)',
+          text:   'rgb(var(--color-light-text) / <alpha-value>)',
+          muted:  'rgb(var(--color-light-muted) / <alpha-value>)',
+          sub:    'rgb(var(--color-light-sub) / <alpha-value>)',
         },
-        // Dark theme (adapted for SaaS look)
+        // Dark theme mapped to variables
         dark: {
-          bg:     '#0F172A',
-          card:   '#1E293B',
-          border: '#334155',
-          text:   '#F8FAFC',
-          muted:  '#94A3B8',
-          sub:    '#64748B',
+          bg:     'rgb(var(--color-dark-bg) / <alpha-value>)',
+          card:   'rgb(var(--color-dark-card) / <alpha-value>)',
+          border: 'rgb(var(--color-dark-border) / <alpha-value>)',
+          text:   'rgb(var(--color-dark-text) / <alpha-value>)',
+          muted:  'rgb(var(--color-dark-muted) / <alpha-value>)',
+          sub:    'rgb(var(--color-dark-sub) / <alpha-value>)',
         },
       },
       backgroundImage: {

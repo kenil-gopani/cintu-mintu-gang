@@ -4,7 +4,7 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { authService } from '../services/services'
 import { useAuth } from '../hooks/useAuth'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export default function OtpVerification() {
   const [params] = useSearchParams()
@@ -55,7 +55,7 @@ export default function OtpVerification() {
 
   return (
     <div className="relative min-h-screen bg-dark-bg flex items-center justify-center p-4 overflow-hidden">
-      <div className="blob blob-purple w-80 h-80 top-[-60px] right-[-60px] animate-float" />
+      <div className="blob blob-primary w-80 h-80 top-[-60px] right-[-60px] animate-float" />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -104,7 +104,7 @@ export default function OtpVerification() {
           </form>
 
           <div className="mt-4">
-            <button onClick={handleResend} className="text-coral text-sm font-semibold hover:underline">
+            <button onClick={handleResend} className="text-primary text-sm font-semibold hover:underline">
               Resend OTP
             </button>
           </div>
