@@ -147,7 +147,13 @@ export default function Chat() {
           socket.emit('mark-seen', { roomId: activeRoom._id, messageId: msg._id })
         }
       }
-      setRooms(prev => prev.map(r => r._id === msg.chatId ? { ...r, lastMessage: msg } : r))
+      
+      // Move room to top of the list and update its lastMessage
+      setRooms(prev => {
+        const updatedRooms = prev.map(r => r._id === msg.chatId ? { ...r, lastMessage: msg, updatedAt: new Date().toISOString() } : r)
+        // Sort rooms by updatedAt descending
+        return updatedRooms.sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0))
+      })
     }
 
     const onEdited  = (msg) => setMessages(prev => prev.map(m => m._id === msg._id ? msg : m))
@@ -448,7 +454,12 @@ export default function Chat() {
                     />
                   )}
                   {msg.type === 'audio' && msg.mediaUrl && (
-                    <audio src={msg.mediaUrl} controls className="w-full max-w-[220px] h-8 mb-1" />
+                    <audio 
+                      src={msg.mediaUrl} 
+                      controls 
+                      className="w-[240px] max-w-full h-10 mb-1 rounded-full bg-black/5 dark:bg-white/10"
+                      controlsList="nodownload noplaybackrate"
+                    />
                   )}
                   {msg.text && (
                     <p className={`break-words whitespace-pre-wrap ${isMe ? 'text-white' : 'text-light-text dark:text-dark-text'}`}>

@@ -47,6 +47,18 @@ export function SocketProvider({ children }) {
       setUnreadCount(prev => prev + 1)
     })
 
+    socket.on('global-new-message', (data) => {
+      const { message, roomName } = data
+      // Only show toast if we are not actively on the chat page, or we could just always show it 
+      // (a quick check: if the user is actively viewing this room, we might not want it, but global toast is fine)
+      import('sonner').then(({ toast }) => {
+        toast.info(`New message in ${roomName}`, {
+          description: message.text || 'Sent an attachment 📎',
+          action: { label: 'Reply', onClick: () => window.location.href = '/chat' }
+        })
+      })
+    })
+
     socket.on('user-typing', ({ userId, isTyping }) => {
       // handled in ChatWindow
     })

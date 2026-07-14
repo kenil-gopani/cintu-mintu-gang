@@ -143,9 +143,23 @@ exports.sendMessage = async (req, res) => {
 
     await ChatRoom.findByIdAndUpdate(req.params.roomId, { lastMessage: msg._id, updatedAt: new Date() })
 
-    // Broadcast to room
+    // Broadcast to room (for active chat UI)
     const io = getIo()
-    if (io) io.to(req.params.roomId).emit('new-message', msg)
+    if (io) {
+      io.to(req.params.roomId).emit('new-message', msg)
+      
+      // Global notification to participants
+      room.participants.forEach(p => {
+        const pId = p.toString()
+        if (pId !== req.user._id.toString()) {
+          io.to(pId).emit('global-new-message', {
+            message: msg,
+            roomName: room.isGroup ? room.name : req.user.nickname || req.user.name,
+            roomId: room._id
+          })
+        }
+      })
+    }
 
     res.status(201).json({ message: msg })
   } catch (err) { res.status(500).json({ message: err.message }) }

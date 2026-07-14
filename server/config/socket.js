@@ -48,6 +48,9 @@ function init(server) {
   io.on('connection', (socket) => {
     const userId = socket.user._id.toString()
     
+    // Join global user room for personal notifications
+    socket.join(userId)
+    
     if (!onlineMap.has(userId)) {
       onlineMap.set(userId, new Set())
     }
