@@ -14,7 +14,7 @@ const navItems = [
   { to: '/tree',     icon: Network,       label: 'Family Tree' },
   { to: '/polls',    icon: CheckCircle2,  label: 'Polls' },
   { to: '/birthday', icon: Gift,          label: 'Birthdays' },
-  { to: '/chat',     icon: MessageCircle, label: 'Family Chat',     comingSoon: true },
+  { to: '/chat',     icon: MessageCircle, label: 'Family Chat' },
   { to: '/games',    icon: Laugh,         label: 'Arcade & Games',  comingSoon: true },
 ]
 

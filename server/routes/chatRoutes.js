@@ -5,13 +5,22 @@ const { uploadChat } = require('../config/cloudinary')
 
 router.use(protect)
 
-router.get('/rooms', ctrl.getRooms)
-router.post('/room/private/:userId', ctrl.getOrCreatePrivateRoom)
-router.post('/room/group', ctrl.createGroupRoom)
+// Rooms
+router.get('/rooms',                         ctrl.getRooms)
+router.post('/room/private/:userId',         ctrl.getOrCreatePrivateRoom)
+router.post('/room/group',                   ctrl.createGroupRoom)
 
-router.get('/room/:roomId/messages', ctrl.getMessages)
+// Messages in a room
+router.get('/room/:roomId/messages',         ctrl.getMessages)
 router.post('/room/:roomId/message', uploadChat.single('media'), ctrl.sendMessage)
 
-router.post('/message/:msgId/read', ctrl.markMessageRead)
+// Single message operations
+router.put('/message/:msgId',                ctrl.editMessage)
+router.delete('/message/:msgId',             ctrl.deleteMessage)
+router.post('/message/:msgId/react',         ctrl.reactMessage)
+router.post('/message/:msgId/read',          ctrl.markMessageRead)
+
+// AI Assistant
+router.post('/ai',                           ctrl.aiChat)
 
 module.exports = router

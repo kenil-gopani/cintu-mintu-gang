@@ -48,12 +48,16 @@ export const memberService = {
 }
 
 export const chatService = {
-  getRooms: () => api.get('/chat/rooms'),
+  getRooms:               () => api.get('/chat/rooms'),
   getOrCreatePrivateRoom: (userId) => api.post(`/chat/room/private/${userId}`),
-  createGroupRoom: (data) => api.post('/chat/room/group', data),
-  getMessages: (roomId) => api.get(`/chat/room/${roomId}/messages`),
-  sendMessage: (roomId, formData) => api.post(`/chat/room/${roomId}/message`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  markRead: (msgId) => api.post(`/chat/message/${msgId}/read`),
+  createGroupRoom:        (data) => api.post('/chat/room/group', data),
+  getMessages:            (roomId) => api.get(`/chat/room/${roomId}/messages`),
+  sendMessage:            (roomId, formData) => api.post(`/chat/room/${roomId}/message`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  editMessage:            (msgId, text) => api.put(`/chat/message/${msgId}`, { text }),
+  deleteMessage:          (msgId) => api.delete(`/chat/message/${msgId}`),
+  reactMessage:           (msgId, emoji) => api.post(`/chat/message/${msgId}/react`, { emoji }),
+  markRead:               (msgId) => api.post(`/chat/message/${msgId}/read`),
+  sendAiMessage:          (message) => api.post('/chat/ai', { message }),
 }
 
 export const notifService = {
