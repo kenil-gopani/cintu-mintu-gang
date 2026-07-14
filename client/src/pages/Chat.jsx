@@ -80,25 +80,34 @@ export default function Chat() {
   const fileInputRef   = useRef(null)
   const inputRef       = useRef(null)
 
-  // ─────────────────────────────────────────────────────────────
-  // Init
-  // ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    // First ensure the permanent Gang Chat exists (idempotent), then load all rooms
-    chatService.initGangChat().catch(() => {}).finally(() => {
-      Promise.all([
-        chatService.getRooms(),
-        memberService.getAll()
-      ]).then(([roomsRes, membersRes]) => {
-        const fetchedRooms = roomsRes.data.rooms
+    const loadChat = async () => {
+      try {
+        // Ensure the permanent Gang Chat exists — safe to fail silently on 404
+        await chatService.initGangChat().catch(() => {})
+
+        const [roomsRes, membersRes] = await Promise.all([
+          chatService.getRooms(),
+          memberService.getAll()
+        ])
+
+        const fetchedRooms = roomsRes.data.rooms || []
+        const fetchedMembers = membersRes.data.users || []
+
         setRooms(fetchedRooms)
-        setMembers(membersRes.data.users)
-        // Auto-select gang chat
+        setMembers(fetchedMembers)
+
+        // Auto-select gang chat if it exists
         const gang = fetchedRooms.find(r => r.isGroup && r.name === GANG_CHAT_NAME)
         if (gang) { setActiveRoom(gang); setSection('gang') }
+      } catch (err) {
+        console.error('Chat init error:', err)
+        toast.error('Failed to load chat. Please refresh.')
+      } finally {
         setLoading(false)
-      }).catch(() => setLoading(false))
-    })
+      }
+    }
+    loadChat()
   }, [])
 
   // ─────────────────────────────────────────────────────────────
