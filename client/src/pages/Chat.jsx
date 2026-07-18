@@ -479,7 +479,9 @@ export default function Chat() {
                           th: ({node, ...props}) => <th className="border border-black/10 dark:border-white/10 px-2 py-1.5 bg-black/5 dark:bg-white/5 text-left font-bold" {...props} />,
                           td: ({node, ...props}) => <td className="border border-black/10 dark:border-white/10 px-2 py-1.5" {...props} />,
                           a: ({node, ...props}) => <a className="underline text-blue-300 hover:text-blue-400" target="_blank" rel="noopener noreferrer" {...props} />,
-                          code: ({inline, ...props}) => inline ? <code className="bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded text-[0.9em]" {...props} /> : <pre className="bg-black/10 dark:bg-white/10 p-2 rounded mb-2 overflow-x-auto text-[0.9em]"><code {...props} /></pre>
+                          code: ({inline, ...props}) => inline ? <code className="bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded text-[0.9em]" {...props} /> : <pre className="bg-black/10 dark:bg-white/10 p-2 rounded mb-2 overflow-x-auto text-[0.9em]"><code {...props} /></pre>,
+                          strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
+                          em: ({node, ...props}) => <em className="italic" {...props} />
                         }}
                       >
                         {msg.text}
