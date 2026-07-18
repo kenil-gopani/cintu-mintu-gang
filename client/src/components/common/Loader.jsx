@@ -45,16 +45,14 @@ const StyledWrapper = styled.div`
     position: relative;
     animation: float 2s ease-in-out infinite;
     z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .arrows {
     width: 50px;
     height: 50px;
     position: absolute;
-    top: -15px; /* Center perfectly on the cloud */
+    top: -24px;
+    left: 5px;
     fill: #80b1ff;
     animation: rotation 1s linear infinite;
     transform-origin: 50% 72.8938%; /* Matches the original SVG rotation pivot */
