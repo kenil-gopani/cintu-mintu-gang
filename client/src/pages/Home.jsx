@@ -411,7 +411,7 @@ export default function Home() {
             <div className="space-y-4">
               {stats.leaderboard?.length > 0 ? stats.leaderboard.map((u, i) => (
                 <div key={u._id} className="flex items-center gap-3 relative">
-                  <div className="w-6 text-center font-black text-gray-300 dark:text-gray-600 text-lg">#{i+1}</div>
+                  <div className="w-6 text-center font-black text-gray-400 dark:text-gray-600 text-lg">#{i+1}</div>
                   <Avatar src={u.avatar} name={u.name} size={36} />
                   <div className="flex-1">
                     <p className="font-bold text-sm">{u.name}</p>
