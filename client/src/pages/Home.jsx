@@ -16,12 +16,56 @@ import Modal from '../components/common/Modal'
 
 // --- Quotes Data ---
 const FAMILY_QUOTES = [
-  "Family is not an important thing. It's everything.",
-  "The memories we make with our family is everything.",
-  "Family: Where life begins and love never ends.",
-  "Time spent with family is worth every second.",
+  "Family is where life begins and love never ends.",
+  "Home is built by family, not walls.",
+  "Family is the heart of every home.",
+  "Love grows best in a family.",
+  "Family makes every moment meaningful.",
   "Together is our favorite place to be.",
-  "In time of test, family is best."
+  "Family is life's greatest blessing.",
+  "Every family has a story worth telling.",
+  "Family is forever.",
+  "Happiness begins at home.",
+  "Family is the strongest foundation.",
+  "Love starts with family.",
+  "Family is the anchor in every storm.",
+  "A loving family is life's greatest gift.",
+  "Family is where you truly belong.",
+  "Home is wherever family is.",
+  "Family makes ordinary days extraordinary.",
+  "Family is the greatest adventure.",
+  "The best memories are made with family.",
+  "Family is love in its purest form.",
+  "Family is life's masterpiece.",
+  "Love never leaves a family.",
+  "Family is the root of happiness.",
+  "Family is your first team.",
+  "Together, we are stronger.",
+  "Family turns houses into homes.",
+  "Family is your forever support.",
+  "Every smile starts with family.",
+  "Family is a circle of strength.",
+  "Family is the greatest treasure.",
+  "Family makes life complete.",
+  "Love is spelled F-A-M-I-L-Y.",
+  "Family is the best kind of forever.",
+  "Family creates priceless memories.",
+  "Family is always worth celebrating.",
+  "Home is filled with family laughter.",
+  "Family is your safe place.",
+  "Family is where hearts connect.",
+  "Family gives life its meaning.",
+  "Family is love without limits.",
+  "Family is the key to happiness.",
+  "Family brings out the best in us.",
+  "Family is your greatest strength.",
+  "Family is life's sweetest gift.",
+  "Family stands by you always.",
+  "Love grows with family.",
+  "Family is where dreams begin.",
+  "Family is a lifelong blessing.",
+  "Family is a reason to smile.",
+  "Family is the heart's home."
 ]
 
 // --- Weather Helper ---
@@ -61,7 +105,7 @@ export default function Home() {
   const [newPoll, setNewPoll] = useState({ question: '', options: ['', ''] })
   
   const confettiFired = useRef(false)
-  const [quote] = useState(() => FAMILY_QUOTES[new Date().getDay() % FAMILY_QUOTES.length])
+  const [quote] = useState(() => FAMILY_QUOTES[Math.floor(Date.now() / 86400000) % FAMILY_QUOTES.length])
 
   useEffect(() => {
     // 1. Fetch Birthdays
