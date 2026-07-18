@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Shield, Trash2, UserX, Crown, Copy, Plus, Check, 
   BarChart3, Users, LayoutDashboard, Send, Settings, Image as ImageIcon,
-  Calendar, Moon, Sun, Bell, KeyRound
+  Calendar, Moon, Sun, Bell, KeyRound, MessageCircle
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { adminService, galleryService, eventService } from '../services/services'
@@ -183,7 +183,7 @@ export default function Admin() {
         </div>
         <div className="card p-6 border-t-4 border-secondary bg-gradient-to-b from-secondary/5 to-transparent">
           <div className="flex justify-between items-start mb-4">
-            <div className="p-2 bg-secondary/10 rounded-lg text-secondary"><BarChart3 size={24} /></div>
+            <div className="p-2 bg-secondary/10 rounded-lg text-secondary"><MessageCircle size={24} /></div>
           </div>
           <p className="text-3xl font-extrabold">{analytics.messages || 0}</p>
           <p className="text-sm font-bold text-gray-500 mt-1">Chat Messages</p>
