@@ -15,7 +15,7 @@ const navItems = [
   { to: '/polls',    icon: CheckCircle2,  label: 'Polls' },
   { to: '/birthday', icon: Gift,          label: 'Birthdays' },
   { to: '/chat',     icon: MessageCircle, label: 'Family Chat' },
-  { to: '/games',    icon: Laugh,         label: 'Arcade & Games',  comingSoon: true },
+  { to: '/games',    icon: Laugh,         label: 'Arcade & Games' },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
