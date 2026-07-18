@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const Loader = ({ scale = 1, className = '' }) => {
   return (
-    <div className={`flex items-center justify-center ${className}`} style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
-      <StyledWrapper>
+    <div className={`flex items-center justify-center ${className}`}>
+      <StyledWrapper $scale={scale}>
         <div className="cloud-wrapper">
           <div className="cloud"></div>
           <div className="cloud-shadow"></div>
@@ -15,8 +15,8 @@ const Loader = ({ scale = 1, className = '' }) => {
 }
 
 const StyledWrapper = styled.div`
-  width: 80px;
-  height: 60px;
+  width: ${props => 80 * props.$scale}px;
+  height: ${props => 60 * props.$scale}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,6 +26,8 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    transform: scale(${props => props.$scale});
+    transform-origin: center;
   }
 
   .cloud {
