@@ -323,3 +323,25 @@ exports.adminResetPassword = async (req, res) => {
     res.status(500).json({ message: 'Server error' })
   }
 }
+
+// PUT /api/users/:id/points
+// Admin only
+exports.adminUpdatePoints = async (req, res) => {
+  try {
+    const { points } = req.body
+    if (points === undefined || isNaN(points)) {
+      return res.status(400).json({ message: 'Valid points value is required.' })
+    }
+
+    const user = await User.findById(req.params.id)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    user.points = Number(points)
+    await user.save({ validateBeforeSave: false })
+
+    res.json({ message: `Points updated successfully to ${points}`, points: user.points })
+  } catch (err) {
+    console.error('Admin update points error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}

@@ -92,6 +92,7 @@ export const adminService = {
   getAnalytics: () => api.get('/admin/analytics'),
   pushNotification: (data) => api.post('/admin/push', data),
   resetUserPassword: (id, newPassword) => api.put(`/users/${id}/admin-reset-password`, { newPassword }),
+  updateUserPoints: (id, points) => api.put(`/users/${id}/admin-update-points`, { points }),
 }
 
 export const notificationService = {

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Shield, Trash2, UserX, Crown, Copy, Plus, Check, 
   BarChart3, Users, LayoutDashboard, Send, Settings, Image as ImageIcon,
-  Calendar, Moon, Sun, Bell, KeyRound, MessageCircle
+  Calendar, Moon, Sun, Bell, KeyRound, MessageCircle, Star
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { adminService, galleryService, eventService } from '../services/services'
@@ -95,6 +95,22 @@ export default function Admin() {
       toast.success(`Password for ${name} has been reset.`)
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to reset password')
+    }
+  }
+
+  const handleEditPoints = async (id, name, currentPoints) => {
+    const input = window.prompt(`Enter new points for ${name} (currently ${currentPoints}):`, currentPoints)
+    if (input === null) return // cancelled
+    
+    const newPoints = parseInt(input, 10)
+    if (isNaN(newPoints)) return toast.error('Invalid points value.')
+
+    try {
+      await adminService.updateUserPoints(id, newPoints)
+      setMembers(prev => prev.map(m => m._id === id ? { ...m, points: newPoints } : m))
+      toast.success(`Points for ${name} updated to ${newPoints}.`)
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update points')
     }
   }
 
@@ -202,12 +218,22 @@ export default function Admin() {
             <div key={member._id} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700">
               <Avatar src={member.avatar} name={member.name} size={48} className="shadow-md" />
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-base truncate">{member.nickname || member.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-bold text-base truncate">{member.nickname || member.name}</p>
+                  <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">{member.points || 0} pts</span>
+                </div>
                 <p className="text-xs text-gray-500 font-semibold truncate">{member.email}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {member._id !== user._id && (
                   <>
+                    <button
+                      onClick={() => handleEditPoints(member._id, member.name, member.points || 0)}
+                      className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:text-yellow-400"
+                      title="Edit Points"
+                    >
+                      <Star size={16} />
+                    </button>
                     <button
                       onClick={() => handleResetPassword(member._id, member.name)}
                       className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/20 hover:text-blue-500 dark:hover:text-blue-400"
