@@ -607,9 +607,9 @@ export default function Chat() {
             </div>
           )}
           <div>
-            <h3 className="font-bold text-sm text-light-text dark:text-dark-text">{getRoomName(activeRoom)}</h3>
+            <h3 className="font-bold text-sm text-light-text dark:text-dark-text">{activeRoom.isGroup ? 'Cintu-Mintu Gang' : getRoomName(activeRoom)}</h3>
             <p className={`text-[10px] font-semibold ${typing ? 'text-primary animate-pulse' : online ? 'text-green-500' : 'text-light-muted dark:text-dark-muted'}`}>
-              {typing || (activeRoom.isGroup ? `${activeRoom.participants?.length} members` : online ? 'Online' : 'Offline')}
+              {typing || (activeRoom.isGroup ? `${members.length} members` : online ? 'Online' : 'Offline')}
             </p>
           </div>
         </div>
@@ -642,7 +642,7 @@ export default function Chat() {
         <div className="flex-1 overflow-y-auto sidebar-scroll py-2">
           {/* Gang Chat */}
           <div className="px-3 mb-1">
-            <p className="text-[9px] font-black uppercase tracking-wider text-light-muted dark:text-dark-muted px-2 mb-1">Group</p>
+            <p className="text-[9px] font-black uppercase tracking-wider text-light-muted dark:text-dark-muted px-2 mb-1">Cintu-Mintu Gang</p>
             <button
               onClick={() => { switchToGang(); setSidebarOpen(false) }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-[14px] text-left transition-all
@@ -655,7 +655,7 @@ export default function Chat() {
                 <span className="text-lg">💬</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className={`font-bold text-sm truncate ${section === 'gang' ? 'text-white' : ''}`}>Gang Chat</p>
+                <p className={`font-bold text-sm truncate ${section === 'gang' ? 'text-white' : ''}`}>Cintu-Mintu Gang</p>
                 <p className={`text-[10px] truncate ${section === 'gang' ? 'text-white/70' : 'text-light-muted dark:text-dark-muted'}`}>
                   {gangRoom?.lastMessage?.text || 'Say something 👋'}
                 </p>
