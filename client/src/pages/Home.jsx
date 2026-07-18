@@ -256,7 +256,7 @@ export default function Home() {
           ) : (
             <div className="card p-5 h-full flex flex-col justify-between">
               <div>
-                <div className="w-9 h-9 rounded-xl bg-primary dark:bg-primary/30 flex items-center justify-center text-primary dark:text-primary mb-3">
+                <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-3">
                   <Users size={18} />
                 </div>
                 <p className="text-xs font-semibold text-light-sub dark:text-dark-sub">Gang Member</p>
