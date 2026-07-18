@@ -43,6 +43,7 @@ const StyledWrapper = styled.div`
     background: #4387f4;
     border-radius: 50px;
     position: relative;
+    margin-top: 15px; /* Pushes the overflowing top fluff down to center the visual bounds */
     animation: float 2s ease-in-out infinite;
     z-index: 10;
   }
