@@ -93,33 +93,11 @@ exports.getDashboardStats = async (req, res) => {
     const upcomingEventsCount = await Event.countDocuments({ date: { $gte: new Date() } })
     const totalPolls = await Poll.countDocuments()
 
-    // Build Leaderboard (very simple points system based on uploaded items)
-    const users = await User.find({ isActive: true }).select('name avatar')
-    const memories = await Memory.find().select('uploadedBy')
-    const events = await Event.find().select('createdBy')
-    const polls = await Poll.find().select('createdBy')
-
-    const userStats = users.map(u => ({
-      _id: u._id,
-      name: u.name,
-      avatar: u.avatar,
-      points: 0
-    }))
-
-    memories.forEach(m => {
-      const u = userStats.find(us => us._id.toString() === m.uploadedBy?.toString())
-      if (u) u.points += 5
-    })
-    events.forEach(e => {
-      const u = userStats.find(us => us._id.toString() === e.createdBy?.toString())
-      if (u) u.points += 10
-    })
-    polls.forEach(p => {
-      const u = userStats.find(us => us._id.toString() === p.createdBy?.toString())
-      if (u) u.points += 2
-    })
-
-    const leaderboard = userStats.sort((a, b) => b.points - a.points).slice(0, 5)
+    // Build Leaderboard (based on persistent points field)
+    const leaderboard = await User.find({ isActive: true })
+      .select('name avatar points')
+      .sort({ points: -1 })
+      .limit(5)
 
     res.json({
       totalMembers,

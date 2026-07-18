@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
   occupation:   { type: String, default: '' },
   badges:       [{ type: String }],
   gamePoints:   { type: Number, default: 0 },
+  points:       { type: Number, default: 0 },
+  dailyPointsEarned: { type: Number, default: 0 },
+  lastPointsReset: { type: Date, default: Date.now },
+  lastLoginDate: { type: Date },
 
   // ─── Family Tree Relations ───────────────────────────────
   spouse:       { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

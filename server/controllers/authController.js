@@ -8,6 +8,7 @@ const {
   sendPasswordResetEmail,
   sendWelcomeEmail,
 } = require('../utils/emailService')
+const { awardPoints } = require('../utils/points')
 
 // ─────────────────────────────────────────────────────────────
 // POST /api/auth/register
@@ -98,6 +99,9 @@ exports.login = async (req, res) => {
     user.rememberMe = rememberMe
     await user.save({ validateBeforeSave: false })
 
+    // Award daily login points
+    await awardPoints(user._id, 10, 'LOGIN')
+
     const token = generateToken(user._id, rememberMe)
     res.json({
       token,
@@ -121,6 +125,10 @@ exports.logout = (req, res) => {
 // GET /api/auth/me
 // ─────────────────────────────────────────────────────────────
 exports.getMe = async (req, res) => {
+  // Award daily login points for returning users
+  if (req.user) {
+    await awardPoints(req.user._id, 10, 'LOGIN')
+  }
   res.json({ user: req.user })
 }
 

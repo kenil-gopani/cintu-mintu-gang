@@ -2,6 +2,7 @@ const Event = require('../models/Event')
 const User = require('../models/User')
 const { createNotification } = require('./notificationController')
 const { sendNotificationEmail } = require('../utils/emailService')
+const { awardPoints } = require('../utils/points')
 
 exports.getAllEvents = async (req, res) => {
   try {
@@ -19,6 +20,9 @@ exports.createEvent = async (req, res) => {
     const { title, description, date, location, locationUrl, type } = req.body
     const event = await Event.create({ title, description, date, location, locationUrl, type, createdBy: req.user._id })
     await event.populate('createdBy', 'name nickname avatar')
+    
+    // Award points
+    await awardPoints(req.user._id, 10, 'ACTION')
     
     // Notify users
     const users = await User.find({ _id: { $ne: req.user._id }, isActive: true }).select('_id email')

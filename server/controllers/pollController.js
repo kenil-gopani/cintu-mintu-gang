@@ -1,6 +1,7 @@
 const Poll = require('../models/Poll')
 const User = require('../models/User')
 const { createNotification } = require('./notificationController')
+const { awardPoints } = require('../utils/points')
 
 exports.getAllPolls = async (req, res) => {
   try {
@@ -20,6 +21,9 @@ exports.createPoll = async (req, res) => {
     }
     const poll = await Poll.create({ question, options, createdBy: req.user._id, expiresAt })
     await poll.populate('createdBy', 'name nickname')
+    
+    // Award points
+    await awardPoints(req.user._id, 2, 'ACTION')
     
     // Notify users
     const users = await User.find({ _id: { $ne: req.user._id }, isActive: true }).select('_id')

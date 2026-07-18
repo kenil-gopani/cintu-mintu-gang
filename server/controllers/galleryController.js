@@ -1,6 +1,7 @@
 const Memory = require('../models/Memory')
 const User = require('../models/User')
 const { createNotification } = require('./notificationController')
+const { awardPoints } = require('../utils/points')
 const { cloudinary } = require('../config/cloudinary')
 
 // GET /api/gallery
@@ -70,6 +71,9 @@ exports.uploadMemory = async (req, res) => {
     const memory = await Memory.create(memoryData)
     await memory.populate('uploadedBy', 'name nickname avatar')
     
+    // Award points
+    await awardPoints(req.user._id, 5, 'ACTION')
+
     // Notify others
     const users = await User.find({ _id: { $ne: req.user._id }, isActive: true }).select('_id')
     if (users.length > 0) {
