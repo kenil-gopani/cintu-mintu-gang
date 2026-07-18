@@ -210,24 +210,24 @@ export default function Admin() {
                   <>
                     <button
                       onClick={() => handleResetPassword(member._id, member.name)}
-                      className="btn-icon shadow-sm bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-500"
+                      className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/20 hover:text-blue-500 dark:hover:text-blue-400"
                       title="Reset Password"
                     >
                       <KeyRound size={16} />
                     </button>
                     <button
                       onClick={() => handleRoleChange(member._id, member.role === 'admin' ? 'member' : 'admin')}
-                      className={`btn-icon shadow-sm ${member.role === 'admin' ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-500 hover:bg-amber-50 hover:text-amber-500'}`}
+                      className={`btn-icon shadow-sm ${member.role === 'admin' ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400' : 'bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-amber-500/20 hover:text-amber-500 dark:hover:text-amber-400'}`}
                       title={member.role === 'admin' ? 'Demote' : 'Promote'}
                     >
                       <Crown size={16} />
                     </button>
-                    <button onClick={() => handleRemove(member._id)} className="btn-icon shadow-sm bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500" title="Remove Member">
+                    <button onClick={() => handleRemove(member._id)} className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-500/20 hover:text-red-500 dark:hover:text-red-400" title="Remove Member">
                       <UserX size={16} />
                     </button>
                   </>
                 )}
-                <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm ${member.role === 'admin' ? 'bg-amber-100 text-amber-700' : 'bg-secondary text-secondary'}`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm ${member.role === 'admin' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-secondary/10 dark:bg-secondary/20 text-secondary'}`}>
                   {member.role}
                 </span>
               </div>
