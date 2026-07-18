@@ -38,7 +38,7 @@ export default function App() {
   return (
     <div className={isDark ? 'dark' : ''}>
       <ErrorBoundary>
-        <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300 overflow-x-hidden">
+        <div className="layout-height bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300 overflow-x-hidden">
           <CustomCursor />
           <AnimatePresence mode="wait">
             <Suspense fallback={<PageSpinner />}>
