@@ -622,6 +622,7 @@ export default function Chat() {
   // ─────────────────────────────────────────────────────────────
   const renderSidebar = () => {
     const gangRoom = rooms.find(r => r.isGroup && r.name === GANG_CHAT_NAME)
+    const adminTestRoom = rooms.find(r => r.isGroup && r.name === 'Admin Test Chat')
     const dmRooms  = rooms.filter(r => !r.isGroup)
 
     return (
@@ -662,6 +663,30 @@ export default function Chat() {
               </div>
             </button>
           </div>
+
+          {/* Admin Test Chat (Only visible to admin if the room exists) */}
+          {user?.role === 'admin' && adminTestRoom && (
+            <div className="px-3 mb-1">
+              <button
+                onClick={() => { setSection('dm'); setActiveRoom(adminTestRoom); setSidebarOpen(false) }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-[14px] text-left transition-all
+                  ${section === 'dm' && activeRoom?._id === adminTestRoom._id
+                    ? 'bg-yellow-500 text-white'
+                    : 'hover:bg-light-bg dark:hover:bg-dark-bg text-light-text dark:text-dark-text'
+                  }`}
+              >
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${section === 'dm' && activeRoom?._id === adminTestRoom._id ? 'bg-white/20' : 'bg-gradient-to-br from-yellow-400 to-orange-500'}`}>
+                  <span className="text-lg">🧪</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={`font-bold text-sm truncate ${section === 'dm' && activeRoom?._id === adminTestRoom._id ? 'text-white' : ''}`}>Admin Test Chat</p>
+                  <p className={`text-[10px] truncate ${section === 'dm' && activeRoom?._id === adminTestRoom._id ? 'text-white/70' : 'text-light-muted dark:text-dark-muted'}`}>
+                    {adminTestRoom?.lastMessage?.text || 'Testing area'}
+                  </p>
+                </div>
+              </button>
+            </div>
+          )}
 
           {/* AI Assistant */}
           <div className="px-3 mb-1">
