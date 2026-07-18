@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Loader = ({ scale = 1, className = '' }) => {
+const Loader = ({ scale = 1, className = '', fullscreen = false }) => {
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div className={`flex items-center justify-center ${fullscreen ? 'min-h-[60vh] w-full' : ''} ${className}`}>
       <StyledWrapper $scale={scale}>
         <div className="cloud-wrapper">
           <div className="cloud">

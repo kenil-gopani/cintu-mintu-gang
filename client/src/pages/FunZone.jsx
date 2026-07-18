@@ -92,7 +92,7 @@ export default function FunZone() {
       </motion.div>
 
       {/* Polls */}
-      {loading ? <Loader /> : (
+      {loading ? <Loader fullscreen /> : (
         polls.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🗳️</div>

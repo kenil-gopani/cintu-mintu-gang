@@ -77,7 +77,7 @@ export default function Birthdays() {
     )
   }
 
-  if (loading) return <Loader />
+  if (loading) return <Loader fullscreen />
 
   return (
     <div className="page-container">
