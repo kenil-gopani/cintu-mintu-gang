@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Shield, Trash2, UserX, Crown, Copy, Plus, Check, 
   BarChart3, Users, LayoutDashboard, Send, Settings, Image as ImageIcon,
-  Calendar, Moon, Sun, Bell
+  Calendar, Moon, Sun, Bell, KeyRound
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { adminService, galleryService, eventService } from '../services/services'
@@ -78,7 +78,24 @@ export default function Admin() {
       await adminService.removeMember(id)
       setMembers(prev => prev.filter(m => m._id !== id))
       toast.success('Member removed')
-    } catch { toast.error('Remove failed') }
+    } catch {
+      toast.error('Failed to remove member')
+    }
+  }
+
+  const handleResetPassword = async (id, name) => {
+    const newPassword = window.prompt(`Enter new password for ${name}:`)
+    if (!newPassword) return
+    if (newPassword.length < 8) {
+      return toast.error('Password must be at least 8 characters long')
+    }
+    
+    try {
+      await adminService.resetUserPassword(id, newPassword)
+      toast.success(`Password for ${name} has been reset.`)
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to reset password')
+    }
   }
 
   const handleGenerateInvite = async () => {
@@ -192,13 +209,20 @@ export default function Admin() {
                 {member._id !== user._id && (
                   <>
                     <button
+                      onClick={() => handleResetPassword(member._id, member.name)}
+                      className="btn-icon shadow-sm bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-500"
+                      title="Reset Password"
+                    >
+                      <KeyRound size={16} />
+                    </button>
+                    <button
                       onClick={() => handleRoleChange(member._id, member.role === 'admin' ? 'member' : 'admin')}
                       className={`btn-icon shadow-sm ${member.role === 'admin' ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-500 hover:bg-amber-50 hover:text-amber-500'}`}
                       title={member.role === 'admin' ? 'Demote' : 'Promote'}
                     >
                       <Crown size={16} />
                     </button>
-                    <button onClick={() => handleRemove(member._id)} className="btn-icon shadow-sm bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500">
+                    <button onClick={() => handleRemove(member._id)} className="btn-icon shadow-sm bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500" title="Remove Member">
                       <UserX size={16} />
                     </button>
                   </>

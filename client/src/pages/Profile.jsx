@@ -28,6 +28,13 @@ export default function Profile() {
   const [saving, setSaving] = useState(false)
   const [photos, setPhotos] = useState([])
   const [newFact, setNewFact] = useState('')
+  
+  // Password change state
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [updatingPassword, setUpdatingPassword] = useState(false)
+
   const avatarRef = useRef()
 
   const targetId = id || user?._id
@@ -66,8 +73,33 @@ export default function Profile() {
       updateUser(res.data.user)
       setEditing(false)
       toast.success('Profile updated! ✨')
-    } catch { toast.error('Update failed') }
-    finally { setSaving(false) }
+    } catch {
+      toast.error('Failed to save profile')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault()
+    if (newPassword !== confirmPassword) {
+      return toast.error('New passwords do not match')
+    }
+    if (newPassword.length < 8) {
+      return toast.error('Password must be at least 8 characters long')
+    }
+    setUpdatingPassword(true)
+    try {
+      await memberService.updatePassword(user._id, { currentPassword, newPassword })
+      toast.success('Password updated successfully! 🔒')
+      setCurrentPassword('')
+      setNewPassword('')
+      setConfirmPassword('')
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update password')
+    } finally {
+      setUpdatingPassword(false)
+    }
   }
 
   const handleAvatarChange = async (e) => {
@@ -250,6 +282,48 @@ export default function Profile() {
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Security Settings */}
+        {isMe && (
+          <div className="card p-5 mb-5">
+            <h3 className="section-title">🔒 Security Settings</h3>
+            <form onSubmit={handleUpdatePassword} className="space-y-3">
+              <input
+                type="password"
+                placeholder="Current Password"
+                className="input-field text-sm"
+                value={currentPassword}
+                onChange={e => setCurrentPassword(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="New Password (min 8 chars)"
+                className="input-field text-sm"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                required
+                minLength={8}
+              />
+              <input
+                type="password"
+                placeholder="Confirm New Password"
+                className="input-field text-sm"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                required
+                minLength={8}
+              />
+              <button 
+                type="submit" 
+                disabled={updatingPassword}
+                className="btn-primary w-full text-sm py-2.5"
+              >
+                {updatingPassword ? 'Updating...' : 'Change Password'}
+              </button>
+            </form>
           </div>
         )}
 

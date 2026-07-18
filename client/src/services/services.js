@@ -37,6 +37,7 @@ export const memberService = {
   getAll:     () => api.get('/users'),
   getOne:     (id) => api.get(`/users/${id}`),
   update:     (id, data) => api.put(`/users/${id}`, data),
+  updatePassword: (id, data) => api.put(`/users/${id}/password`, data),
   uploadAvatar: (id, formData) => api.put(`/users/${id}/avatar`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   getBirthdays: () => api.get('/users/birthdays'),
   getDashboardStats: () => api.get('/users/dashboard-stats'),
@@ -89,7 +90,8 @@ export const adminService = {
   getInvites:   () => api.get('/admin/invites'),
   createInvite: () => api.post('/admin/invites'),
   getAnalytics: () => api.get('/admin/analytics'),
-  pushNotification: (data) => api.post('/admin/push', data)
+  pushNotification: (data) => api.post('/admin/push', data),
+  resetUserPassword: (id, newPassword) => api.put(`/users/${id}/admin-reset-password`, { newPassword }),
 }
 
 export const notificationService = {

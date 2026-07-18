@@ -14,6 +14,8 @@ router.post('/tree/member',     ctrl.createFamilyMember)
 router.delete('/tree/member/:id', ctrl.deleteFamilyMember)
 router.get('/:id',              ctrl.getUserById)
 router.put('/:id',              ctrl.updateUser)
+router.put('/:id/password',     ctrl.updatePassword)
+router.put('/:id/admin-reset-password', ctrl.adminResetPassword)
 router.put('/:id/relations',    ctrl.updateRelations)
 router.put('/:id/avatar', uploadAvatar.single('avatar'), ctrl.updateAvatar)
 

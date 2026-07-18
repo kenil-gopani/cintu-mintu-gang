@@ -290,3 +290,58 @@ exports.updateRelations = async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 }
+
+// ─────────────────────────────────────────────────────────────
+// PUT /api/users/:id/password
+// User changes their own password
+// ─────────────────────────────────────────────────────────────
+exports.updatePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    
+    if (req.user._id.toString() !== req.params.id) {
+      return res.status(403).json({ message: 'Not authorized to change this password.' })
+    }
+
+    const user = await User.findById(req.params.id).select('+password')
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    const bcrypt = require('bcryptjs')
+    const isMatch = await bcrypt.compare(currentPassword, user.password)
+    if (!isMatch) return res.status(400).json({ message: 'Incorrect current password.' })
+
+    user.password = await bcrypt.hash(newPassword, 12)
+    await user.save()
+
+    res.json({ message: 'Password updated successfully' })
+  } catch (err) {
+    console.error('Update password error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// PUT /api/users/:id/admin-reset-password
+// Admin forcefully resets a user's password
+// ─────────────────────────────────────────────────────────────
+exports.adminResetPassword = async (req, res) => {
+  try {
+    const { newPassword } = req.body
+
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Admin privileges required.' })
+    }
+
+    const user = await User.findById(req.params.id)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    const bcrypt = require('bcryptjs')
+    user.password = await bcrypt.hash(newPassword, 12)
+    await user.save()
+
+    res.json({ message: `Password for ${user.name} has been reset successfully.` })
+  } catch (err) {
+    console.error('Admin reset password error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
