@@ -345,3 +345,25 @@ exports.adminUpdatePoints = async (req, res) => {
     res.status(500).json({ message: 'Server error' })
   }
 }
+
+// PUT /api/users/:id/admin-update-game-points
+// Admin only
+exports.adminUpdateGamePoints = async (req, res) => {
+  try {
+    const { gamePoints } = req.body
+    if (gamePoints === undefined || isNaN(gamePoints)) {
+      return res.status(400).json({ message: 'Valid gamePoints value is required.' })
+    }
+
+    const user = await User.findById(req.params.id)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    user.gamePoints = Number(gamePoints)
+    await user.save({ validateBeforeSave: false })
+
+    res.json({ message: `Game points updated successfully to ${gamePoints}`, gamePoints: user.gamePoints })
+  } catch (err) {
+    console.error('Admin update game points error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}

@@ -17,6 +17,7 @@ router.put('/:id',              ctrl.updateUser)
 router.put('/:id/password',     ctrl.updatePassword)
 router.put('/:id/admin-reset-password', ctrl.adminResetPassword)
 router.put('/:id/admin-update-points',  ctrl.adminUpdatePoints)
+router.put('/:id/admin-update-game-points', ctrl.adminUpdateGamePoints)
 router.put('/:id/relations',    ctrl.updateRelations)
 router.put('/:id/avatar', uploadAvatar.single('avatar'), ctrl.updateAvatar)
 

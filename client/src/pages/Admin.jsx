@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Shield, Trash2, UserX, Crown, Copy, Plus, Check, 
   BarChart3, Users, LayoutDashboard, Send, Settings, Image as ImageIcon,
-  Calendar, Moon, Sun, Bell, KeyRound, MessageCircle, Star
+  Calendar, Moon, Sun, Bell, KeyRound, MessageCircle, Star, Gamepad2
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { adminService, galleryService, eventService } from '../services/services'
@@ -114,6 +114,22 @@ export default function Admin() {
     }
   }
 
+  const handleEditGamePoints = async (id, name, currentGamePoints) => {
+    const input = window.prompt(`Enter new Game points for ${name} (currently ${currentGamePoints}):`, currentGamePoints)
+    if (input === null) return // cancelled
+    
+    const newGamePoints = parseInt(input, 10)
+    if (isNaN(newGamePoints)) return toast.error('Invalid game points value.')
+
+    try {
+      await adminService.updateUserGamePoints(id, newGamePoints)
+      setMembers(prev => prev.map(m => m._id === id ? { ...m, gamePoints: newGamePoints } : m))
+      toast.success(`Game points for ${name} updated to ${newGamePoints}.`)
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update game points')
+    }
+  }
+
   const handleGenerateInvite = async () => {
     try {
       const res = await adminService.createInvite()
@@ -221,12 +237,20 @@ export default function Admin() {
                 <div className="flex items-center gap-2">
                   <p className="font-bold text-base truncate">{member.nickname || member.name}</p>
                   <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">{member.points || 0} pts</span>
+                  <span className="text-[10px] font-bold text-cyan-500 bg-cyan-500/10 px-2 py-0.5 rounded-full flex items-center gap-1"><Gamepad2 size={10} /> {member.gamePoints || 0}</span>
                 </div>
                 <p className="text-xs text-gray-500 font-semibold truncate">{member.email}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {member._id !== user._id && (
                   <>
+                    <button
+                      onClick={() => handleEditGamePoints(member._id, member.name, member.gamePoints || 0)}
+                      className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-cyan-500/20 hover:text-cyan-500 dark:hover:text-cyan-400"
+                      title="Edit Game Points"
+                    >
+                      <Gamepad2 size={16} />
+                    </button>
                     <button
                       onClick={() => handleEditPoints(member._id, member.name, member.points || 0)}
                       className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:text-yellow-400"
