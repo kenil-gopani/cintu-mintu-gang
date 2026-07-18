@@ -135,36 +135,6 @@ export default function Games() {
       border: 'hover:border-pink-400',
       badge: null,
     },
-    {
-      id: 'truth-dare',
-      title: '🎲 Truth or Dare (Quick)',
-      desc: 'Quick family spinner',
-      icon: Dices,
-      color: 'text-primary',
-      bg: 'from-primary/20 to-secondary/20',
-      border: 'hover:border-primary',
-      badge: null,
-    },
-    {
-      id: 'quiz',
-      title: '❓ Family Quiz',
-      desc: 'Test your family knowledge',
-      icon: HelpCircle,
-      color: 'text-amber-500',
-      bg: 'from-amber-500/20 to-orange-500/20',
-      border: 'hover:border-amber-400',
-      badge: null,
-    },
-    {
-      id: 'spin',
-      title: '🖼️ Photo Puzzle',
-      desc: 'Slide puzzle game',
-      icon: ImageIcon,
-      color: 'text-blue-500',
-      bg: 'from-blue-500/20 to-indigo-500/20',
-      border: 'hover:border-blue-400',
-      badge: 'Soon',
-    },
   ]
 
   useEffect(() => {
