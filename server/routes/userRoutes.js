@@ -12,10 +12,11 @@ router.get('/activities',       ctrl.getActivities)
 router.get('/tree',             ctrl.getFamilyTree)
 router.post('/tree/member',     ctrl.createFamilyMember)
 router.delete('/tree/member/:id', ctrl.deleteFamilyMember)
-router.get('/:id',              ctrl.getUserById)
-router.put('/:id',              ctrl.updateUser)
 router.put('/admin-reset-all-points', ctrl.adminResetAllPoints)
 router.put('/admin-reset-all-game-points', ctrl.adminResetAllGamePoints)
+
+router.get('/:id',              ctrl.getUserById)
+router.put('/:id',              ctrl.updateUser)
 
 router.put('/:id/password',     ctrl.updatePassword)
 router.put('/:id/admin-reset-password', ctrl.adminResetPassword)
