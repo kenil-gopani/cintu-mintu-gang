@@ -40,8 +40,8 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Logo */}
       <div className="flex items-center justify-between px-5 py-5 border-b border-light-border dark:border-dark-border">
         <div className="flex items-center gap-2.5">
-          <img src="/logo-light.png" alt="CMG Logo" className="w-10 h-10 object-contain shrink-0 dark:hidden block" />
-          <img src="/logo-dark.png" alt="CMG Logo" className="w-10 h-10 object-contain shrink-0 hidden dark:block" />
+          <img src="/logo-light.png" alt="CMG Logo" className="w-14 h-14 object-contain shrink-0 dark:hidden block scale-[1.15] origin-left" />
+          <img src="/logo-dark.png" alt="CMG Logo" className="w-14 h-14 object-contain shrink-0 hidden dark:block scale-[1.15] origin-left" />
           <div>
             <h1 className="text-sm font-black text-light-text dark:text-dark-text leading-tight">Cintu-Mintu</h1>
             <p className="text-[10px] font-semibold text-light-muted dark:text-dark-muted">Gang</p>
