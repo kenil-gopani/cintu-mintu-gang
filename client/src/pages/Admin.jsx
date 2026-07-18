@@ -209,7 +209,7 @@ export default function Admin() {
   )
 
   const renderUsers = () => (
-    <div className="grid lg:grid-cols-2 gap-8 animate-fade-in">
+    <div className="max-w-3xl mx-auto animate-fade-in">
       {/* Members table */}
       <div className="card p-6 shadow-xl border border-gray-100 dark:border-gray-800">
         <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><Users className="text-primary" /> Manage Members</h2>
@@ -260,40 +260,6 @@ export default function Admin() {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Invite codes */}
-      <div className="card p-6 shadow-xl border border-gray-100 dark:border-gray-800">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="font-extrabold text-xl flex items-center gap-2">🎟️ Invite Codes</h2>
-          <button onClick={handleGenerateInvite} className="btn-primary flex items-center gap-1 text-sm px-4 py-2 shadow-lg shadow-primary/30">
-            <Plus size={16} /> Generate
-          </button>
-        </div>
-        {invites.length === 0 ? (
-          <div className="text-center py-16 bg-gray-50 dark:bg-black/20 rounded-2xl">
-            <p className="text-gray-400 font-bold mb-4">No invite codes yet</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {invites.map(inv => (
-              <div key={inv._id} className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all shadow-sm ${inv.isUsed ? 'border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-black/10 opacity-60' : 'border-primary/30 bg-gradient-to-r from-primary/5 to-transparent'}`}>
-                <div>
-                  <p className="font-mono font-black text-xl tracking-widest text-gray-900 dark:text-white">{inv.code}</p>
-                  <p className="text-xs text-gray-500 font-bold mt-1">
-                    {inv.isUsed ? `Used by ${inv.usedBy?.nickname || inv.usedBy?.name}` : `Expires ${inv.expiresAt ? format(new Date(inv.expiresAt), 'MMM d') : 'never'}`}
-                  </p>
-                </div>
-                {!inv.isUsed && (
-                  <button onClick={() => copyCode(inv.code)} className="btn-icon bg-white dark:bg-dark-card shadow-md text-primary hover:scale-110 transition-transform">
-                    {copiedCode === inv.code ? <Check size={18} /> : <Copy size={18} />}
-                  </button>
-                )}
-                {inv.isUsed && <span className="bg-gray-200 dark:bg-gray-800 text-gray-500 px-3 py-1 rounded-full text-xs font-bold">Used</span>}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   )
