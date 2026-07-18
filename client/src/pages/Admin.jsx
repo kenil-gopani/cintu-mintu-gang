@@ -130,6 +130,28 @@ export default function Admin() {
     }
   }
 
+  const handleResetAllPoints = async () => {
+    if (!window.confirm('Are you sure you want to reset ALL activity points for ALL members? This cannot be undone.')) return
+    try {
+      await adminService.resetAllPoints()
+      setMembers(prev => prev.map(m => ({ ...m, points: 0 })))
+      toast.success('All activity points have been reset to 0.')
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to reset all points')
+    }
+  }
+
+  const handleResetAllGamePoints = async () => {
+    if (!window.confirm('Are you sure you want to reset ALL arcade points for ALL members? This cannot be undone.')) return
+    try {
+      await adminService.resetAllGamePoints()
+      setMembers(prev => prev.map(m => ({ ...m, gamePoints: 0 })))
+      toast.success('All game points have been reset to 0.')
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to reset all game points')
+    }
+  }
+
   const handleGenerateInvite = async () => {
     try {
       const res = await adminService.createInvite()
@@ -228,7 +250,23 @@ export default function Admin() {
     <div className="max-w-3xl mx-auto animate-fade-in">
       {/* Members table */}
       <div className="card p-6 shadow-xl border border-gray-100 dark:border-gray-800">
-        <h2 className="font-extrabold text-xl mb-6 flex items-center gap-2"><Users className="text-primary" /> Manage Members</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <h2 className="font-extrabold text-xl flex items-center gap-2"><Users className="text-primary" /> Manage Members</h2>
+          <div className="flex gap-2">
+            <button
+              onClick={handleResetAllGamePoints}
+              className="btn-primary bg-cyan-500 hover:bg-cyan-600 shadow-cyan-500/30 flex items-center gap-2 text-sm py-2"
+            >
+              <Gamepad2 size={16} /> Reset All Games
+            </button>
+            <button
+              onClick={handleResetAllPoints}
+              className="btn-primary flex items-center gap-2 text-sm py-2"
+            >
+              <Star size={16} /> Reset All Activity
+            </button>
+          </div>
+        </div>
         <div className="space-y-4">
           {members.map(member => (
             <div key={member._id} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700">
@@ -242,22 +280,22 @@ export default function Admin() {
                 <p className="text-xs text-gray-500 font-semibold truncate">{member.email}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => handleEditGamePoints(member._id, member.name, member.gamePoints || 0)}
+                  className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-cyan-500/20 hover:text-cyan-500 dark:hover:text-cyan-400"
+                  title="Edit Game Points"
+                >
+                  <Gamepad2 size={16} />
+                </button>
+                <button
+                  onClick={() => handleEditPoints(member._id, member.name, member.points || 0)}
+                  className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:text-yellow-400"
+                  title="Edit Points"
+                >
+                  <Star size={16} />
+                </button>
                 {member._id !== user._id && (
                   <>
-                    <button
-                      onClick={() => handleEditGamePoints(member._id, member.name, member.gamePoints || 0)}
-                      className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-cyan-500/20 hover:text-cyan-500 dark:hover:text-cyan-400"
-                      title="Edit Game Points"
-                    >
-                      <Gamepad2 size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleEditPoints(member._id, member.name, member.points || 0)}
-                      className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:text-yellow-400"
-                      title="Edit Points"
-                    >
-                      <Star size={16} />
-                    </button>
                     <button
                       onClick={() => handleResetPassword(member._id, member.name)}
                       className="btn-icon shadow-sm bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-500/20 hover:text-blue-500 dark:hover:text-blue-400"

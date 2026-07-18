@@ -367,3 +367,27 @@ exports.adminUpdateGamePoints = async (req, res) => {
     res.status(500).json({ message: 'Server error' })
   }
 }
+
+// PUT /api/users/admin-reset-all-points
+// Admin only
+exports.adminResetAllPoints = async (req, res) => {
+  try {
+    await User.updateMany({}, { points: 0 })
+    res.json({ message: 'All activity points have been reset to 0.' })
+  } catch (err) {
+    console.error('Admin reset all points error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+// PUT /api/users/admin-reset-all-game-points
+// Admin only
+exports.adminResetAllGamePoints = async (req, res) => {
+  try {
+    await User.updateMany({}, { gamePoints: 0 })
+    res.json({ message: 'All game points have been reset to 0.' })
+  } catch (err) {
+    console.error('Admin reset all game points error:', err)
+    res.status(500).json({ message: 'Server error' })
+  }
+}

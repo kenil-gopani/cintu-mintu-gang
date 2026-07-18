@@ -94,6 +94,8 @@ export const adminService = {
   resetUserPassword: (id, newPassword) => api.put(`/users/${id}/admin-reset-password`, { newPassword }),
   updateUserPoints: (id, points) => api.put(`/users/${id}/admin-update-points`, { points }),
   updateUserGamePoints: (id, gamePoints) => api.put(`/users/${id}/admin-update-game-points`, { gamePoints }),
+  resetAllPoints: () => api.put('/users/admin-reset-all-points'),
+  resetAllGamePoints: () => api.put('/users/admin-reset-all-game-points'),
 }
 
 export const notificationService = {
