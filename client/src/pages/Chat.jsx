@@ -2,8 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import Loader from '../components/common/Loader'
 import { motion, AnimatePresence } from 'framer-motion'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import MarkdownRenderer from '../components/common/MarkdownRenderer'
 import {
   Send, Image as ImageIcon, Mic, Square, Smile, Paperclip,
   ChevronLeft, Check, CheckCheck, MoreVertical, Users, Search, X,
@@ -464,29 +463,7 @@ export default function Chat() {
                     />
                   )}
                   {msg.text && (
-                    <div className={`break-words ${isMe ? 'text-white' : 'text-light-text dark:text-dark-text'} ${!isMe && msg.sender?._id === 'ai' ? 'markdown-body' : ''}`}>
-                      <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                          p: ({node, ...props}) => <p className="mb-2 last:mb-0 whitespace-pre-wrap" {...props} />,
-                          h1: ({node, ...props}) => <h1 className="text-lg font-bold mt-3 mb-1" {...props} />,
-                          h2: ({node, ...props}) => <h2 className="text-base font-bold mt-3 mb-1" {...props} />,
-                          h3: ({node, ...props}) => <h3 className="text-sm font-bold mt-2 mb-1" {...props} />,
-                          ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2" {...props} />,
-                          ol: ({node, ...props}) => <ol className="list-decimal pl-4 mb-2" {...props} />,
-                          li: ({node, ...props}) => <li className="mb-0.5" {...props} />,
-                          table: ({node, ...props}) => <div className="overflow-x-auto mb-2"><table className="w-full border-collapse border border-black/10 dark:border-white/10 text-sm" {...props} /></div>,
-                          th: ({node, ...props}) => <th className="border border-black/10 dark:border-white/10 px-2 py-1.5 bg-black/5 dark:bg-white/5 text-left font-bold" {...props} />,
-                          td: ({node, ...props}) => <td className="border border-black/10 dark:border-white/10 px-2 py-1.5" {...props} />,
-                          a: ({node, ...props}) => <a className="underline text-blue-300 hover:text-blue-400" target="_blank" rel="noopener noreferrer" {...props} />,
-                          code: ({inline, ...props}) => inline ? <code className="bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded text-[0.9em]" {...props} /> : <pre className="bg-black/10 dark:bg-white/10 p-2 rounded mb-2 overflow-x-auto text-[0.9em]"><code {...props} /></pre>,
-                          strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
-                          em: ({node, ...props}) => <em className="italic" {...props} />
-                        }}
-                      >
-                        {msg.text}
-                      </ReactMarkdown>
-                    </div>
+                    <MarkdownRenderer content={msg.text} isMe={isMe} />
                   )}
                   {msg.edited && (
                     <span className={`text-[9px] font-medium ${isMe ? 'text-white/50' : 'text-light-muted dark:text-dark-muted'}`}> (edited)</span>
