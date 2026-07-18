@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Search, CheckCircle } from 'lucide-react'
+import { Search, BadgeCheck } from 'lucide-react'
 import { memberService } from '../services/services'
 import { useSocket } from '../hooks/useSocket'
 import Avatar from '../components/common/Avatar'
@@ -119,7 +119,7 @@ export default function Members() {
                     <div className="member-card-body">
                       <div className="member-card-name">
                         <span className="truncate">{member.nickname || member.name}</span>
-                        <CheckCircle size={16} className="text-verified shrink-0 fill-verified text-white" style={{ fill: '#22C55E', stroke: 'white', strokeWidth: 2 }} />
+                        <BadgeCheck size={16} className="shrink-0 drop-shadow-sm" style={{ fill: '#0095F6', stroke: 'white', strokeWidth: 2 }} />
                       </div>
                       {member.nickname && (
                         <p className="text-xs text-light-sub dark:text-dark-sub">{member.name}</p>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Edit2, Save, X, Camera, Plus, CheckCircle } from 'lucide-react'
+import { Edit2, Save, X, Camera, Plus, BadgeCheck } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { memberService, galleryService } from '../services/services'
 import Avatar from '../components/common/Avatar'
@@ -210,7 +210,7 @@ export default function Profile() {
                   <h1 className="text-xl font-bold text-light-text dark:text-dark-text">
                     {profile.nickname || profile.name}
                   </h1>
-                  <CheckCircle size={18} style={{ fill: '#22C55E', stroke: 'white', strokeWidth: 2 }} className="shrink-0" />
+                  <BadgeCheck size={18} style={{ fill: '#0095F6', stroke: 'white', strokeWidth: 2 }} className="shrink-0 drop-shadow-sm" />
                 </div>
                 {profile.nickname && (
                   <p className="text-sm text-light-muted dark:text-dark-muted">{profile.name}</p>
