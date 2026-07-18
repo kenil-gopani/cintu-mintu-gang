@@ -909,12 +909,14 @@ export default function Chat() {
                     <Bot size={16} className="text-white" />
                   </div>
                 )}
-                <div className={`max-w-[75%] md:max-w-[60%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap shadow-sm
+                <div className={`max-w-full md:max-w-[85%] px-4 py-3 rounded-2xl text-[13px] lg:text-[15px] shadow-sm
                   ${msg.role === 'user'
-                    ? 'bg-primary text-white rounded-br-sm'
-                    : 'bg-white dark:bg-dark-card text-light-text dark:text-dark-text rounded-bl-sm border border-light-border dark:border-dark-border'
+                    ? 'bg-gradient-to-br from-primary to-accent text-white rounded-br-sm'
+                    : 'bg-white dark:bg-dark-card text-light-text dark:text-dark-text rounded-bl-sm border border-light-border dark:border-dark-border markdown-body'
                   }`}>
-                  {msg.text}
+                  {msg.text && (
+                    <MarkdownRenderer content={msg.text} isMe={msg.role === 'user'} />
+                  )}
                   <p className={`text-[9px] mt-1 font-bold ${msg.role === 'user' ? 'text-white/50 text-right' : 'text-light-muted dark:text-dark-muted'}`}>
                     {format(new Date(msg.createdAt), 'h:mm a')}
                   </p>
