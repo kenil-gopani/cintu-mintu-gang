@@ -2,11 +2,12 @@ const GameScore = require('../models/GameScore')
 const User = require('../models/User')
 
 const BADGES_CRITERIA = {
-  'Quiz Master': (scores, totalPoints) => scores.filter(s => s.game === 'quiz').length >= 5,
-  'Puzzle Solver': (scores, totalPoints) => scores.filter(s => s.game === 'puzzle').length >= 3,
-  'Memory Guru': (scores, totalPoints) => scores.filter(s => s.game === 'memory').length >= 5,
-  'High Roller': (scores, totalPoints) => totalPoints >= 1000,
-  'Arcade Champion': (scores, totalPoints) => totalPoints >= 5000,
+  'Quiz Master':      (scores, totalPoints) => scores.filter(s => s.game === 'quiz').length >= 5,
+  'Puzzle Solver':    (scores, totalPoints) => scores.filter(s => s.game === 'puzzle').length >= 3,
+  'Memory Guru':      (scores, totalPoints) => scores.filter(s => s.game === 'memory' || s.game === 'memory-family').length >= 5,
+  'Snake Charmer':    (scores, totalPoints) => scores.filter(s => s.game === 'snake').length >= 3,
+  'High Roller':      (scores, totalPoints) => totalPoints >= 1000,
+  'Arcade Champion':  (scores, totalPoints) => totalPoints >= 5000,
 }
 
 exports.submitScore = async (req, res) => {
