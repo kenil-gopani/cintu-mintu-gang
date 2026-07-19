@@ -85,8 +85,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password, rememberMe = false } = req.body
 
+    let normalizedEmail = email.toLowerCase()
+    if (normalizedEmail.includes('@cintumintugang.com')) {
+      normalizedEmail = normalizedEmail.replace('@cintumintugang.com', '@chintumintugang.com')
+    }
+
     // Fetch with password
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password')
+    const user = await User.findOne({ email: normalizedEmail }).select('+password')
     if (!user || !user.isActive) {
       return res.status(401).json({ message: 'Invalid email or password.' })
     }
