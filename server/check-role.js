@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const MONGODB_URI = 'mongodb://efg5726_db_user:nczMNVFd5FeGKWmw@ac-lrjjl3w-shard-00-00.0nxw2vp.mongodb.net:27017,ac-lrjjl3w-shard-00-01.0nxw2vp.mongodb.net:27017,ac-lrjjl3w-shard-00-02.0nxw2vp.mongodb.net:27017/cintu-mintu-gang?ssl=true&authSource=admin&retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,

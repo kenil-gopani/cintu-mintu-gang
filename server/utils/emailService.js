@@ -21,7 +21,7 @@ exports.sendNotificationEmail = async (emails, subject, text, html) => {
 
   try {
     const mailOptions = {
-      from: `"Cintu-Mintu Gang" <${process.env.SMTP_USER}>`,
+      from: `"Chintu-Mintu Gang" <${process.env.SMTP_USER}>`,
       to: emails.join(','),
       subject,
       text,

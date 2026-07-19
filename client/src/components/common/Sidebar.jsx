@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <img src="/logo-light.png" alt="CMG Logo" className="w-14 h-14 object-contain shrink-0 dark:hidden block scale-[1.15] origin-left" />
           <img src="/logo-dark.png" alt="CMG Logo" className="w-14 h-14 object-contain shrink-0 hidden dark:block scale-[1.15] origin-left" />
           <div>
-            <h1 className="text-sm font-black text-light-text dark:text-dark-text leading-tight">Cintu-Mintu</h1>
+            <h1 className="text-sm font-black text-light-text dark:text-dark-text leading-tight">Chintu-Mintu</h1>
             <p className="text-[10px] font-semibold text-light-muted dark:text-dark-muted">Gang</p>
           </div>
         </div>

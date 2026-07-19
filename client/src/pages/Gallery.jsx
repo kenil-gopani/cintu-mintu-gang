@@ -170,7 +170,7 @@ export default function Gallery() {
       const a = document.createElement('a')
       a.style.display = 'none'
       a.href = url
-      a.download = `cintu-mintu-${memory.album || 'memory'}-${Date.now()}.${memory.type === 'video' ? 'mp4' : 'jpg'}`
+      a.download = `chintu-mintu-${memory.album || 'memory'}-${Date.now()}.${memory.type === 'video' ? 'mp4' : 'jpg'}`
       document.body.appendChild(a)
       a.click()
       window.URL.revokeObjectURL(url)

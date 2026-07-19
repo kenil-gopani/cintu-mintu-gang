@@ -24,7 +24,7 @@ exports.getRooms = async (req, res) => {
 // Safe to call multiple times — idempotent.
 exports.initGangChat = async (req, res) => {
   try {
-    const GANG_CHAT_NAME = 'Cintu Mintu Gang'
+    const GANG_CHAT_NAME = 'Chintu Mintu Gang'
 
     // Find all active users
     const allUsers = await User.find({ isActive: true }).select('_id')
@@ -269,7 +269,7 @@ exports.aiChat = async (req, res) => {
       // Intelligent fallback responses
       const responses = [
         "That's a great question! I'm your family AI assistant. While I'm in limited mode right now, feel free to ask me about family planning, recipes, travel ideas, or anything else!",
-        "Interesting! As the Cintu-Mintu Gang AI, I love helping with creative ideas. Could you tell me more about what you're looking for?",
+        "Interesting! As the Chintu-Mintu Gang AI, I love helping with creative ideas. Could you tell me more about what you're looking for?",
         "Great question! I'd be happy to help. For the best experience, make sure the GROQ_API_KEY is configured on the server.",
       ]
       return res.json({ reply: responses[Math.floor(Math.random() * responses.length)] })
@@ -286,7 +286,7 @@ exports.aiChat = async (req, res) => {
         body: JSON.stringify({
           model: 'openai/gpt-oss-20b',
           messages: [
-            { role: 'system', content: 'You are a helpful AI assistant for the Cintu-Mintu Gang, a close-knit family group. Be friendly, warm, and helpful.' },
+            { role: 'system', content: 'You are a helpful AI assistant for the Chintu-Mintu Gang, a close-knit family group. Be friendly, warm, and helpful.' },
             { role: 'user', content: message }
           ]
         })

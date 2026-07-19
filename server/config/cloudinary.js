@@ -12,7 +12,7 @@ cloudinary.config({
 const galleryStorage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder:         'cintu-mintu-gang/gallery',
+    folder:         'chintu-mintu-gang/gallery',
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'mp4', 'mov', 'webm'],
     resource_type:  'auto',
     transformation: [{ width: 1200, height: 1200, crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
@@ -23,7 +23,7 @@ const galleryStorage = new CloudinaryStorage({
 const avatarStorage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder:         'cintu-mintu-gang/avatars',
+    folder:         'chintu-mintu-gang/avatars',
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
     transformation: [{ width: 400, height: 400, crop: 'fill', gravity: 'face', quality: 'auto', fetch_format: 'auto' }],
   },
@@ -33,7 +33,7 @@ const avatarStorage = new CloudinaryStorage({
 const chatStorage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: 'cintu-mintu-gang/chat',
+    folder: 'chintu-mintu-gang/chat',
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'mp4', 'webm', 'ogg', 'wav', 'mp3'],
     resource_type: 'auto',
     transformation: [{ width: 800, crop: 'scale', quality: 'auto', fetch_format: 'auto' }],

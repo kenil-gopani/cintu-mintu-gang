@@ -71,7 +71,7 @@ exports.updateAvatar = async (req, res) => {
     // Delete old avatar from Cloudinary if it exists
     if (req.user.avatar) {
       const oldPublicId = req.user.avatar.split('/').pop().split('.')[0]
-      await cloudinary.uploader.destroy(`cintu-mintu-gang/avatars/${oldPublicId}`).catch(() => {})
+      await cloudinary.uploader.destroy(`chintu-mintu-gang/avatars/${oldPublicId}`).catch(() => {})
     }
 
     const user = await User.findByIdAndUpdate(
@@ -172,9 +172,9 @@ exports.createFamilyMember = async (req, res) => {
     const { name, nickname, birthday } = req.body
     if (!name) return res.status(400).json({ message: 'Name is required' })
 
-    const baseEmail = name.toLowerCase().replace(/\s+/g, '.') + '@cintumintugang.com'
+    const baseEmail = name.toLowerCase().replace(/\s+/g, '.') + '@chintumintugang.com'
     const existing = await User.findOne({ email: baseEmail })
-    const finalEmail = existing ? `${baseEmail.split('@')[0]}.${Date.now()}@cintumintugang.com` : baseEmail
+    const finalEmail = existing ? `${baseEmail.split('@')[0]}.${Date.now()}@chintumintugang.com` : baseEmail
 
     const user = new User({
       name,

@@ -24,10 +24,10 @@ async function seed() {
   const admin = await User.create({
     name:     process.env.SEED_ADMIN_NAME || 'Gang Admin',
     nickname: 'Admin',
-    email:    process.env.SEED_ADMIN_EMAIL || 'admin@cintumintugang.com',
+    email:    process.env.SEED_ADMIN_EMAIL || 'admin@chintumintugang.com',
     password: process.env.SEED_ADMIN_PASSWORD || 'Admin@1234',
     role:     'admin',
-    bio:      'I manage the Cintu-Mintu Gang! 🏠',
+    bio:      'I manage the Chintu-Mintu Gang! 🏠',
   })
 
   console.log('👑 Admin created:', admin.email)

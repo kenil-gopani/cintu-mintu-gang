@@ -1,4 +1,4 @@
-# 🏠 Cintu-Mintu Gang
+# 🏠 Chintu-Mintu Gang
 
 A modern, premium, private family website for cousins to stay connected, share memories, celebrate birthdays, organize events, and have fun together.
 
@@ -26,7 +26,7 @@ A modern, premium, private family website for cousins to stay connected, share m
 ### 1. Clone & Setup
 
 ```bash
-cd "cintu-mintu-gang"
+cd "chintu-mintu-gang"
 ```
 
 ### 2. Setup Server
@@ -56,7 +56,7 @@ npm run dev
 ### 5. First Login
 
 After seeding, login with:
-- Email: `admin@cintumintugang.com`
+- Email: `admin@chintumintugang.com`
 - Password: `Admin@1234`
 
 Then go to **Admin Panel → Invite Codes → Generate** to create invite codes for family members.
@@ -76,7 +76,7 @@ Then go to **Admin Panel → Invite Codes → Generate** to create invite codes 
 ## 📁 Project Structure
 
 ```
-cintu-mintu-gang/
+chintu-mintu-gang/
 ├── client/   # React + Vite frontend
 └── server/   # Node.js + Express backend
 ```

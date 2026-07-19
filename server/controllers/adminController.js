@@ -20,13 +20,13 @@ exports.addMember = async (req, res) => {
     const { name, nickname } = req.body
     if (!name) return res.status(400).json({ message: 'Name is required' })
 
-    const email = `${name.toLowerCase().replace(/\s+/g, '.')}@cintumintugang.com`
+    const email = `${name.toLowerCase().replace(/\s+/g, '.')}@chintumintugang.com`
     
     // Check if email exists to avoid duplicate key error
     const existing = await User.findOne({ email })
     let finalEmail = email
     if (existing) {
-      finalEmail = `${name.toLowerCase().replace(/\s+/g, '.')}.${Date.now()}@cintumintugang.com`
+      finalEmail = `${name.toLowerCase().replace(/\s+/g, '.')}.${Date.now()}@chintumintugang.com`
     }
 
     const user = new User({

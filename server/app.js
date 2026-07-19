@@ -62,7 +62,7 @@ app.use('/api/admin',         require('./routes/adminRoutes'))
 app.use('/api/games',         require('./routes/gameRoutes'))
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok', gang: '🏠 Cintu-Mintu Gang' }))
+app.get('/api/health', (req, res) => res.json({ status: 'ok', gang: '🏠 Chintu-Mintu Gang' }))
 
 // 404
 app.use('*', (req, res) => res.status(404).json({ message: 'Route not found' }))

@@ -10,13 +10,13 @@ async function updatePasswords() {
     await mongoose.connect(process.env.MONGODB_URI);
     
     const usersToUpdate = [
-      'krish.miyani@cintumintugang.com',
-      'hasti.miyani@cintumintugang.com',
-      'maitri.gopani@cintumintugang.com',
-      'krisha.sutariya@cintumintugang.com',
-      'harshil.sutariya@cintumintugang.com',
-      'het.sheta@cintumintugang.com',
-      'rutvi.sheta@cintumintugang.com'
+      'krish.miyani@chintumintugang.com',
+      'hasti.miyani@chintumintugang.com',
+      'maitri.gopani@chintumintugang.com',
+      'krisha.sutariya@chintumintugang.com',
+      'harshil.sutariya@chintumintugang.com',
+      'het.sheta@chintumintugang.com',
+      'rutvi.sheta@chintumintugang.com'
     ];
 
     const users = await User.find({ email: { $in: usersToUpdate } });

@@ -60,7 +60,7 @@ const TruthOrDareSimple = ({ onScore }) => {
 
 const Quiz = ({ onScore }) => {
   const questions = [
-    { q: "What year was the Cintu-Mintu Gang officially formed?", options: ["1999", "2005", "2010", "2020"], a: 3 },
+    { q: "What year was the Chintu-Mintu Gang officially formed?", options: ["1999", "2005", "2010", "2020"], a: 3 },
     { q: "Who is the oldest cousin in the family?", options: ["Rahul", "Priya", "Arjun", "Sneha"], a: 2 },
     { q: "Which city has the family visited the most for vacations?", options: ["Goa", "Manali", "Ooty", "Jaipur"], a: 0 },
     { q: "Who is known as the biggest foodie in the house?", options: ["Rohan", "Karan", "Aisha", "Kabir"], a: 1 }

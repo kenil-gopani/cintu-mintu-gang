@@ -12,5 +12,5 @@ initSocket(server)
 startCron()
 
 server.listen(PORT, () => {
-  console.log(`🚀 Cintu-Mintu Gang server running on port ${PORT}`)
+  console.log(`🚀 Chintu-Mintu Gang server running on port ${PORT}`)
 })
