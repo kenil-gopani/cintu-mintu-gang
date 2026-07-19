@@ -1,8 +1,8 @@
-const express    = require('express')
-const cors       = require('cors')
-const helmet     = require('helmet')
+const express = require('express')
+const cors = require('cors')
+const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
-const rateLimit  = require('express-rate-limit')
+const rateLimit = require('express-rate-limit')
 require('dotenv').config()
 
 const app = express()
@@ -51,15 +51,15 @@ const authLimiter = rateLimit({
 })
 
 // Routes
-app.use('/api/auth',          authLimiter, require('./routes/authRoutes'))
-app.use('/api/users',         require('./routes/userRoutes'))
-app.use('/api/gallery',       require('./routes/galleryRoutes'))
-app.use('/api/events',        require('./routes/eventRoutes'))
-app.use('/api/chat',          require('./routes/chatRoutes'))
+app.use('/api/auth', authLimiter, require('./routes/authRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/gallery', require('./routes/galleryRoutes'))
+app.use('/api/events', require('./routes/eventRoutes'))
+app.use('/api/chat', require('./routes/chatRoutes'))
 app.use('/api/notifications', require('./routes/notificationRoutes'))
-app.use('/api/polls',         require('./routes/pollRoutes'))
-app.use('/api/admin',         require('./routes/adminRoutes'))
-app.use('/api/games',         require('./routes/gameRoutes'))
+app.use('/api/polls', require('./routes/pollRoutes'))
+app.use('/api/admin', require('./routes/adminRoutes'))
+app.use('/api/games', require('./routes/gameRoutes'))
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', gang: '🏠 Chintu-Mintu Gang' }))
@@ -70,10 +70,10 @@ app.use('*', (req, res) => res.status(404).json({ message: 'Route not found' }))
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  
+
   if (err.code === 'LIMIT_FILE_SIZE') {
-    return res.status(413).json({ 
-      message: 'File too large! Maximum allowed sizes are: Profile Pictures (15MB), Chat (25MB), Gallery (50MB). Please choose a smaller file or compress it.' 
+    return res.status(413).json({
+      message: 'File too large! Maximum allowed sizes are: Profile Pictures (15MB), Chat (25MB), Gallery (50MB). Please choose a smaller file or compress it.'
     })
   }
 

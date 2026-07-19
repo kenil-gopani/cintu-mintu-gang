@@ -62,9 +62,14 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
-  *::-webkit-scrollbar { width: 4px; height: 4px; }
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
   *::-webkit-scrollbar-track { background: transparent; }
-  *::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 9999px; }
+  *::-webkit-scrollbar-thumb { @apply bg-light-border dark:bg-dark-border rounded-full; }
+  *::-webkit-scrollbar-thumb:hover { @apply bg-light-sub dark:bg-dark-sub; }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 dark:ring-offset-dark-bg;
+  }
 
   html {
     scroll-behavior: smooth;
@@ -162,7 +167,7 @@
   /* ===== Buttons ===== */
   .btn-primary {
     @apply px-5 py-2.5 rounded-[14px] font-semibold text-white text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
-    @apply bg-primary hover:bg-[#1D4ED8] shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-primary hover:bg-[#1D4ED8] shadow-sm hover:shadow hover:-translate-y-0.5 active:scale-95;
   }
   .btn-secondary {
     @apply px-5 py-2.5 rounded-[14px] font-semibold text-sm transition-all duration-300 min-h-[44px] flex items-center justify-center gap-2;
@@ -173,7 +178,7 @@
     @apply text-primary bg-transparent hover:bg-primary/10 hover:text-[#1D4ED8] active:scale-95;
   }
   .btn-icon {
-    @apply p-2 rounded-[14px] transition-all duration-200;
+    @apply p-2 rounded-[14px] transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center;
     @apply text-light-muted dark:text-dark-muted hover:bg-primary/10 hover:text-primary active:scale-95;
   }
 
