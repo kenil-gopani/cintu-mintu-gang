@@ -10,7 +10,7 @@ export default function Navbar({ onMenuClick }) {
   const { user } = useAuth()
 
   return (
-    <header className="shrink-0 z-20 bg-white dark:bg-dark-card border-b border-light-border dark:border-dark-border px-4 h-14 flex items-center justify-between gap-4 safe-top">
+    <header className="shrink-0 z-20 sticky top-0 w-full bg-white dark:bg-dark-card border-b border-light-border dark:border-dark-border px-4 h-14 flex items-center justify-between gap-4 safe-top">
       {/* Left */}
       <div className="flex items-center gap-3">
         <button onClick={onMenuClick} className="btn-icon lg:hidden" id="mobile-menu-btn">
@@ -32,7 +32,7 @@ export default function Navbar({ onMenuClick }) {
         <ThemeSelector />
         <ThemeToggle />
         <NotificationCenter />
-        <Link to={`/profile/${user?._id}`} className="ml-1">
+        <Link to={`/profile/${user?._id}`} className="ml-1 flex items-center justify-center">
           <Avatar src={user?.avatar} name={user?.name} size={32} />
         </Link>
       </div>

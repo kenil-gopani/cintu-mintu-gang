@@ -188,7 +188,7 @@ export default function Home() {
   const todayBdays = birthdays.filter(b => isToday(new Date(b.nextBirthday)))
 
   return (
-    <div className="page-container max-w-7xl mx-auto py-8">
+    <div className="page-container max-w-7xl mx-auto py-8 overflow-x-hidden">
       
       {/* Dynamic Grid Layout */}
       <motion.div 

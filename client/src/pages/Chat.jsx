@@ -188,7 +188,7 @@ export default function Chat() {
   // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, typingUsers, aiMessages])
+  }, [messages, aiMessages])
 
   // Close context/react menus on click outside
   useEffect(() => {
